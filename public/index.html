@@ -399,6 +399,8 @@
     const $ = (s) => document.querySelector(s);
     const $$ = (s) => document.querySelectorAll(s);
 
+    const API_BASE = "https://cctutor-api.onrender.com";
+
     let currentLang = "c";
     let currentTheme = localStorage.getItem("theme") || "light";
     let vizState = null;
@@ -595,7 +597,7 @@
       const t0 = performance.now();
 
       try {
-        const res = await fetch("/api/compile", {
+        const res = await fetch(API_BASE + "/api/compile", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code, lang: currentLang, args }),

@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: cctutor-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production

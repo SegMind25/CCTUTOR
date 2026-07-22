@@ -2,10 +2,5 @@
   "name": "cctutor",
   "version": "1.0.0",
   "private": true,
-  "description": "C/C++ step-by-step execution visualizer with GCC compiler",
-  "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Static site - no build needed'",
-    "start": "vercel dev"
-  }
+  "description": "C/C++ native compiler - frontend (Vercel) + backend (Render)"
 }
