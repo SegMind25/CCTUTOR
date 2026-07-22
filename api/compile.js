@@ -64,6 +64,8 @@ export default async function handler(req, res) {
   const argv = Array.isArray(args) ? args.map(String) : [];
   const { source, wrapped } = buildWrappedSource(code, argv, lang);
   const compiler = pickCompiler(lang);
+  const argc = argv.length + 1;
+  const fullArgv = ["./prog", ...argv];
 
   const compilerArgs = lang === "cpp" ? "-std=c++17" : "-std=c11";
 
@@ -93,7 +95,8 @@ export default async function handler(req, res) {
         stderr: "",
         code: -1,
         signal: data.signal || null,
-        argv_injected: wrapped,
+        argc,
+        argv: fullArgv,
       });
     }
 
@@ -105,15 +108,18 @@ export default async function handler(req, res) {
     if (progErr.trim()) stderr += progErr.trim();
     if (signal) stderr += (stderr ? "\n" : "") + "Signal: " + signal;
 
+    const exitCode = data.status !== undefined ? parseInt(data.status) || 0 : 0;
+
     return res.status(200).json({
       success: true,
       compile_error: "",
       compile_output: (data.compiler_output || "").trim(),
       stdout: progOut,
-      stderr: stderr,
-      code: 0,
+      stderr,
+      code: exitCode,
       signal,
-      argv_injected: wrapped,
+      argc,
+      argv: fullArgv,
     });
   } catch (err) {
     return res.status(500).json({

@@ -479,17 +479,11 @@
       return d.innerHTML;
     }
 
-    function parseArgvFromOutput(stdout, argcVal) {
+    function buildArgvVars(argcVal, argvArr) {
       const vars = [];
       vars.push({ type: "int", name: "argc", value: String(argcVal) });
-      const argvVals = [];
-      const re = /\s*argv\[(\d+)\]\s*=\s*"(.*)"/g;
-      let m;
-      while ((m = re.exec(stdout)) !== null) {
-        argvVals[parseInt(m[1])] = m[2];
-      }
-      if (argvVals.length > 0) {
-        vars.push({ type: "char*[]", name: "argv", value: null, children: argvVals });
+      if (argvArr && argvArr.length > 0) {
+        vars.push({ type: "char*[]", name: "argv", value: null, children: argvArr });
       }
       return vars;
     }
@@ -540,15 +534,17 @@
 
     function findLineForOutputLine(outputLines, stepIdx, sourceCode) {
       const srcLines = sourceCode.split("\n");
-      const printfLines = [];
+      const outLines = [];
       srcLines.forEach((l, i) => {
         const t = l.trim();
-        if (t.includes("printf") || t.includes("cout") || t.includes("fprintf") || t.includes("puts(")) {
-          printfLines.push(i);
+        if (t.includes("printf") || t.includes("cout") || t.includes("fprintf") ||
+            t.includes("puts(") || t.includes("write(") || t.includes("putchar") ||
+            t.includes("fputs") || t.includes("fputchar") || t.includes("dprintf")) {
+          outLines.push(i);
         }
       });
-      if (printfLines.length === 0) return null;
-      return printfLines[stepIdx % printfLines.length] ?? null;
+      if (outLines.length === 0) return null;
+      return outLines[stepIdx % outLines.length] ?? null;
     }
 
     function goToStep(n, pushHistory) {
@@ -612,11 +608,9 @@
         const stderr = data.stderr || "";
         const outLines = stdout.split("\n").filter(l => l.length > 0);
 
-        let argcVal = args.length + 1;
-        const argcMatch = stdout.match(/^argc\s*=\s*(\d+)/m);
-        if (argcMatch) argcVal = parseInt(argcMatch[1]);
-
-        const vars = parseArgvFromOutput(stdout, argcVal);
+        const argcVal = data.argc ?? (args.length + 1);
+        const argvArr = data.argv ?? ["./prog", ...args];
+        const vars = buildArgvVars(argcVal, argvArr);
 
         vizState = {
           code,
