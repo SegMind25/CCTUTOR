@@ -229,6 +229,8 @@ tr:{title:"C/C++ Eğitmeni",run:"Çalıştır",running:"Çalışıyor...",edit:"
 vi:{title:"Gia sư C/C++",run:"Chạy",running:"Đang chạy...",edit:"Sửa",sourceCode:"Mã nguồn",variables:"Biến",stack:"Ngăn xếp",heap:"Heap",output:"Đầu ra",ready:"Sẵn sàng",runVars:"Chạy để xem biến",runStack:"Chạy để xem ngăn xếp",noHeap:"Không có heap",noSource:"Không có mã nguồn",compiling:"Đang biên dịch...",noCode:"Nhập mã trước.",backendErr:"Lỗi backend",netErr:"Lỗi mạng:",unkErr:"Lỗi không xác định",argvTitle:"Đối số chương trình (argv)",argvDesc:"Mã dùng argc/argv. Nhập đối số. argv[0] tự động.",addArg:"+ Thêm đối số",argvNote:"Đầu tiên = argv[1], thứ hai = argv[2].",cancel:"Hủy",finished:"Chương trình kết thúc",noFrames:"Không có khung",step:"Bước",expFor:"Đánh giá điều kiện for và cập nhật bộ đếm.",expWhile:"Kiểm tra điều kiện while.",expIf:"Đánh giá điều条件 if.",expReturn:"Trả về từ hàm.",expWrite:"write() ra stdout.",expPrintf:"printf() định dạng.",expDeclInit:"Khai báo và khởi tạo biến.",expDecl:"Khai báo biến cục bộ.",expAssign:"Gán giá trị mới.",expDefault:"Thực thi câu lệnh."}
 };
 
+const $=id=>document.getElementById(id);
+
 let lang='en';
 function t(k){return(I[lang]&&I[lang][k])||I.en[k]||k}
 function setLang(l){lang=l;localStorage.setItem('cctutor_lang',l);document.documentElement.setAttribute('lang',l);if(l==='ar')document.documentElement.setAttribute('dir','rtl');else document.documentElement.removeAttribute('dir');$('i18n-sel').value=l;document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(k)e.textContent=t(k)});if(traceData&&currentStep>=0){renderStepDesc();renderFrames();renderStack();}}
@@ -241,7 +243,6 @@ function toggleTheme(){const v=getTheme()==='dark'?'light':'dark';localStorage.s
 applyTheme(getTheme());
 
 let traceData=null,currentStep=-1,prevVars={},editMode=true,pendingArgs=[];
-const $=id=>document.getElementById(id);
 
 /* ══════ Syntax Highlighting ══════ */
 function highlight(code,lang){
