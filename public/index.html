@@ -27,7 +27,6 @@
       --text-secondary: #6C757D;
       --text-error: #DC3545;
       --text-success: #28A745;
-      --text-warn: #FFC107;
       --link-blue: #0066CC;
       --sep-line: #DEE2E6;
       --btn-viz-bg: #28A745;
@@ -36,9 +35,8 @@
       --nav-active: #0066CC;
       --nav-disabled: #ADB5BD;
       --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+      --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
       --radius: 6px;
     }
     [data-theme="dark"] {
@@ -62,7 +60,6 @@
       --text-secondary: #8B949E;
       --text-error: #F85149;
       --text-success: #3FB950;
-      --text-warn: #D29922;
       --link-blue: #58A6FF;
       --sep-line: #30363D;
       --btn-viz-bg: #238636;
@@ -71,7 +68,6 @@
       --nav-active: #58A6FF;
       --nav-disabled: #484F58;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-      --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -94,7 +90,7 @@
     }
     .logo { display: flex; align-items: baseline; gap: 6px; }
     .logo-title { font-size: 20px; font-weight: 700; color: var(--text-primary); }
-    .logo-sub { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+    .logo-sub { font-size: 12px; color: var(--text-secondary); }
     .header-right { display: flex; align-items: center; gap: 16px; }
 
     .lang-tabs { display: flex; gap: 0; font-size: 13px; }
@@ -103,11 +99,8 @@
       padding: 6px 14px;
       border-bottom: 2px solid transparent;
       cursor: pointer;
-      transition: color 0.15s;
       background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
+      border-top: none; border-left: none; border-right: none;
       font-family: var(--font-main);
       font-size: 13px;
     }
@@ -126,12 +119,9 @@
     }
     .theme-toggle:hover { background: var(--bg-secondary); }
 
-    .main-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+    .main-container { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
+    /* Input Section */
     .input-section {
       background: var(--bg-frame);
       border: 1px solid var(--sep-line);
@@ -141,256 +131,150 @@
       box-shadow: var(--shadow-sm);
     }
     .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 12px;
     }
-    .section-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
+    .section-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
     .code-textarea {
-      width: 100%;
-      height: 380px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.5;
-      background: var(--bg-page);
-      color: var(--text-code);
-      border: 1px solid var(--sep-line);
-      border-radius: var(--radius);
-      padding: 16px;
-      resize: vertical;
-      outline: none;
-      tab-size: 4;
+      width: 100%; height: 350px;
+      font-family: var(--font-mono); font-size: 13px; line-height: 1.5;
+      background: var(--bg-page); color: var(--text-code);
+      border: 1px solid var(--sep-line); border-radius: var(--radius);
+      padding: 16px; resize: vertical; outline: none; tab-size: 4;
     }
     .code-textarea:focus {
       border-color: var(--text-active);
       box-shadow: 0 0 0 2px rgba(0,102,204,0.15);
     }
 
-    .args-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .args-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
+    .args-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+    .args-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
     .args-input {
-      flex: 1;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      padding: 8px 12px;
-      border: 1px solid var(--sep-line);
-      border-radius: var(--radius);
-      background: var(--bg-page);
-      color: var(--text-code);
-      outline: none;
+      flex: 1; font-family: var(--font-mono); font-size: 13px;
+      padding: 8px 12px; border: 1px solid var(--sep-line); border-radius: var(--radius);
+      background: var(--bg-page); color: var(--text-code); outline: none;
     }
     .args-input:focus {
       border-color: var(--text-active);
       box-shadow: 0 0 0 2px rgba(0,102,204,0.15);
     }
-    .args-hint {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-top: 4px;
-    }
+    .args-hint { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
 
-    .actions-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 16px;
-    }
+    .actions-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
     .viz-btn {
-      background: var(--btn-viz-bg);
-      color: var(--btn-viz-text);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px 24px;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: background 0.15s;
-      font-family: var(--font-main);
+      background: var(--btn-viz-bg); color: var(--btn-viz-text);
+      font-size: 14px; font-weight: 600; padding: 10px 24px;
+      border: none; border-radius: var(--radius); cursor: pointer;
+      transition: background 0.15s; font-family: var(--font-main);
     }
     .viz-btn:hover { background: var(--btn-viz-hover); }
-    .viz-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .warn-text {
-      font-size: 11px;
-      color: var(--text-secondary);
-    }
-
-    .result-section {
-      display: none;
-      background: var(--bg-frame);
-      border: 1px solid var(--sep-line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-
-    .result-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--sep-line);
-      background: var(--bg-secondary);
-    }
-    .result-tab {
-      padding: 10px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-inactive);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-family: var(--font-main);
-    }
-    .result-tab:hover { color: var(--text-hover); }
-    .result-tab.active {
-      color: var(--text-active);
-      font-weight: 600;
-      border-bottom-color: var(--text-active);
-    }
-    .result-tab .badge {
-      display: inline-block;
-      padding: 1px 6px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-left: 6px;
-    }
-    .badge-error { background: var(--text-error); color: #fff; }
-    .badge-success { background: var(--text-success); color: #fff; }
-
-    .result-panel {
-      display: none;
-      padding: 16px;
-    }
-    .result-panel.active { display: block; }
-
-    .output-box {
-      background: var(--bg-output);
-      color: var(--text-output);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.5;
-      padding: 16px;
-      border-radius: var(--radius);
-      white-space: pre-wrap;
-      word-break: break-all;
-      min-height: 60px;
-      max-height: 400px;
-      overflow: auto;
-    }
-    .output-box.error-output {
-      color: var(--text-error);
-    }
-    .output-box.success-output {
-      color: var(--text-success);
-    }
-    .output-placeholder {
-      color: var(--text-secondary);
-      font-style: italic;
-    }
-
-    .code-display {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .code-line {
-      display: flex;
-      align-items: center;
-      min-height: 22px;
-    }
-    .line-num {
-      width: 40px;
-      text-align: right;
-      color: var(--text-linenum);
-      padding-right: 8px;
-      user-select: none;
-      flex-shrink: 0;
-    }
-    .line-content {
-      flex: 1;
-      padding-left: 8px;
-      white-space: pre;
-      color: var(--text-code);
-    }
-
+    .viz-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .warn-text { font-size: 11px; color: var(--text-secondary); }
     .back-btn {
-      font-size: 13px;
-      color: var(--link-blue);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: var(--font-main);
-      padding: 0;
+      font-size: 13px; color: var(--link-blue); background: none;
+      border: none; cursor: pointer; font-family: var(--font-main);
     }
     .back-btn:hover { text-decoration: underline; }
 
-    .examples-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
+    .examples-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
     .example-btn {
-      font-size: 12px;
-      padding: 4px 10px;
+      font-size: 12px; padding: 4px 10px;
+      border: 1px solid var(--sep-line); border-radius: var(--radius);
+      background: var(--bg-secondary); color: var(--text-secondary);
+      cursor: pointer; font-family: var(--font-main); transition: all 0.15s;
+    }
+    .example-btn:hover { border-color: var(--text-active); color: var(--text-active); }
+
+    /* Viz Section */
+    .viz-section { display: none; }
+    .viz-container {
+      display: flex;
       border: 1px solid var(--sep-line);
+      background: var(--bg-frame);
       border-radius: var(--radius);
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-family: var(--font-main);
-      transition: all 0.15s;
+      min-height: 480px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
-    .example-btn:hover {
-      border-color: var(--text-active);
-      color: var(--text-active);
+    .viz-left {
+      width: 45%; border-right: 1px solid var(--sep-line);
+      padding: 16px; overflow: auto;
     }
+    .viz-right { width: 55%; padding: 16px; overflow: auto; }
+
+    .code-display { font-family: var(--font-mono); font-size: 13px; line-height: 1.6; }
+    .code-line { display: flex; align-items: center; min-height: 22px; }
+    .line-num {
+      width: 40px; text-align: right; color: var(--text-linenum);
+      padding-right: 8px; user-select: none; flex-shrink: 0;
+    }
+    .line-content {
+      flex: 1; padding-left: 8px; white-space: pre; color: var(--text-code);
+    }
+    .line-current { background: var(--bg-current); }
+    .line-executed { background: var(--bg-executed); }
+
+    .section-label-sm { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .output-box {
+      background: var(--bg-output); color: var(--text-output);
+      font-family: var(--font-mono); font-size: 13px; line-height: 1.5;
+      padding: 12px; border-radius: var(--radius);
+      white-space: pre-wrap; word-break: break-all;
+      min-height: 50px; max-height: 250px; overflow: auto;
+    }
+    .output-box.error-output { color: var(--text-error); }
+    .output-box.success-output { color: var(--text-success); }
+    .output-placeholder { color: var(--text-secondary); font-style: italic; }
+
+    .vars-box {
+      background: var(--bg-page); border: 1px solid var(--sep-line);
+      border-radius: var(--radius); padding: 12px; margin-top: 12px;
+    }
+    .var-row {
+      font-family: var(--font-mono); font-size: 13px; color: var(--text-var);
+      display: flex; gap: 6px; margin: 3px 0; align-items: baseline;
+    }
+    .var-name { color: var(--text-active); font-weight: 600; }
+    .var-type { color: var(--text-secondary); font-size: 11px; }
+    .var-eq { color: var(--text-secondary); }
+    .var-val { color: var(--text-primary); }
+    .var-idx { color: var(--text-linenum); font-size: 11px; margin-left: 12px; }
+
+    /* Nav Bar */
+    .nav-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; margin-top: 12px;
+      border-top: 1px solid var(--sep-line);
+    }
+    .nav-buttons { display: flex; align-items: center; gap: 8px; }
+    .nav-btn {
+      font-size: 14px; color: var(--nav-active); background: none;
+      border: none; cursor: pointer; padding: 4px 10px;
+      border-radius: var(--radius); font-family: var(--font-main); font-weight: 500;
+    }
+    .nav-btn:hover { background: var(--bg-secondary); }
+    .nav-btn:disabled { color: var(--nav-disabled); cursor: not-allowed; }
+    .nav-btn:disabled:hover { background: transparent; }
+    .nav-sep { color: var(--sep-line); font-size: 12px; }
+    .step-info { font-size: 13px; color: var(--text-secondary); }
+    .step-hint { font-size: 11px; color: var(--text-linenum); margin-top: 2px; }
 
     .spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-      margin-right: 8px;
-      vertical-align: middle;
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+      margin-right: 8px; vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .timing-info {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-top: 8px;
-      text-align: right;
-    }
 
     @media (max-width: 768px) {
       .main-container { padding: 12px; }
       .code-textarea { height: 260px; }
       .args-row { flex-direction: column; align-items: stretch; }
-      .lang-tabs { flex-wrap: wrap; }
+      .viz-container { flex-direction: column; }
+      .viz-left, .viz-right { width: 100%; border-right: none; border-bottom: 1px solid var(--sep-line); }
     }
   </style>
 </head>
@@ -412,125 +296,119 @@
   </div>
 
   <div class="main-container">
-    <div class="input-section" id="inputSection">
+    <!-- EDITOR PAGE -->
+    <div class="input-section" id="editorPage">
       <div class="section-header">
         <span class="section-label" id="codeLabel">C Source Code</span>
-        <span class="args-label" id="compilerInfo">GCC 10.2.0</span>
+        <span id="compilerInfo" style="font-size:12px;color:var(--text-secondary)">GCC 13.2.0</span>
       </div>
-      <textarea class="code-textarea" id="codeTextarea" spellcheck="false">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
+      <textarea class="code-textarea" id="codeTextarea" spellcheck="false"></textarea>
 
-int main(int argc, char *argv[]) {
-    printf("Hello, World!\n");
-    printf("You passed %d argument(s):\n", argc);
-    for (int i = 0; i &lt; argc; i++) {
-        printf("  argv[%d] = \"%s\"\n", i, argv[i]);
-    }
-    return 0;
-}</textarea>
-
-      <div class="examples-row" id="examplesRow">
-        <button class="example-btn" data-example="hello">Hello World</button>
-        <button class="example-btn" data-example="fib">Fibonacci</button>
-        <button class="example-btn" data-example="args">Argv Demo</button>
-        <button class="example-btn" data-example="struct">Struct</button>
-        <button class="example-btn" data-example="malloc">Malloc</button>
-        <button class="example-btn" data-example="linkedlist">Linked List</button>
-      </div>
+      <div class="examples-row" id="examplesRow"></div>
 
       <div class="args-row">
-        <span class="args-label">argv:</span>
+        <span class="args-label">argc / argv:</span>
         <input class="args-input" id="argsInput" type="text" placeholder='./prog arg1 "arg with spaces" 42' />
       </div>
-      <div class="args-hint" id="argsHint">Space-separated arguments. Wrap multi-word args in quotes.</div>
+      <div class="args-hint">Space-separated arguments. Wrap multi-word args in quotes. These become argv[1], argv[2], ...</div>
 
       <div class="actions-row">
         <button class="viz-btn" id="vizBtn">Compile &amp; Run</button>
-        <button class="back-btn" id="backBtn" style="display:none;">&#8592; Edit Code</button>
-        <span class="warn-text" id="warnText">Execution timeout: 10s</span>
+        <span class="warn-text">Ctrl+Enter to run</span>
       </div>
     </div>
 
-    <div class="result-section" id="resultSection">
-      <div class="result-tabs" id="resultTabs">
-        <button class="result-tab active" data-panel="output">Output</button>
-        <button class="result-tab" data-panel="stderr">Stderr</button>
-        <button class="result-tab" data-panel="source">Source</button>
+    <!-- VIZ PAGE -->
+    <div class="viz-section" id="vizPage">
+      <div style="margin-bottom:12px;">
+        <button class="back-btn" id="backBtn">&#8592; Edit Code</button>
       </div>
+      <div class="viz-container">
+        <div class="viz-left">
+          <div class="section-label-sm">Source Code</div>
+          <div class="code-display" id="codeDisplay"></div>
+        </div>
+        <div class="viz-right">
+          <div class="section-label-sm">Output</div>
+          <div class="output-box" id="outputBox"></div>
 
-      <div class="result-panel active" id="panel-output">
-        <div class="output-box" id="outputBox"><span class="output-placeholder">Click "Compile &amp; Run" to see output...</span></div>
-        <div class="timing-info" id="timingInfo"></div>
+          <div class="section-label-sm" style="margin-top:14px">Variables</div>
+          <div class="vars-box" id="varsBox"></div>
+
+          <div id="timingInfo" style="font-size:11px;color:var(--text-secondary);margin-top:8px;text-align:right;"></div>
+        </div>
       </div>
-      <div class="result-panel" id="panel-stderr">
-        <div class="output-box error-output" id="stderrBox"><span class="output-placeholder">No errors.</span></div>
-      </div>
-      <div class="result-panel" id="panel-source">
-        <div class="code-display" id="codeDisplay"></div>
+      <div class="nav-bar">
+        <div class="nav-buttons">
+          <button class="nav-btn" id="btnFirst" title="First step">&#x23EE;</button>
+          <button class="nav-btn" id="btnPrev" title="Previous step">&#x25C0; Prev</button>
+          <button class="nav-btn" id="btnNext" title="Next step">Next &#x25B6;</button>
+          <button class="nav-btn" id="btnLast" title="Last step">&#x23ED;</button>
+        </div>
+        <div>
+          <div class="step-info" id="stepInfo">Step 0 of 0</div>
+          <div class="step-hint">Use browser &#8592; &#8594; arrows too</div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const EXAMPLES = {
+    const EXAMPLES_C = {
       hello: {
-        code: `#include <stdio.h>\n\nint main(void) {\n    printf("Hello, World!\\n");\n    return 0;\n}`,
-        args: "",
-        lang: "c"
+        code: '#include <stdio.h>\n\nint main(void) {\n    printf("Hello, World!\\n");\n    return 0;\n}',
+        args: ""
+      },
+      argv: {
+        code: '#include <stdio.h>\n\nint main(int argc, char *argv[]) {\n    printf("argc = %d\\n", argc);\n    for (int i = 0; i < argc; i++) {\n        printf("  argv[%d] = \\"%s\\"\\n", i, argv[i]);\n    }\n    return 0;\n}',
+        args: 'hello "world demo" 42'
       },
       fib: {
-        code: `#include <stdio.h>\n#include <stdlib.h>\n\nlong fib(int n) {\n    if (n <= 1) return n;\n    return fib(n - 1) + fib(n - 2);\n}\n\nint main(int argc, char *argv[]) {\n    int n = 10;\n    if (argc > 1) n = atoi(argv[1]);\n    printf("fib(%d) = %ld\\n", n, fib(n));\n    return 0;\n}`,
-        args: "10",
-        lang: "c"
-      },
-      args: {
-        code: `#include <stdio.h>\n\nint main(int argc, char *argv[]) {\n    printf("argc = %d\\n", argc);\n    for (int i = 0; i < argc; i++) {\n        printf("argv[%d] = \\"%s\\"\\n", i, argv[i]);\n    }\n    return 0;\n}`,
-        args: 'hello "world demo" 42',
-        lang: "c"
+        code: '#include <stdio.h>\n#include <stdlib.h>\n\nlong fib(int n) {\n    if (n <= 1) return n;\n    return fib(n - 1) + fib(n - 2);\n}\n\nint main(int argc, char *argv[]) {\n    int n = 10;\n    if (argc > 1) n = atoi(argv[1]);\n    printf("fib(%d) = %ld\\n", n, fib(n));\n    return 0;\n}',
+        args: "10"
       },
       struct: {
-        code: `#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char name[50];\n    int age;\n    float gpa;\n} Student;\n\nvoid print_student(const Student *s) {\n    printf("Name: %s, Age: %d, GPA: %.1f\\n", s->name, s->age, s->gpa);\n}\n\nint main(void) {\n    Student alice;\n    strcpy(alice.name, "Alice");\n    alice.age = 21;\n    alice.gpa = 3.9;\n    print_student(&alice);\n\n    Student bob = {"Bob", 22, 3.7};\n    print_student(&bob);\n    return 0;\n}`,
-        args: "",
-        lang: "c"
+        code: '#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char name[50];\n    int age;\n    float gpa;\n} Student;\n\nvoid print_student(const Student *s) {\n    printf("Name: %s, Age: %d, GPA: %.1f\\n", s->name, s->age, s->gpa);\n}\n\nint main(void) {\n    Student alice;\n    strcpy(alice.name, "Alice");\n    alice.age = 21;\n    alice.gpa = 3.9;\n    print_student(&alice);\n\n    Student bob = {"Bob", 22, 3.7};\n    print_student(&bob);\n    return 0;\n}',
+        args: ""
       },
       malloc: {
-        code: `#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n = 5;\n    int *arr = malloc(n * sizeof(int));\n    if (!arr) {\n        fprintf(stderr, "malloc failed\\n");\n        return 1;\n    }\n    for (int i = 0; i < n; i++) {\n        arr[i] = (i + 1) * 10;\n    }\n    for (int i = 0; i < n; i++) {\n        printf("arr[%d] = %d\\n", i, arr[i]);\n    }\n    free(arr);\n    return 0;\n}`,
-        args: "",
-        lang: "c"
+        code: '#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n = 5;\n    int *arr = malloc(n * sizeof(int));\n    if (!arr) return 1;\n    for (int i = 0; i < n; i++) arr[i] = (i + 1) * 10;\n    for (int i = 0; i < n; i++) printf("arr[%d] = %d\\n", i, arr[i]);\n    free(arr);\n    return 0;\n}',
+        args: ""
       },
       linkedlist: {
-        code: `#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct Node {\n    int data;\n    struct Node *next;\n} Node;\n\nNode *create(int data) {\n    Node *n = malloc(sizeof(Node));\n    n->data = data;\n    n->next = NULL;\n    return n;\n}\n\nvoid push(Node **head, int data) {\n    Node *n = create(data);\n    n->next = *head;\n    *head = n;\n}\n\nvoid print_list(Node *head) {\n    while (head) {\n        printf("%d -> ", head->data);\n        head = head->next;\n    }\n    printf("NULL\\n");\n}\n\nvoid free_list(Node *head) {\n    while (head) {\n        Node *tmp = head;\n        head = head->next;\n        free(tmp);\n    }\n}\n\nint main(void) {\n    Node *list = NULL;\n    push(&list, 30);\n    push(&list, 20);\n    push(&list, 10);\n    print_list(list);\n    free_list(list);\n    return 0;\n}`,
-        args: "",
-        lang: "c"
+        code: '#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct Node { int data; struct Node *next; } Node;\n\nvoid push(Node **h, int d) {\n    Node *n = malloc(sizeof(Node));\n    n->data = d; n->next = *h; *h = n;\n}\n\nvoid print_list(Node *h) {\n    while (h) { printf("%d -> ", h->data); h = h->next; }\n    printf("NULL\\n");\n}\n\nvoid free_list(Node *h) {\n    while (h) { Node *t = h; h = h->next; free(t); }\n}\n\nint main(void) {\n    Node *list = NULL;\n    push(&list, 30);\n    push(&list, 20);\n    push(&list, 10);\n    print_list(list);\n    free_list(list);\n    return 0;\n}',
+        args: ""
       }
     };
 
-    const CPP_EXAMPLES = {
+    const EXAMPLES_CPP = {
       hello: {
-        code: `#include <iostream>\n#include <string>\n\nint main(int argc, char *argv[]) {\n    std::cout << "Hello, C++ World!" << std::endl;\n    std::cout << "Arguments: " << argc << std::endl;\n    for (int i = 0; i < argc; i++) {\n        std::cout << "  argv[" << i << "] = \\"" << argv[i] << "\\"" << std::endl;\n    }\n    return 0;\n}`,
-        args: "foo bar",
+        code: '#include <iostream>\n\nint main(int argc, char *argv[]) {\n    std::cout << "Hello, C++ World!" << std::endl;\n    std::cout << "argc = " << argc << std::endl;\n    for (int i = 0; i < argc; i++)\n        std::cout << "  argv[" << i << "] = \\"" << argv[i] << "\\"" << std::endl;\n    return 0;\n}',
+        args: "foo bar"
       },
       vector: {
-        code: `#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::vector<int> nums = {5, 2, 8, 1, 9, 3};\n\n    std::cout << "Before sort: ";\n    for (int n : nums) std::cout << n << " ";\n    std::cout << std::endl;\n\n    std::sort(nums.begin(), nums.end());\n\n    std::cout << "After sort:  ";\n    for (int n : nums) std::cout << n << " ";\n    std::cout << std::endl;\n\n    std::cout << "Sum: ";\n    int sum = 0;\n    for (int n : nums) sum += n;\n    std::cout << sum << std::endl;\n\n    return 0;\n}`,
-        args: "",
+        code: '#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::vector<int> nums = {5, 2, 8, 1, 9, 3};\n    std::cout << "Before: "; for (int n : nums) std::cout << n << " "; std::cout << "\\n";\n    std::sort(nums.begin(), nums.end());\n    std::cout << "After:  "; for (int n : nums) std::cout << n << " "; std::cout << "\\n";\n    int sum = 0; for (int n : nums) sum += n;\n    std::cout << "Sum: " << sum << std::endl;\n    return 0;\n}',
+        args: ""
       },
       class: {
-        code: `#include <iostream>\n#include <string>\n\nclass Dog {\npublic:\n    Dog(const std::string &name, int age) : name_(name), age_(age) {}\n    void bark() const {\n        std::cout << name_ << " says: Woof! (age " << age_ << ")" << std::endl;\n    }\nprivate:\n    std::string name_;\n    int age_;\n};\n\nint main() {\n    Dog d1("Rex", 5);\n    Dog d2("Buddy", 3);\n    d1.bark();\n    d2.bark();\n    return 0;\n}`,
-        args: "",
+        code: '#include <iostream>\n#include <string>\n\nclass Dog {\npublic:\n    Dog(const std::string &n, int a) : name_(n), age_(a) {}\n    void bark() const {\n        std::cout << name_ << " says: Woof! (age " << age_ << ")" << std::endl;\n    }\nprivate:\n    std::string name_; int age_;\n};\n\nint main() {\n    Dog d1("Rex", 5), d2("Buddy", 3);\n    d1.bark();\n    d2.bark();\n    return 0;\n}',
+        args: ""
       }
     };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
 
     let currentLang = "c";
     let currentTheme = localStorage.getItem("theme") || "light";
-
-    const $ = (sel) => document.querySelector(sel);
-    const $$ = (sel) => document.querySelectorAll(sel);
+    let vizState = null;
+    let currentStep = 0;
+    let steps = [];
 
     function applyTheme() {
       document.body.setAttribute("data-theme", currentTheme);
       $("#themeToggle").innerHTML = currentTheme === "dark" ? "&#127769;" : "&#9728;";
     }
-
     $("#themeToggle").addEventListener("click", () => {
       currentTheme = currentTheme === "light" ? "dark" : "light";
       localStorage.setItem("theme", currentTheme);
@@ -543,57 +421,39 @@ int main(int argc, char *argv[]) {
         tab.classList.add("active");
         currentLang = tab.dataset.lang;
         updateLangUI();
-        loadExample("hello");
+        loadFirstExample();
       });
     });
 
     function updateLangUI() {
       const isCpp = currentLang === "cpp";
       $("#codeLabel").textContent = isCpp ? "C++ Source Code" : "C Source Code";
-      $("#compilerInfo").textContent = isCpp ? "G++ 10.2.0" : "GCC 10.2.0";
-      if (isCpp) {
-        loadCppExamples();
-      } else {
-        loadCExamples();
-      }
+      $("#compilerInfo").textContent = isCpp ? "G++ 13.2.0" : "GCC 13.2.0";
+      buildExampleButtons();
     }
 
-    function loadCExamples() {
+    function buildExampleButtons() {
+      const exs = currentLang === "cpp" ? EXAMPLES_CPP : EXAMPLES_C;
       const row = $("#examplesRow");
       row.innerHTML = "";
-      Object.keys(EXAMPLES).forEach(key => {
+      Object.keys(exs).forEach(key => {
         const btn = document.createElement("button");
         btn.className = "example-btn";
-        btn.dataset.example = key;
-        btn.textContent = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1");
+        btn.textContent = key.charAt(0).toUpperCase() + key.slice(1);
         btn.addEventListener("click", () => loadExample(key));
         row.appendChild(btn);
       });
     }
 
-    function loadCppExamples() {
-      const row = $("#examplesRow");
-      row.innerHTML = "";
-      const labels = { hello: "Hello World", vector: "Vector & Sort", class: "Class" };
-      Object.keys(CPP_EXAMPLES).forEach(key => {
-        const btn = document.createElement("button");
-        btn.className = "example-btn";
-        btn.dataset.example = key;
-        btn.textContent = labels[key] || key;
-        btn.addEventListener("click", () => loadCppExample(key));
-        row.appendChild(btn);
-      });
+    function loadFirstExample() {
+      const exs = currentLang === "cpp" ? EXAMPLES_CPP : EXAMPLES_C;
+      const first = Object.keys(exs)[0];
+      if (first) loadExample(first);
     }
 
     function loadExample(key) {
-      const ex = EXAMPLES[key];
-      if (!ex) return;
-      $("#codeTextarea").value = ex.code;
-      $("#argsInput").value = ex.args || "";
-    }
-
-    function loadCppExample(key) {
-      const ex = CPP_EXAMPLES[key];
+      const exs = currentLang === "cpp" ? EXAMPLES_CPP : EXAMPLES_C;
+      const ex = exs[key];
       if (!ex) return;
       $("#codeTextarea").value = ex.code;
       $("#argsInput").value = ex.args || "";
@@ -602,30 +462,14 @@ int main(int argc, char *argv[]) {
     function parseArgs(str) {
       if (!str.trim()) return [];
       const args = [];
-      let current = "";
-      let inQuote = false;
-      let quoteChar = "";
-      for (let i = 0; i < str.length; i++) {
-        const ch = str[i];
-        if (inQuote) {
-          if (ch === quoteChar) {
-            inQuote = false;
-          } else {
-            current += ch;
-          }
-        } else if (ch === '"' || ch === "'") {
-          inQuote = true;
-          quoteChar = ch;
-        } else if (ch === " ") {
-          if (current) {
-            args.push(current);
-            current = "";
-          }
-        } else {
-          current += ch;
-        }
+      let cur = "", inQ = false, qc = "";
+      for (const ch of str) {
+        if (inQ) { if (ch === qc) inQ = false; else cur += ch; }
+        else if (ch === '"' || ch === "'") { inQ = true; qc = ch; }
+        else if (ch === " ") { if (cur) { args.push(cur); cur = ""; } }
+        else cur += ch;
       }
-      if (current) args.push(current);
+      if (cur) args.push(cur);
       return args;
     }
 
@@ -635,30 +479,124 @@ int main(int argc, char *argv[]) {
       return d.innerHTML;
     }
 
-    function renderSourceDisplay(code) {
+    function parseArgvFromOutput(stdout, argcVal) {
+      const vars = [];
+      vars.push({ type: "int", name: "argc", value: String(argcVal) });
+      const argvVals = [];
+      const re = /\s*argv\[(\d+)\]\s*=\s*"(.*)"/g;
+      let m;
+      while ((m = re.exec(stdout)) !== null) {
+        argvVals[parseInt(m[1])] = m[2];
+      }
+      if (argvVals.length > 0) {
+        vars.push({ type: "char*[]", name: "argv", value: null, children: argvVals });
+      }
+      return vars;
+    }
+
+    function renderVars(vars) {
+      const box = $("#varsBox");
+      box.innerHTML = "";
+      if (vars.length === 0) {
+        box.innerHTML = '<span style="color:var(--text-secondary);font-size:12px">No variables to display</span>';
+        return;
+      }
+      vars.forEach(v => {
+        const row = document.createElement("div");
+        row.className = "var-row";
+        if (v.children) {
+          row.innerHTML = `<span class="var-type">${escapeHtml(v.type)}</span> <span class="var-name">${escapeHtml(v.name)}</span> <span class="var-eq">=</span> <span class="var-val">{</span>`;
+          box.appendChild(row);
+          v.children.forEach((val, i) => {
+            const child = document.createElement("div");
+            child.className = "var-row";
+            child.innerHTML = `<span class="var-idx">[${i}]</span> <span class="var-type">char*</span> <span class="var-eq">=</span> <span class="var-val">"${escapeHtml(val)}"</span>`;
+            box.appendChild(child);
+          });
+          const close = document.createElement("div");
+          close.className = "var-row";
+          close.innerHTML = `<span class="var-val">}</span>`;
+          box.appendChild(close);
+        } else {
+          row.innerHTML = `<span class="var-type">${escapeHtml(v.type)}</span> <span class="var-name">${escapeHtml(v.name)}</span> <span class="var-eq">=</span> <span class="var-val">${escapeHtml(v.value)}</span>`;
+          box.appendChild(row);
+        }
+      });
+    }
+
+    function renderSourceWithHighlight(code, highlightLine) {
       const container = $("#codeDisplay");
       container.innerHTML = "";
       const lines = code.split("\n");
       lines.forEach((line, idx) => {
         const div = document.createElement("div");
         div.className = "code-line";
+        if (idx === highlightLine) div.classList.add("line-current");
+        if (idx < highlightLine) div.classList.add("line-executed");
         div.innerHTML = `<span class="line-num">${idx + 1}</span><span class="line-content">${escapeHtml(line) || " "}</span>`;
         container.appendChild(div);
       });
     }
 
+    function findLineForOutputLine(outputLines, stepIdx, sourceCode) {
+      const srcLines = sourceCode.split("\n");
+      const printfLines = [];
+      srcLines.forEach((l, i) => {
+        const t = l.trim();
+        if (t.includes("printf") || t.includes("cout") || t.includes("fprintf") || t.includes("puts(")) {
+          printfLines.push(i);
+        }
+      });
+      if (printfLines.length === 0) return null;
+      return printfLines[stepIdx % printfLines.length] ?? null;
+    }
+
+    function goToStep(n, pushHistory) {
+      if (n < 0 || n >= steps.length) return;
+      currentStep = n;
+      const step = steps[n];
+
+      renderSourceWithHighlight(vizState.code, step.srcLine);
+      $("#outputBox").textContent = step.outputSoFar || "(no output yet)";
+      if (step.isError) {
+        $("#outputBox").className = "output-box error-output";
+      } else {
+        $("#outputBox").className = "output-box success-output";
+      }
+      renderVars(vizState.vars);
+      updateNavButtons();
+      updateStepInfo();
+
+      if (pushHistory) {
+        history.pushState({ step: n }, "", "?step=" + n);
+      }
+    }
+
+    function updateNavButtons() {
+      $("#btnFirst").disabled = currentStep === 0;
+      $("#btnPrev").disabled = currentStep === 0;
+      $("#btnNext").disabled = currentStep === steps.length - 1;
+      $("#btnLast").disabled = currentStep === steps.length - 1;
+    }
+
+    function updateStepInfo() {
+      const total = steps.length;
+      if (total <= 1) {
+        $("#stepInfo").textContent = `Done (${total} step)`;
+      } else {
+        $("#stepInfo").textContent = `Step ${currentStep + 1} of ${total}`;
+      }
+    }
+
     async function compileAndRun() {
       const code = $("#codeTextarea").value.trim();
       if (!code) return;
-
-      const argsStr = $("#argsInput").value;
-      const args = parseArgs(argsStr);
+      const args = parseArgs($("#argsInput").value);
 
       const btn = $("#vizBtn");
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>Compiling...';
-
-      const startTime = performance.now();
+      const t0 = performance.now();
 
       try {
         const res = await fetch("/api/compile", {
@@ -667,114 +605,132 @@ int main(int argc, char *argv[]) {
           body: JSON.stringify({ code, lang: currentLang, args }),
         });
         const data = await res.json();
-        const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+        const elapsed = ((performance.now() - t0) / 1000).toFixed(2);
 
-        $("#inputSection").style.display = "none";
-        $("#backBtn").style.display = "inline";
-        $("#resultSection").style.display = "block";
+        const hasCompileErr = !!(data.compile_error && data.compile_error.trim());
+        const stdout = data.stdout || "";
+        const stderr = data.stderr || "";
+        const outLines = stdout.split("\n").filter(l => l.length > 0);
 
-        renderSourceDisplay(code);
+        let argcVal = args.length + 1;
+        const argcMatch = stdout.match(/^argc\s*=\s*(\d+)/m);
+        if (argcMatch) argcVal = parseInt(argcMatch[1]);
 
-        const hasCompileError = data.compile_error && data.compile_error.trim();
-        const hasRuntimeError = data.stderr && data.stderr.trim();
-        const hasOutput = data.stdout && data.stdout.trim();
+        const vars = parseArgvFromOutput(stdout, argcVal);
 
-        if (hasCompileError) {
-          $("#outputBox").className = "output-box error-output";
-          $("#outputBox").textContent = data.compile_error;
-          activateTab("output");
-        } else if (hasOutput) {
-          $("#outputBox").className = "output-box success-output";
-          $("#outputBox").textContent = data.stdout;
-          activateTab("output");
+        vizState = {
+          code,
+          stdout,
+          stderr,
+          compile_error: data.compile_error || "",
+          compile_output: data.compile_output || "",
+          exitCode: data.code,
+          signal: data.signal,
+          elapsed,
+          vars,
+          argcVal,
+          argv: args,
+        };
+
+        steps = [];
+        if (hasCompileErr) {
+          steps.push({
+            outputSoFar: data.compile_error.trim(),
+            srcLine: null,
+            isError: true,
+            label: "Compile Error",
+          });
         } else {
-          $("#outputBox").className = "output-box";
-          $("#outputBox").textContent = "(no output)";
-          activateTab("output");
+          steps.push({
+            outputSoFar: "",
+            srcLine: findLineForOutputLine(outLines, 0, code),
+            isError: false,
+            label: "Start",
+          });
+          for (let i = 0; i < outLines.length; i++) {
+            const soFar = outLines.slice(0, i + 1).join("\n");
+            steps.push({
+              outputSoFar: soFar,
+              srcLine: findLineForOutputLine(outLines, i, code),
+              isError: false,
+              label: outLines[i],
+            });
+          }
+          if (data.signal) {
+            steps.push({
+              outputSoFar: stdout + "\n\n*** " + data.signal + " ***",
+              srcLine: null,
+              isError: true,
+              label: "Signal: " + data.signal,
+            });
+          }
+          if (steps.length === 1) {
+            steps.push({
+              outputSoFar: "(no output)",
+              srcLine: null,
+              isError: false,
+              label: "Done",
+            });
+          }
         }
 
-        if (hasRuntimeError) {
-          $("#stderrBox").className = "output-box error-output";
-          $("#stderrBox").textContent = data.stderr;
-          addTabBadge("stderr", true);
-        } else {
-          $("#stderrBox").className = "output-box";
-          $("#stderrBox").textContent = data.stderr || "(no errors)";
-          removeTabBadge("stderr");
-        }
+        $("#editorPage").style.display = "none";
+        $("#vizPage").style.display = "block";
+        $("#timingInfo").textContent = hasCompileErr
+          ? `Compilation failed | ${elapsed}s`
+          : `Exit code: ${data.code ?? "?"} | ${elapsed}s`;
 
-        if (hasCompileError) {
-          addTabBadge("output", true);
-        } else {
-          removeTabBadge("output");
-        }
+        currentStep = 0;
+        history.pushState({ step: 0 }, "", "?step=0");
+        goToStep(0, false);
 
-        if (data.signal) {
-          $("#timingInfo").textContent = `Signal: ${data.signal} | Time: ${elapsed}s`;
-        } else {
-          $("#timingInfo").textContent = `Exit code: ${data.code ?? "?"} | Time: ${elapsed}s`;
-        }
       } catch (err) {
-        $("#outputBox").className = "output-box error-output";
-        $("#outputBox").textContent = "Network error: " + err.message;
-        activateTab("output");
+        steps = [{
+          outputSoFar: "Network error: " + err.message,
+          srcLine: null, isError: true, label: "Error"
+        }];
+        vizState = { code, vars: [] };
+        $("#editorPage").style.display = "none";
+        $("#vizPage").style.display = "block";
+        goToStep(0, false);
       } finally {
         btn.disabled = false;
         btn.innerHTML = "Compile &amp; Run";
       }
     }
 
-    function activateTab(name) {
-      $$(".result-tab").forEach(t => t.classList.remove("active"));
-      $$(".result-panel").forEach(p => p.classList.remove("active"));
-      const tab = $(`.result-tab[data-panel="${name}"]`);
-      const panel = $(`#panel-${name}`);
-      if (tab) tab.classList.add("active");
-      if (panel) panel.classList.add("active");
+    function showEditor() {
+      history.pushState(null, "", "/");
+      $("#editorPage").style.display = "block";
+      $("#vizPage").style.display = "none";
+      vizState = null;
+      steps = [];
+      currentStep = 0;
     }
-
-    function addTabBadge(name, isError) {
-      const tab = $(`.result-tab[data-panel="${name}"]`);
-      if (!tab) return;
-      let badge = tab.querySelector(".badge");
-      if (!badge) {
-        badge = document.createElement("span");
-        badge.className = "badge";
-        tab.appendChild(badge);
-      }
-      badge.className = "badge " + (isError ? "badge-error" : "badge-success");
-      badge.textContent = "!";
-    }
-
-    function removeTabBadge(name) {
-      const tab = $(`.result-tab[data-panel="${name}"]`);
-      if (!tab) return;
-      const badge = tab.querySelector(".badge");
-      if (badge) badge.remove();
-    }
-
-    $$(".result-tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        activateTab(tab.dataset.panel);
-      });
-    });
 
     $("#vizBtn").addEventListener("click", compileAndRun);
+    $("#backBtn").addEventListener("click", showEditor);
 
-    $("#backBtn").addEventListener("click", () => {
-      $("#inputSection").style.display = "block";
-      $("#backBtn").style.display = "none";
-      $("#resultSection").style.display = "none";
+    $("#btnFirst").addEventListener("click", () => { goToStep(0, true); });
+    $("#btnPrev").addEventListener("click", () => { goToStep(currentStep - 1, true); });
+    $("#btnNext").addEventListener("click", () => { goToStep(currentStep + 1, true); });
+    $("#btnLast").addEventListener("click", () => { goToStep(steps.length - 1, true); });
+
+    window.addEventListener("popstate", (e) => {
+      if (!vizState) return;
+      if (e.state && typeof e.state.step === "number") {
+        goToStep(e.state.step, false);
+      } else if (!location.search) {
+        showEditor();
+      }
     });
 
     $("#codeTextarea").addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
-        const ta = e.target;
-        const start = ta.selectionStart;
-        const end = ta.selectionEnd;
-        ta.value = ta.value.substring(0, start) + "    " + ta.value.substring(end);
-        ta.selectionStart = ta.selectionEnd = start + 4;
+        const ta = e.target, s = ta.selectionStart, end = ta.selectionEnd;
+        ta.value = ta.value.substring(0, s) + "    " + ta.value.substring(end);
+        ta.selectionStart = ta.selectionEnd = s + 4;
       }
     });
 
@@ -783,11 +739,17 @@ int main(int argc, char *argv[]) {
         e.preventDefault();
         compileAndRun();
       }
+      if (vizState) {
+        if (e.key === "ArrowRight") { e.preventDefault(); goToStep(currentStep + 1, true); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); goToStep(currentStep - 1, true); }
+      }
     });
 
-    applyTheme();
-    updateLangUI();
-    loadExample("hello");
+    window.addEventListener("load", () => {
+      applyTheme();
+      updateLangUI();
+      loadFirstExample();
+    });
   </script>
 </body>
 </html>
