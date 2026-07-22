@@ -263,10 +263,10 @@ button{padding:6px 16px;border:none;border-radius:var(--radius-sm);font-size:12p
 <div class="modal-overlay" id="argv-modal" style="display:none">
   <div class="modal">
     <h3>Program Arguments (argv)</h3>
-    <p>Your code uses <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argc</code> / <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argv</code>. Enter the arguments your program should receive. Each row becomes one <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argv[i]</code>.</p>
+    <p>Your code uses <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argc</code> / <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argv</code>. Enter the arguments below. The program name (argv[0]) is added automatically.</p>
     <div class="modal-argv-list" id="modal-argv-list"></div>
     <button class="modal-add" onclick="addArgvRow()">+ Add argument</button>
-    <div class="modal-note">argv[0] is typically the program name (e.g. "./prog")</div>
+    <div class="modal-note">argv[0] (program name) is set automatically by the system. Your first input becomes argv[1].</div>
     <div class="modal-buttons">
       <button class="btn-step btn-cancel" onclick="closeArgvModal()">Cancel</button>
       <button class="btn-run" onclick="submitArgvModal()">&#9654; Run</button>
@@ -311,12 +311,12 @@ function openArgvModal() {
   const modal = $('argv-modal');
   const list = $('modal-argv-list');
   list.innerHTML = '';
-  addArgvRow('./prog');
+  addArgvRow();
   addArgvRow();
   modal.style.display = 'flex';
   setTimeout(() => {
     const inputs = list.querySelectorAll('input');
-    inputs[1].focus();
+    inputs[0].focus();
   }, 100);
 }
 
