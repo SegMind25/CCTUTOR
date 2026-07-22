@@ -88,6 +88,7 @@ button{padding:6px 16px;border:none;border-radius:4px;font-size:13px;font-weight
   <header>
     <h1>C/C++ Tutor</h1>
     <span class="subtitle">Step-by-step execution visualizer with argc/argv support</span>
+    <input type="text" id="api-url" placeholder="Backend URL (e.g. https://xyz.trycloudflare.com)" style="margin-left:auto;padding:4px 8px;border-radius:4px;border:none;font-size:11px;width:340px" title="Leave empty if backend is same origin">
   </header>
 
   <div class="top-bar">
@@ -144,12 +145,20 @@ button{padding:6px 16px;border:none;border-radius:4px;font-size:13px;font-weight
 </div>
 
 <script>
+window.CCTUTOR_API = window.CCTUTOR_API || '';
 let traceData = null;
 let currentStep = -1;
 let prevVars = {};
 let editMode = true;
 
 const $ = id => document.getElementById(id);
+
+function getApiBase() {
+  const input = $('api-url');
+  const val = input ? input.value.trim() : '';
+  if (val) { window.CCTUTOR_API = val.replace(/\/+$/, ''); }
+  return window.CCTUTOR_API;
+}
 
 function parseArgs(raw) {
   if (!raw.trim()) return [];
@@ -194,7 +203,8 @@ async function runCode() {
   $('code-container').innerHTML = '<div class="no-data">Compiling and tracing...</div>';
 
   try {
-    const resp = await fetch('/api/trace', {
+    const API_BASE = getApiBase();
+    const resp = await fetch(API_BASE + '/api/trace', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code, lang, args }),
