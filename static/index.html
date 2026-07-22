@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C/C++ Tutor</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f5f5f5;--panel:#fff;--border:#ddd;--accent:#4a90d9;--accent-hover:#357abd;
+--highlight:#fffde7;--changed:#e8f5e9;--error:#fce4ec;--error-text:#c62828;
+--dim:#888;--text:#222;--mono:'Consolas','Monaco','Courier New',monospace;
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+--shadow:0 1px 3px rgba(0,0,0,0.1)}
+html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--text)}
+#app{display:flex;flex-direction:column;height:100vh}
+
+header{background:#1a237e;color:#fff;padding:10px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+header h1{font-size:18px;font-weight:600;letter-spacing:0.5px}
+header .subtitle{font-size:12px;opacity:0.7}
+
+.top-bar{background:var(--panel);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;gap:10px;align-items:center;flex-shrink:0;flex-wrap:wrap}
+.top-bar label{font-size:13px;font-weight:600}
+.top-bar input[type=text]{flex:1;min-width:200px;padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-family:var(--mono);font-size:13px}
+select{padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px}
+button{padding:6px 16px;border:none;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.15s}
+.btn-run{background:var(--accent);color:#fff}
+.btn-run:hover{background:var(--accent-hover)}
+.btn-run:disabled{opacity:0.5;cursor:not-allowed}
+.btn-step{background:#e0e0e0;color:var(--text)}
+.btn-step:hover{background:#ccc}
+.btn-step:disabled{opacity:0.4;cursor:not-allowed}
+
+.error-bar{background:var(--error);border-bottom:1px solid #ef9a9a;padding:10px 20px;color:var(--error-text);font-family:var(--mono);font-size:13px;white-space:pre-wrap;max-height:120px;overflow-y:auto;flex-shrink:0;display:none}
+
+.main-area{display:flex;flex:1;overflow:hidden}
+
+.left-panel{width:50%;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
+.right-panel{width:50%;display:flex;flex-direction:column;overflow:hidden}
+
+.panel-header{background:#e8eaf6;padding:8px 14px;font-size:13px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0;text-transform:uppercase;letter-spacing:0.5px;color:#3949ab;display:flex;align-items:center;gap:8px}
+.panel-header .badge{font-size:11px;font-weight:400;background:#c5cae9;color:#283593;padding:1px 6px;border-radius:8px;text-transform:none}
+
+.code-editor{flex:1;width:100%;border:none;outline:none;resize:none;padding:10px 14px;font-family:var(--mono);font-size:13px;line-height:1.6;background:var(--panel);color:var(--text)}
+.code-editor:focus{outline:none}
+
+.code-container{flex:1;overflow-y:auto;font-family:var(--mono);font-size:13px;line-height:1.6}
+.code-line{display:flex;padding:0 14px;min-height:22px}
+.code-line.active{background:var(--highlight);border-left:3px solid var(--accent);padding-left:11px}
+.code-line:not(.active){border-left:3px solid transparent;padding-left:11px}
+.line-num{color:var(--dim);min-width:36px;text-align:right;margin-right:12px;user-select:none;flex-shrink:0}
+.line-text{white-space:pre}
+
+.right-section{flex:1;overflow-y:auto;border-bottom:1px solid var(--border);min-height:0}
+.right-section:last-child{border-bottom:none}
+
+.frame-card{border-bottom:1px solid #e0e0e0;padding:10px 14px}
+.frame-card:last-child{border-bottom:none}
+.frame-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.frame-level{background:#e8eaf6;color:#3949ab;font-size:11px;font-weight:700;padding:2px 6px;border-radius:3px}
+.frame-func{font-family:var(--mono);font-size:13px;font-weight:600}
+.frame-line{color:var(--dim);font-size:12px;margin-left:auto}
+
+.var-table{width:100%;font-size:12px;border-collapse:collapse}
+.var-table td{padding:2px 6px;font-family:var(--mono);border-top:1px solid #f0f0f0}
+.var-table tr.changed{background:var(--changed)}
+.var-name{color:#1565c0;font-weight:600}
+.var-type{color:var(--dim)}
+.var-value{color:#2e7d32}
+
+.argv-panel{padding:10px 14px;font-size:12px;background:#f3e5f5}
+.argv-panel .argv-title{font-weight:700;margin-bottom:4px;color:#6a1b9a;font-size:13px}
+.argv-item{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid #ce93d8;border-radius:4px;padding:2px 8px;margin:2px;font-family:var(--mono);font-size:12px}
+.argv-idx{color:#6a1b9a;font-weight:700}
+.argv-val{color:#2e7d32}
+
+.console-panel{padding:10px 14px;font-family:var(--mono);font-size:13px;min-height:60px;background:#263238;color:#eeffff;white-space:pre-wrap;word-break:break-all;line-height:1.5}
+
+.controls{background:var(--panel);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.controls .step-info{font-size:13px;color:var(--dim);margin-left:auto}
+.slider-wrap{display:flex;align-items:center;gap:8px;flex:1;min-width:200px}
+.slider-wrap input[type=range]{flex:1;accent-color:var(--accent)}
+
+.no-data{padding:30px;text-align:center;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>C/C++ Tutor</h1>
+    <span class="subtitle">Step-by-step execution visualizer with argc/argv support</span>
+  </header>
+
+  <div class="top-bar">
+    <label for="args-input">argv:</label>
+    <input type="text" id="args-input" placeholder='e.g. hello world  (comma or space separated)'>
+    <label for="lang-select">Lang:</label>
+    <select id="lang-select">
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+    </select>
+    <button class="btn-run" id="btn-run" onclick="runCode()">Run</button>
+  </div>
+
+  <div class="error-bar" id="error-bar"></div>
+
+  <div class="main-area">
+    <div class="left-panel">
+      <div class="panel-header" id="code-header">
+        Source Code
+        <button class="btn-step" id="btn-edit-toggle" onclick="toggleEdit()" style="margin-left:auto;font-size:11px;padding:3px 10px">Edit</button>
+      </div>
+      <textarea class="code-editor" id="code-editor" spellcheck="false" placeholder="Enter your C/C++ code here...">int main(int argc, char *argv[]) {
+    int i;
+    for (i = 0; i < argc; i++) {
+        write(1, argv[i], 1);
+        write(1, " ", 1);
+    }
+    write(1, "\n", 1);
+    return 0;
+}</textarea>
+      <div class="code-container" id="code-container" style="display:none"></div>
+    </div>
+    <div class="right-panel">
+      <div class="panel-header">Call Stack &amp; Variables</div>
+      <div class="argv-panel" id="argv-panel" style="display:none"></div>
+      <div class="right-section" id="frames-container">
+        <div class="no-data">Run a program to see the call stack</div>
+      </div>
+      <div class="panel-header">Console Output</div>
+      <div class="console-panel" id="console-panel"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-step" id="btn-first" onclick="goFirst()" disabled>&#x23EE;</button>
+    <button class="btn-step" id="btn-prev" onclick="goPrev()" disabled>&#x25C0; Prev</button>
+    <div class="slider-wrap">
+      <input type="range" id="step-slider" min="0" max="0" value="0" oninput="goToStep(+this.value)" disabled>
+    </div>
+    <button class="btn-step" id="btn-next" onclick="goNext()" disabled>Next &#x25B6;</button>
+    <button class="btn-step" id="btn-last" onclick="goLast()" disabled>&#x23ED;</button>
+    <div class="step-info" id="step-info"></div>
+  </div>
+</div>
+
+<script>
+let traceData = null;
+let currentStep = -1;
+let prevVars = {};
+let editMode = true;
+
+const $ = id => document.getElementById(id);
+
+function parseArgs(raw) {
+  if (!raw.trim()) return [];
+  if (raw.includes(',')) return raw.split(',').map(s => s.trim()).filter(Boolean);
+  return raw.trim().split(/\s+/).filter(Boolean);
+}
+
+function toggleEdit() {
+  editMode = !editMode;
+  if (editMode) {
+    $('code-editor').style.display = '';
+    $('code-container').style.display = 'none';
+    $('btn-edit-toggle').textContent = 'Edit';
+  } else {
+    $('code-editor').style.display = 'none';
+    $('code-container').style.display = '';
+    $('btn-edit-toggle').textContent = 'Edit';
+    if (traceData) renderCode();
+  }
+}
+
+async function runCode() {
+  const code = $('code-editor').value;
+  if (!code.trim()) {
+    showError('Please enter some C/C++ code first.');
+    return;
+  }
+
+  const lang = $('lang-select').value;
+  const args = parseArgs($('args-input').value);
+
+  hideError();
+  setLoading(true);
+  currentStep = -1;
+  prevVars = {};
+  traceData = null;
+
+  // Switch to trace view
+  editMode = false;
+  $('code-editor').style.display = 'none';
+  $('code-container').style.display = '';
+  $('code-container').innerHTML = '<div class="no-data">Compiling and tracing...</div>';
+
+  try {
+    const resp = await fetch('/api/trace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, lang, args }),
+    });
+    const data = await resp.json();
+
+    if (!data.success) {
+      showError(data.error || 'Unknown error');
+      setLoading(false);
+      // Switch back to edit
+      editMode = true;
+      $('code-editor').style.display = '';
+      $('code-container').style.display = 'none';
+      return;
+    }
+
+    traceData = data;
+    renderCode();
+    renderArgv();
+    updateControls();
+    goToStep(0);
+  } catch (e) {
+    showError('Network error: ' + e.message);
+    editMode = true;
+    $('code-editor').style.display = '';
+    $('code-container').style.display = 'none';
+  } finally {
+    setLoading(false);
+  }
+}
+
+function showError(msg) {
+  $('error-bar').style.display = 'block';
+  $('error-bar').textContent = msg;
+}
+function hideError() {
+  $('error-bar').style.display = 'none';
+}
+
+function setLoading(on) {
+  $('btn-run').disabled = on;
+  $('btn-run').textContent = on ? 'Running...' : 'Run';
+}
+
+function renderCode() {
+  const container = $('code-container');
+  if (!traceData || !traceData.source_lines) {
+    container.innerHTML = '<div class="no-data">No source</div>';
+    return;
+  }
+
+  const lines = traceData.source_lines;
+  const activeLine = currentStep >= 0 && traceData.steps[currentStep]
+    ? traceData.steps[currentStep].line : 0;
+
+  let html = '';
+  for (let i = 0; i < lines.length; i++) {
+    const lineNum = i + 1;
+    const active = lineNum === activeLine ? ' active' : '';
+    html += `<div class="code-line${active}" id="codeline-${lineNum}">`
+      + `<span class="line-num">${lineNum}</span>`
+      + `<span class="line-text">${escHtml(lines[i])}</span></div>`;
+  }
+  container.innerHTML = html;
+
+  if (activeLine > 0) {
+    const el = $('codeline-' + activeLine);
+    if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+}
+
+function renderArgv() {
+  const panel = $('argv-panel');
+  if (!traceData || !traceData.argv || traceData.argv.length === 0) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = 'block';
+  let html = '<div class="argv-title">argc = ' + traceData.argv.length + '</div>';
+  traceData.argv.forEach((v, i) => {
+    html += `<span class="argv-item"><span class="argv-idx">argv[${i}]</span> <span class="argv-val">"${escHtml(v)}"</span></span>`;
+  });
+  panel.innerHTML = html;
+}
+
+function renderFrames() {
+  const container = $('frames-container');
+  if (!traceData || currentStep < 0 || currentStep >= traceData.steps.length) {
+    container.innerHTML = '<div class="no-data">Run a program to see the call stack</div>';
+    return;
+  }
+
+  const step = traceData.steps[currentStep];
+  if (!step.frames || step.frames.length === 0) {
+    container.innerHTML = '<div class="no-data">' + (step.finished ? 'Program finished' : 'No stack frames') + '</div>';
+    return;
+  }
+
+  let html = '';
+  const frames = [...step.frames].reverse();
+  for (const frame of frames) {
+    html += `<div class="frame-card">`;
+    html += `<div class="frame-header">`;
+    html += `<span class="frame-level">Frame ${frame.level}</span>`;
+    html += `<span class="frame-func">${escHtml(frame.func)}</span>`;
+    html += `<span class="frame-line">line ${frame.line || '?'}</span>`;
+    html += `</div>`;
+
+    if (frame.vars && frame.vars.length > 0) {
+      html += `<table class="var-table">`;
+      for (const v of frame.vars) {
+        const key = `${frame.level}:${v.name}`;
+        const changed = prevVars[key] !== undefined && prevVars[key] !== v.value;
+        html += `<tr class="${changed ? 'changed' : ''}">`;
+        html += `<td class="var-name">${escHtml(v.name)}</td>`;
+        html += `<td class="var-type">${escHtml(v.type)}</td>`;
+        html += `<td class="var-value">${escHtml(v.value)}</td>`;
+        html += `</tr>`;
+      }
+      html += `</table>`;
+    }
+    html += `</div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderConsole() {
+  const panel = $('console-panel');
+  if (!traceData || currentStep < 0 || currentStep >= traceData.steps.length) {
+    panel.textContent = '';
+    return;
+  }
+  const step = traceData.steps[currentStep];
+  panel.textContent = step.output_so_far || '';
+}
+
+function updateControls() {
+  const total = traceData ? traceData.steps.length : 0;
+  $('btn-first').disabled = total === 0 || currentStep <= 0;
+  $('btn-prev').disabled = total === 0 || currentStep <= 0;
+  $('btn-next').disabled = total === 0 || currentStep >= total - 1;
+  $('btn-last').disabled = total === 0 || currentStep >= total - 1;
+
+  const slider = $('step-slider');
+  slider.max = Math.max(0, total - 1);
+  slider.value = currentStep >= 0 ? currentStep : 0;
+  slider.disabled = total === 0;
+
+  $('step-info').textContent = total > 0 ? `Step ${currentStep + 1} / ${total}` : '';
+}
+
+function goToStep(n) {
+  if (!traceData) return;
+  const total = traceData.steps.length;
+  if (n < 0) n = 0;
+  if (n >= total) n = total - 1;
+
+  // Save previous vars for change detection
+  if (currentStep >= 0 && currentStep < traceData.steps.length) {
+    prevVars = {};
+    const step = traceData.steps[currentStep];
+    for (const frame of (step.frames || [])) {
+      for (const v of (frame.vars || [])) {
+        prevVars[`${frame.level}:${v.name}`] = v.value;
+      }
+    }
+  }
+
+  currentStep = n;
+  renderCode();
+  renderFrames();
+  renderConsole();
+  updateControls();
+}
+
+function goFirst() { goToStep(0); }
+function goPrev() { goToStep(currentStep - 1); }
+function goNext() { goToStep(currentStep + 1); }
+function goLast() { goToStep(traceData ? traceData.steps.length - 1 : 0); }
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowRight' || e.key === 'n') goNext();
+  else if (e.key === 'ArrowLeft' || e.key === 'p') goPrev();
+  else if (e.key === 'Home') goFirst();
+  else if (e.key === 'End') goLast();
+  else if (e.key === 'Enter' && e.ctrlKey) runCode();
+});
+
+function escHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
