@@ -2,12 +2,19 @@ import os
 import re
 import pty
 import select
+import shutil
 import subprocess
 import tempfile
 import json
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from pygdbmi.gdbcontroller import GdbController
+
+
+def _check_tool(name):
+    return shutil.which(name) is not None
+
+MISSING_TOOLS = [t for t in ("gcc", "g++", "gdb") if not _check_tool(t)]
 
 app = Flask(__name__, static_folder="static")
 CORS(app)
@@ -42,6 +49,13 @@ def parse_argv_value(raw_value):
 
 
 def compile_code(code, lang):
+    if MISSING_TOOLS:
+        needed = ", ".join(MISSING_TOOLS)
+        raise FileNotFoundError(
+            f"Required tools not found: {needed}. "
+            "This app requires gcc, g++, and gdb to be installed on the server."
+        )
+
     tmpdir = tempfile.mkdtemp(prefix="cctutor_")
     ext = ".cpp" if lang == "cpp" else ".c"
     src_path = os.path.join(tmpdir, "prog" + ext)
@@ -411,6 +425,8 @@ def trace():
         trace_result = capture_trace(tmpdir, src_path, bin_path, argv_list, code)
         return jsonify(trace_result)
 
+    except FileNotFoundError as e:
+        return jsonify({"success": False, "error": str(e)})
     except subprocess.TimeoutExpired:
         return jsonify({"success": False, "error": "Compilation timed out"})
     except Exception as e:
