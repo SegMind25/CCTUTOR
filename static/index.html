@@ -308,20 +308,15 @@ function toggleEdit() {
 }
 
 function openArgvModal() {
-  const code = $('code-editor').value;
   const modal = $('argv-modal');
   const list = $('modal-argv-list');
   list.innerHTML = '';
+  addArgvRow('./prog');
   addArgvRow();
-  if (!list.querySelector('input').value) {
-    list.querySelector('input').value = './prog';
-    list.querySelector('input').placeholder = './prog';
-  }
   modal.style.display = 'flex';
   setTimeout(() => {
     const inputs = list.querySelectorAll('input');
-    if (inputs.length > 1) inputs[1].focus();
-    else inputs[0].focus();
+    inputs[1].focus();
   }, 100);
 }
 
