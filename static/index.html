@@ -8,61 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
-  --font-mono:'Fira Code','Source Code Pro','Consolas',monospace;
-  --radius:8px;--radius-sm:5px;
-}
-
-/* ─── Dark Mode (default) ─── */
-[data-theme="dark"]{
-  --bg:#1E1E2E;--panel:#2A2A3C;--panel2:#33334D;--border:#3A3A50;
-  --header-bg:#2A2A3C;--footer-bg:#2A2A3C;
-  --code-bg:#282A36;--code-text:#F8F8F2;
-  --line-num:#6272A4;--line-active-bg:rgba(255,255,0,0.15);--line-executed-bg:rgba(0,255,0,0.08);
-  --output-bg:#000000;--output-text:#00FF00;
-  --stack-bg:#1A3A5C;--stack-border:#89B4FA;--stack-text:#CDD6F4;
-  --heap-bg:#3A2A1A;--heap-border:#FAB387;--heap-text:#CDD6F4;
-  --btn-primary:#89B4FA;--btn-primary-hover:#74C7EC;--btn-text:#1E1E2E;
-  --btn-secondary:#45475A;--btn-secondary-hover:#585B70;--btn-secondary-text:#CDD6F4;
-  --text-primary:#CDD6F4;--text-secondary:#A6ADC8;--text-dim:#6C7086;
-  --error:#F38BA8;--error-bg:rgba(243,139,168,0.1);
-  --success:#A6E3A9;--success-bg:rgba(166,227,169,0.1);
-  --accent:#89B4FA;--accent-hover:#74C7EC;--accent-glow:rgba(137,180,250,0.15);
-  --changed-bg:rgba(166,227,169,0.12);--changed-border:rgba(166,227,169,0.4);
-  --ptr-color:#FAB387;--addr-color:#CBA6F7;--type-color:#6C7086;
-  --shadow:0 2px 8px rgba(0,0,0,0.3);--shadow-lg:0 4px 20px rgba(0,0,0,0.4);
-  --slider-track:#45475A;--slider-thumb:#89B4FA;
-  --modal-overlay:rgba(0,0,0,0.6);
-}
-
-/* ─── Light Mode ─── */
-[data-theme="light"]{
-  --bg:#FFFFFF;--panel:#F5F5F5;--panel2:#EEEEEE;--border:#E0E0E0;
-  --header-bg:#F0F0F0;--footer-bg:#E8E8E8;
-  --code-bg:#FAFAFA;--code-text:#212121;
-  --line-num:#999999;--line-active-bg:rgba(255,255,0,0.12);--line-executed-bg:rgba(0,128,0,0.05);
-  --output-bg:#000000;--output-text:#00FF00;
-  --stack-bg:#E3F2FD;--stack-border:#2196F3;--stack-text:#212121;
-  --heap-bg:#FFF3E0;--heap-border:#FF9800;--heap-text:#212121;
-  --btn-primary:#2196F3;--btn-primary-hover:#1976D2;--btn-text:#FFFFFF;
-  --btn-secondary:#E0E0E0;--btn-secondary-hover:#BDBDBD;--btn-secondary-text:#212121;
-  --text-primary:#212121;--text-secondary:#757575;--text-dim:#999999;
-  --error:#F44336;--error-bg:rgba(244,67,54,0.08);
-  --success:#4CAF50;--success-bg:rgba(76,175,80,0.08);
-  --accent:#2196F3;--btn-primary:#2196F3;--accent-hover:#1976D2;--accent-glow:rgba(33,150,243,0.1);
-  --changed-bg:rgba(76,175,80,0.1);--changed-border:rgba(76,175,80,0.4);
-  --ptr-color:#E65100;--addr-color:#7B1FA2;--type-color:#999999;
-  --shadow:0 2px 8px rgba(0,0,0,0.08);--shadow-lg:0 4px 20px rgba(0,0,0,0.12);
-  --slider-track:#BDBDBD;--slider-thumb:#2196F3;
-  --modal-overlay:rgba(0,0,0,0.3);
-}
-
+:root{--font-sans:'Inter',system-ui,-apple-system,sans-serif;--font-mono:'Fira Code','Source Code Pro','Consolas',monospace;--radius:8px;--radius-sm:5px}
+[data-theme="dark"]{--bg:#1E1E2E;--panel:#2A2A3C;--panel2:#33334D;--border:#3A3A50;--header-bg:#2A2A3C;--footer-bg:#2A2A3C;--code-bg:#282A36;--code-text:#F8F8F2;--line-num:#6272A4;--line-active-bg:rgba(255,255,0,0.15);--line-executed-bg:rgba(0,255,0,0.08);--output-bg:#000000;--output-text:#00FF00;--stack-bg:#1A3A5C;--stack-border:#89B4FA;--stack-text:#CDD6F4;--heap-bg:#3A2A1A;--heap-border:#FAB387;--heap-text:#CDD6F4;--btn-primary:#89B4FA;--btn-primary-hover:#74C7EC;--btn-text:#1E1E2E;--btn-secondary:#45475A;--btn-secondary-hover:#585B70;--btn-secondary-text:#CDD6F4;--text-primary:#CDD6F4;--text-secondary:#A6ADC8;--text-dim:#6C7086;--error:#F38BA8;--error-bg:rgba(243,139,168,0.1);--success:#A6E3A9;--success-bg:rgba(166,227,169,0.1);--accent:#89B4FA;--accent-hover:#74C7EC;--accent-glow:rgba(137,180,250,0.15);--changed-bg:rgba(166,227,169,0.12);--changed-border:rgba(166,227,169,0.4);--ptr-color:#FAB387;--addr-color:#CBA6F7;--type-color:#6C7086;--shadow:0 2px 8px rgba(0,0,0,0.3);--shadow-lg:0 4px 20px rgba(0,0,0,0.4);--slider-track:#45475A;--slider-thumb:#89B4FA;--modal-overlay:rgba(0,0,0,0.6)}
+[data-theme="light"]{--bg:#FFFFFF;--panel:#F5F5F5;--panel2:#EEEEEE;--border:#E0E0E0;--header-bg:#F0F0F0;--footer-bg:#E8E8E8;--code-bg:#FAFAFA;--code-text:#212121;--line-num:#999999;--line-active-bg:rgba(255,255,0,0.12);--line-executed-bg:rgba(0,128,0,0.05);--output-bg:#000000;--output-text:#00FF00;--stack-bg:#E3F2FD;--stack-border:#2196F3;--stack-text:#212121;--heap-bg:#FFF3E0;--heap-border:#FF9800;--heap-text:#212121;--btn-primary:#2196F3;--btn-primary-hover:#1976D2;--btn-text:#FFFFFF;--btn-secondary:#E0E0E0;--btn-secondary-hover:#BDBDBD;--btn-secondary-text:#212121;--text-primary:#212121;--text-secondary:#757575;--text-dim:#999999;--error:#F44336;--error-bg:rgba(244,67,54,0.08);--success:#4CAF50;--success-bg:rgba(76,175,80,0.08);--accent:#2196F3;--accent-hover:#1976D2;--accent-glow:rgba(33,150,243,0.1);--changed-bg:rgba(76,175,80,0.1);--changed-border:rgba(76,175,80,0.4);--ptr-color:#E65100;--addr-color:#7B1FA2;--type-color:#999999;--shadow:0 2px 8px rgba(0,0,0,0.08);--shadow-lg:0 4px 20px rgba(0,0,0,0.12);--slider-track:#BDBDBD;--slider-thumb:#2196F3;--modal-overlay:rgba(0,0,0,0.3)}
 html,body{height:100%;font-family:var(--font-sans);background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased;transition:background 0.15s,color 0.15s}
 #app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
-
-/* ─── Header ─── */
 .header{background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0;border-bottom:1px solid var(--border);transition:background 0.15s}
 .header h1{font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--accent),#CBA6F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .header-center{display:flex;align-items:center;gap:8px;margin-left:16px}
@@ -70,31 +20,19 @@ html,body{height:100%;font-family:var(--font-sans);background:var(--bg);color:va
 select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-sans);background:var(--panel2);color:var(--text-primary);cursor:pointer;transition:background 0.15s,border-color 0.15s}
 .btn-icon{width:32px;height:32px;border:none;border-radius:var(--radius-sm);background:var(--panel2);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;border:1px solid var(--border)}
 .btn-icon:hover{background:var(--accent);color:var(--btn-text);border-color:var(--accent)}
-
-/* ─── Top Bar ─── */
 .top-bar{background:var(--panel);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:10px;align-items:center;flex-shrink:0;transition:background 0.15s}
 .btn-run{background:var(--btn-primary);color:var(--btn-text);padding:6px 20px;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.15s}
 .btn-run:hover{background:var(--btn-primary-hover);box-shadow:0 0 12px var(--accent-glow)}
 .btn-run:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none}
-
-/* ─── Error Bar ─── */
 .error-bar{background:var(--error-bg);border-bottom:1px solid var(--error);padding:10px 20px;color:var(--error);font-family:var(--font-mono);font-size:12px;white-space:pre-wrap;max-height:120px;overflow-y:auto;flex-shrink:0;display:none}
-
-/* ─── Main Layout ─── */
 .main-area{display:flex;flex:1;overflow:hidden;gap:0}
 .left-panel{width:60%;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
 .right-panel{width:40%;display:flex;flex-direction:column;overflow:hidden}
-
-/* ─── Panel Headers ─── */
 .panel-header{background:var(--panel);padding:8px 14px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-secondary);display:flex;align-items:center;gap:8px;transition:background 0.15s}
 .panel-header .badge{font-size:10px;font-weight:400;background:var(--accent-glow);color:var(--accent);padding:2px 7px;border-radius:10px;text-transform:none;letter-spacing:0}
-
-/* ─── Code Editor ─── */
 .code-editor{flex:1;width:100%;border:none;outline:none;resize:none;padding:14px 16px;font-family:var(--font-mono);font-size:13px;line-height:1.6;background:var(--code-bg);color:var(--code-text);tab-size:4;transition:background 0.15s,color 0.15s}
 .code-editor:focus{outline:none}
 .code-editor::placeholder{color:var(--text-dim)}
-
-/* ─── Code Display ─── */
 .code-container{flex:1;overflow-y:auto;font-family:var(--font-mono);font-size:13px;line-height:1.6;background:var(--code-bg);transition:background 0.15s}
 .code-line{display:flex;padding:0 16px;min-height:22px;transition:background 0.15s;position:relative}
 .code-line.current{background:var(--line-active-bg);border-left:3px solid var(--accent);padding-left:13px}
@@ -104,23 +42,19 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
 .line-num{color:var(--line-num);min-width:36px;text-align:right;margin-right:14px;user-select:none;flex-shrink:0;font-size:12px}
 .line-text{white-space:pre;color:var(--code-text)}
 .flow-indicator{position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:16px;border-radius:0 2px 2px 0}
-
-/* ─── Step Description ─── */
 .step-desc{background:var(--panel);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:flex-start;gap:10px;flex-shrink:0}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--btn-primary);color:var(--btn-text);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
 .step-info-text{font-size:12px;color:var(--text-secondary);line-height:1.5}
 .step-info-text strong{color:var(--text-primary);font-weight:600}
 .step-info-text code{font-family:var(--font-mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px}
 .step-explain{font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.4;padding:4px 8px;background:var(--panel2);border-radius:4px;border-left:2px solid var(--accent)}
-
-/* ─── Stack Zone ─── */
-.zone-header{background:var(--panel);padding:6px 14px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);border-top:1px solid var(--border);text-transform:uppercase;letter-spacing:0.8px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.zone-header{background:var(--panel);padding:6px 14px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:0.8px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;flex-shrink:0}
 .zone-header::before{content:'';width:6px;height:6px;border-radius:50%}
 .zone-header.stack::before{background:var(--stack-border)}
 .zone-header.heap::before{background:var(--heap-border)}
 .zone-header.vars::before{background:var(--accent)}
-
-.stack-zone{overflow-y:auto;padding:8px;min-height:60px;display:flex;flex-direction:column;gap:4px}
+.zone-header.output::before{background:var(--success)}
+.stack-zone{overflow-y:auto;padding:8px;min-height:40px;display:flex;flex-direction:column;gap:4px}
 .stack-frame{border:1px solid var(--stack-border);border-radius:var(--radius);overflow:hidden;transition:all 0.15s}
 .stack-frame.active{box-shadow:0 0 0 1px var(--accent)}
 .stack-frame-header{background:var(--stack-bg);padding:5px 10px;font-size:11px;font-weight:700;color:var(--stack-text);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--stack-border)}
@@ -135,18 +69,12 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
 .var-val.ptr{color:var(--ptr-color)}
 .var-addr{color:var(--addr-color);font-size:10px;min-width:70px}
 .var-arrow{color:var(--ptr-color);font-size:10px}
-
-/* ─── Heap Zone ─── */
 .heap-zone{overflow-y:auto;padding:8px;min-height:40px;display:flex;flex-wrap:wrap;gap:6px}
 .heap-object{border:1px solid var(--heap-border);border-radius:var(--radius-sm);background:var(--heap-bg);padding:6px 10px;font-family:var(--font-mono);font-size:11px;transition:all 0.15s}
 .heap-object .heap-label{font-weight:700;color:var(--heap-text);margin-bottom:3px;font-size:10px;text-transform:uppercase;letter-spacing:0.5px}
 .heap-object .heap-val{color:var(--success)}
 .heap-empty{color:var(--text-dim);font-size:12px;padding:8px;text-align:center}
-
-/* ─── Output Terminal ─── */
 .console-panel{padding:12px 14px;font-family:var(--font-mono);font-size:13px;min-height:60px;background:var(--output-bg);color:var(--output-text);white-space:pre-wrap;word-break:break-all;line-height:1.6}
-
-/* ─── Argv Panel ─── */
 .argv-panel{padding:8px 14px;font-size:12px;background:var(--panel);border-bottom:1px solid var(--border)}
 .argv-title{font-weight:700;margin-bottom:4px;color:var(--accent);font-size:12px;display:flex;align-items:center;gap:6px}
 .argv-title::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
@@ -154,8 +82,6 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
 .argv-idx{color:var(--accent);font-weight:700}
 .argv-val{color:var(--success)}
 .argv-addr{color:var(--addr-color);font-size:10px}
-
-/* ─── Footer Controls ─── */
 .footer{background:var(--footer-bg);border-top:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:6px;flex-shrink:0;transition:background 0.15s}
 .footer .step-count{font-size:12px;color:var(--text-secondary);margin-left:auto;font-family:var(--font-mono)}
 .slider-wrap{display:flex;align-items:center;gap:8px;flex:1;min-width:180px}
@@ -168,8 +94,6 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
 .progress-bar{height:4px;background:var(--border);border-radius:2px;margin:0 8px;flex:1;overflow:hidden}
 .progress-fill{height:100%;background:var(--btn-primary);border-radius:2px;transition:width 0.2s ease}
 .no-data{padding:20px;text-align:center;color:var(--text-dim);font-size:12px}
-
-/* ─── Modal ─── */
 .modal-overlay{position:fixed;inset:0;background:var(--modal-overlay);display:flex;align-items:center;justify-content:center;z-index:1000}
 .modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;width:460px;max-width:90vw;box-shadow:var(--shadow-lg)}
 .modal h3{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--text-primary)}
@@ -188,27 +112,16 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
 .modal-btn-run{background:var(--btn-primary);color:var(--btn-text)}
 .modal-btn-run:hover{background:var(--btn-primary-hover)}
 .modal-note{font-size:10px;color:var(--text-dim);font-style:italic}
-
 @keyframes flash{0%{background:rgba(166,227,169,0.3)}100%{background:var(--changed-bg)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.6s linear infinite}
-
-.progress-dots{display:flex;gap:3px;align-items:center}
-.progress-dot{width:4px;height:4px;border-radius:50%;background:var(--border);transition:all 0.15s;flex-shrink:0}
-.progress-dot.active{background:var(--accent);width:12px;height:4px;border-radius:2px}
-.progress-dot.visited{background:var(--accent);opacity:0.4}
-
-@media(max-width:900px){
-  .main-area{flex-direction:column}
-  .left-panel,.right-panel{width:100%;height:50%}
-  .left-panel{border-right:none;border-bottom:1px solid var(--border)}
-}
+@media(max-width:900px){.main-area{flex-direction:column}.left-panel,.right-panel{width:100%;height:50%}.left-panel{border-right:none;border-bottom:1px solid var(--border)}}
 </style>
 </head>
 <body>
 <div id="app">
   <div class="header">
-    <h1>C/C++ Tutor</h1>
+    <h1 data-i18n="title">C/C++ Tutor</h1>
     <div class="header-center">
       <select id="lang-select">
         <option value="c">C</option>
@@ -216,10 +129,17 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
       </select>
       <button class="btn-run" id="btn-run" onclick="runCode()">
         <span id="run-icon">&#9654;</span>
-        <span id="run-text">Run</span>
+        <span id="run-text" data-i18n="run">Run</span>
       </button>
     </div>
     <div class="header-right">
+      <select id="i18n-select" onchange="setLanguage(this.value)" title="Language">
+        <option value="en">EN</option><option value="zh-CN">中文</option><option value="zh-TW">繁中</option>
+        <option value="ja">日本語</option><option value="ko">한국어</option><option value="es">ES</option>
+        <option value="fr">FR</option><option value="de">DE</option><option value="pt">PT</option>
+        <option value="ru">RU</option><option value="ar">AR</option><option value="hi">HI</option>
+        <option value="it">IT</option><option value="tr">TR</option><option value="vi">VI</option>
+      </select>
       <button class="btn-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9789;</button>
     </div>
   </div>
@@ -229,9 +149,8 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
   <div class="main-area">
     <div class="left-panel">
       <div class="panel-header">
-        Source Code
-        <span class="badge" id="line-badge" style="display:none"></span>
-        <button class="btn-nav" id="btn-edit-toggle" onclick="toggleEdit()" style="margin-left:auto;font-size:10px;padding:3px 10px">Edit</button>
+        <span data-i18n="sourceCode">Source Code</span>
+        <button class="btn-nav" id="btn-edit-toggle" onclick="toggleEdit()" style="margin-left:auto;font-size:10px;padding:3px 10px" data-i18n="edit">Edit</button>
       </div>
       <textarea class="code-editor" id="code-editor" spellcheck="false" placeholder="Enter your C/C++ code here...">int main(int argc, char *argv[]) {
     int i;
@@ -248,39 +167,35 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
       <div class="step-desc" id="step-desc" style="display:none">
         <div class="step-num" id="step-num">0</div>
         <div style="flex:1">
-          <div class="step-info-text" id="step-text">Ready</div>
+          <div class="step-info-text" id="step-text" data-i18n="ready">Ready</div>
           <div class="step-explain" id="step-explain" style="display:none"></div>
         </div>
       </div>
-
-      <div class="zone-header vars">Variables</div>
+      <div class="zone-header vars" data-i18n="variables">Variables</div>
       <div class="argv-panel" id="argv-panel" style="display:none"></div>
       <div class="stack-zone" id="frames-container">
-        <div class="no-data">Run code to see variables</div>
+        <div class="no-data" data-i18n="runToSeeVars">Run code to see variables</div>
       </div>
-
-      <div class="zone-header stack">Stack</div>
+      <div class="zone-header stack" data-i18n="stack">Stack</div>
       <div class="stack-zone" id="stack-container">
-        <div class="no-data">Run code to see stack frames</div>
+        <div class="no-data" data-i18n="runToSeeStack">Run code to see stack frames</div>
       </div>
-
-      <div class="zone-header heap">Heap</div>
+      <div class="zone-header heap" data-i18n="heap">Heap</div>
       <div class="heap-zone" id="heap-container">
-        <div class="heap-empty">No heap allocations</div>
+        <div class="heap-empty" data-i18n="noHeap">No heap allocations</div>
       </div>
-
-      <div class="panel-header">Output</div>
+      <div class="zone-header output" data-i18n="output">Output</div>
       <div class="console-panel" id="console-panel"></div>
     </div>
   </div>
 
   <div class="footer">
     <button class="btn-nav" id="btn-first" onclick="goFirst()" title="First (Home)">&#x23EE;</button>
-    <button class="btn-nav" id="btn-prev" onclick="goPrev()" title="Prev (←)">&#x25C0;</button>
+    <button class="btn-nav" id="btn-prev" onclick="goPrev()" title="Prev (&#8592;)">&#x25C0;</button>
     <div class="slider-wrap">
       <input type="range" id="step-slider" min="0" max="0" value="0" oninput="goToStep(+this.value)" disabled>
     </div>
-    <button class="btn-nav" id="btn-next" onclick="goNext()" title="Next (→)">&#x25B6;</button>
+    <button class="btn-nav" id="btn-next" onclick="goNext()" title="Next (&#8594;)">&#x25B6;</button>
     <button class="btn-nav" id="btn-last" onclick="goLast()" title="Last (End)">&#x23ED;</button>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     <div class="step-count" id="step-count"></div>
@@ -289,40 +204,408 @@ select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radiu
 
 <div class="modal-overlay" id="argv-modal" style="display:none">
   <div class="modal">
-    <h3>Program Arguments (argv)</h3>
-    <p>Your code uses <code style="font-family:var(--font-mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px">argc</code>/<code style="font-family:var(--font-mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px">argv</code>. Enter arguments below. argv[0] (program name) is set automatically.</p>
+    <h3 data-i18n="argvTitle">Program Arguments (argv)</h3>
+    <p data-i18n="argvDesc">Your code uses argc/argv. Enter arguments below. argv[0] (program name) is set automatically.</p>
     <div class="modal-argv-list" id="modal-argv-list"></div>
-    <button class="modal-add" onclick="addArgvRow()">+ Add argument</button>
-    <div class="modal-note">Your first input becomes argv[1], second becomes argv[2], etc.</div>
+    <button class="modal-add" onclick="addArgvRow()" data-i18n="addArg">+ Add argument</button>
+    <div class="modal-note" data-i18n="argvNote">Your first input becomes argv[1], second becomes argv[2], etc.</div>
     <div class="modal-buttons">
-      <button class="modal-btn modal-btn-cancel" onclick="closeArgvModal()">Cancel</button>
-      <button class="modal-btn modal-btn-run" onclick="submitArgvModal()">&#9654; Run</button>
+      <button class="modal-btn modal-btn-cancel" onclick="closeArgvModal()" data-i18n="cancel">Cancel</button>
+      <button class="modal-btn modal-btn-run" onclick="submitArgvModal()">&#9654; <span data-i18n="run">Run</span></button>
     </div>
   </div>
 </div>
 
 <script>
+/* ═══════════════════════════════════════════════════
+   TRANSLATIONS — 15 Languages
+   ═══════════════════════════════════════════════════ */
+const I18N = {
+  en: {
+    title:"C/C++ Tutor",run:"Run",running:"Running...",edit:"Edit",sourceCode:"Source Code",
+    variables:"Variables",stack:"Stack",heap:"Heap",output:"Output",
+    ready:"Ready",runToSeeVars:"Run code to see variables",runToSeeStack:"Run code to see stack frames",
+    noHeap:"No heap allocations",noSource:"No source",compiling:"Compiling and tracing...",
+    noCode:"Please enter some C/C++ code first.",backendError:"Backend returned error",
+    networkError:"Network error:",unknownError:"Unknown error",
+    argvTitle:"Program Arguments (argv)",
+    argvDesc:"Your code uses argc/argv. Enter arguments below. argv[0] (program name) is set automatically.",
+    addArg:"+ Add argument",argvNote:"Your first input becomes argv[1], second becomes argv[2], etc.",
+    cancel:"Cancel",programFinished:"Program finished",noFrames:"No frames",
+    stepLabel:"Step",stepOf:"of",
+    expFor:"Evaluating the for-loop condition and updating the counter.",
+    expWhile:"Checking while-loop condition.",
+    expIf:"Evaluating the if-condition.",
+    expReturn:"Returning from the current function.",
+    expWrite:"Calling write() to output to stdout.",
+    expPrintf:"Calling printf() to format and print output.",
+    expDeclInit:"Declaring and initializing a variable on the stack.",
+    expDecl:"Declaring a local variable (uninitialized).",
+    expAssign:"Assigning a new value to a variable.",
+    expDefault:"Executing this statement.",
+  },
+  "zh-CN": {
+    title:"C/C++ 教程",run:"运行",running:"运行中...",edit:"编辑",sourceCode:"源代码",
+    variables:"变量",stack:"调用栈",heap:"堆",output:"输出",
+    ready:"就绪",runToSeeVars:"运行代码查看变量",runToSeeStack:"运行代码查看调用栈",
+    noHeap:"无堆分配",noSource:"无源代码",compiling:"编译并追踪中...",
+    noCode:"请先输入 C/C++ 代码。",backendError:"后端返回错误",
+    networkError:"网络错误：",unknownError:"未知错误",
+    argvTitle:"程序参数 (argv)",
+    argvDesc:"您的代码使用了 argc/argv。请在下方输入参数。argv[0]（程序名）由系统自动设置。",
+    addArg:"+ 添加参数",argvNote:"您的第一个输入将成为 argv[1]，第二个成为 argv[2]，依此类推。",
+    cancel:"取消",programFinished:"程序已结束",noFrames:"无栈帧",
+    stepLabel:"步骤",stepOf:"共",
+    expFor:"正在计算 for 循环条件并更新计数器。",
+    expWhile:"正在检查 while 循环条件。",
+    expIf:"正在计算 if 条件。",
+    expReturn:"正在从当前函数返回。",
+    expWrite:"正在调用 write() 输出到标准输出。",
+    expPrintf:"正在调用 printf() 格式化并打印输出。",
+    expDeclInit:"正在栈上声明并初始化一个变量。",
+    expDecl:"正在声明一个局部变量（未初始化）。",
+    expAssign:"正在给变量赋新值。",
+    expDefault:"正在执行此语句。",
+  },
+  "zh-TW": {
+    title:"C/C++ 教學",run:"執行",running:"執行中...",edit:"編輯",sourceCode:"原始碼",
+    variables:"變數",stack:"呼叫堆疊",heap:"堆積",output:"輸出",
+    ready:"就緒",runToSeeVars:"執行程式碼以查看變數",runToSeeStack:"執行程式碼以查看呼叫堆疊",
+    noHeap:"無堆積配置",noSource:"無原始碼",compiling:"編譯並追蹤中...",
+    noCode:"請先輸入 C/C++ 程式碼。",backendError:"後端回傳錯誤",
+    networkError:"網路錯誤：",unknownError:"未知錯誤",
+    argvTitle:"程式參數 (argv)",
+    argvDesc:"您的程式碼使用了 argc/argv。請在下方輸入參數。argv[0]（程式名）由系統自動設定。",
+    addArg:"+ 新增參數",argvNote:"您的第一個輸入將成為 argv[1]，第二個成為 argv[2]，依此類推。",
+    cancel:"取消",programFinished:"程式已結束",noFrames:"無堆疊框架",
+    stepLabel:"步驟",stepOf:"共",
+    expFor:"正在評估 for 迴圈條件並更新計數器。",
+    expWhile:"正在檢查 while 迴圈條件。",
+    expIf:"正在評估 if 條件。",
+    expReturn:"正在從目前函數傳回。",
+    expWrite:"正在呼叫 write() 輸出到標準輸出。",
+    expPrintf:"正在呼叫 printf() 格式化並列印輸出。",
+    expDeclInit:"正在堆疊上宣告並初始化一個變數。",
+    expDecl:"正在宣告一個區域變數（未初始化）。",
+    expAssign:"正在給變數賦新值。",
+    expDefault:"正在執行此語句。",
+  },
+  ja: {
+    title:"C/C++ チュートリアル",run:"実行",running:"実行中...",edit:"編集",sourceCode:"ソースコード",
+    variables:"変数",stack:"コールスタック",heap:"ヒープ",output:"出力",
+    ready:"準備完了",runToSeeVars:"コードを実行して変数を表示",runToSeeStack:"コードを実行してスタックを表示",
+    noHeap:"ヒープ割り当てなし",noSource:"ソースなし",compiling:"コンパイル＆トレース中...",
+    noCode:"まずC/C++コードを入力してください。",backendError:"バックエンドエラー",
+    networkError:"ネットワークエラー：",unknownError:"不明なエラー",
+    argvTitle:"プログラム引数 (argv)",
+    argvDesc:"コードは argc/argv を使用しています。以下に引数を入力してください。argv[0]（プログラム名）は自動設定されます。",
+    addArg:"+ 引数を追加",argvNote:"最初の入力は argv[1]、2番目は argv[2] になります。",
+    cancel:"キャンセル",programFinished:"プログラム終了",noFrames:"フレームなし",
+    stepLabel:"ステップ",stepOf:"/",
+    expFor:"for ループの条件を評価し、カウンターを更新しています。",
+    expWhile:"while ループの条件をチェックしています。",
+    expIf:"if 条件を評価しています。",
+    expReturn:"現在の関数から戻っています。",
+    expWrite:"write() を呼び出して標準出力に出力しています。",
+    expPrintf:"printf() を呼び出してフォーマット出力しています。",
+    expDeclInit:"スタック上で変数を宣言・初期化しています。",
+    expDecl:"ローカル変数を宣言しています（未初期化）。",
+    expAssign:"変数に新しい値を代入しています。",
+    expDefault:"この文を実行しています。",
+  },
+  ko: {
+    title:"C/C++ 튜토리얼",run:"실행",running:"실행 중...",edit:"편집",sourceCode:"소스 코드",
+    variables:"변수",stack:"호출 스택",heap:"히ープ",output:"출력",
+    ready:"준비",runToSeeVars:"코드를 실행하여 변수 보기",runToSeeStack:"코드를 실행하여 스택 보기",
+    noHeap:"히ープ 할당 없음",noSource:"소스 없음",compiling:"컴파일 및 추적 중...",
+    noCode:"C/C++ 코드를 입력하세요.",backendError:"백엔드 오류",
+    networkError:"네트워크 오류:",unknownError:"알 수 없는 오류",
+    argvTitle:"프로그램 인수 (argv)",
+    argvDesc:"코드에서 argc/argv를 사용합니다. 아래에 인수를 입력하세요. argv[0](프로그램 이름)은 자동 설정됩니다.",
+    addArg:"+ 인수 추가",argvNote:"첫 번째 입력은 argv[1], 두 번째는 argv[2]가 됩니다.",
+    cancel:"취소",programFinished:"프로그램 종료",noFrames:"프레임 없음",
+    stepLabel:"단계",stepOf:"/",
+    expFor:"for 루프 조건을 평가하고 카운터를 업데이트하고 있습니다.",
+    expWhile:"while 루프 조건을 확인하고 있습니다.",
+    expIf:"if 조건을 평가하고 있습니다.",
+    expReturn:"현재 함수에서 반환하고 있습니다.",
+    expWrite:"write()를 호출하여 표준 출력에 출력하고 있습니다.",
+    expPrintf:"printf()를 호출하여 포맷 출력하고 있습니다.",
+    expDeclInit:"스택에서 변수를 선언하고 초기화하고 있습니다.",
+    expDecl:"지역 변수를 선언하고 있습니다(초기화 안 됨).",
+    expAssign:"변수에 새 값을 할당하고 있습니다.",
+    expDefault:"이 문을 실행하고 있습니다.",
+  },
+  es: {
+    title:"Tutor C/C++",run:"Ejecutar",running:"Ejecutando...",edit:"Editar",sourceCode:"Código fuente",
+    variables:"Variables",stack:"Pila",heap:"Montículo",output:"Salida",
+    ready:"Listo",runToSeeVars:"Ejecuta el código para ver variables",runToSeeStack:"Ejecuta el código para ver la pila",
+    noHeap:"Sin asignaciones en el montículo",noSource:"Sin código fuente",compiling:"Compilando y rastreando...",
+    noCode:"Ingresa código C/C++ primero.",backendError:"Error del backend",
+    networkError:"Error de red:",unknownError:"Error desconocido",
+    argvTitle:"Argumentos del programa (argv)",
+    argvDesc:"Tu código usa argc/argv. Ingresa los argumentos. argv[0] (nombre del programa) se configura automáticamente.",
+    addArg:"+ Agregar argumento",argvNote:"Tu primera entrada será argv[1], la segunda argv[2], etc.",
+    cancel:"Cancelar",programFinished:"Programa terminado",noFrames:"Sin marcos",
+    stepLabel:"Paso",stepOf:"de",
+    expFor:"Evaluando la condición del for y actualizando el contador.",
+    expWhile:"Verificando la condición del while.",
+    expIf:"Evaluando la condición del if.",
+    expReturn:"Retornando de la función actual.",
+    expWrite:"Llamando a write() para salir a stdout.",
+    expPrintf:"Llamando a printf() para formatear e imprimir.",
+    expDeclInit:"Declarando e inicializando una variable en la pila.",
+    expDecl:"Declarando una variable local (sin inicializar).",
+    expAssign:"Asignando un nuevo valor a una variable.",
+    expDefault:"Ejecutando esta sentencia.",
+  },
+  fr: {
+    title:"Tuteur C/C++",run:"Exécuter",running:"Exécution...",edit:"Éditer",sourceCode:"Code source",
+    variables:"Variables",stack:"Pile",heap:"Tas",output:"Sortie",
+    ready:"Prêt",runToSeeVars:"Exécuter le code pour voir les variables",runToSeeStack:"Exécuter le code pour voir la pile",
+    noHeap:"Pas d'allocation tas",noSource:"Pas de code source",compiling:"Compilation et traçage...",
+    noCode:"Entrez du code C/C++ d'abord.",backendError:"Erreur backend",
+    networkError:"Erreur réseau :",unknownError:"Erreur inconnue",
+    argvTitle:"Arguments du programme (argv)",
+    argvDesc:"Votre code utilise argc/argv. Entrez les arguments. argv[0] (nom du programme) est défini automatiquement.",
+    addArg:"+ Ajouter un argument",argvNote:"Votre première entrée devient argv[1], la seconde argv[2], etc.",
+    cancel:"Annuler",programFinished:"Programme terminé",noFrames:"Pas de frames",
+    stepLabel:"Étape",stepOf:"sur",
+    expFor:"Évaluation de la condition for et mise à jour du compteur.",
+    expWhile:"Vérification de la condition while.",
+    expIf:"Évaluation de la condition if.",
+    expReturn:"Retour de la fonction actuelle.",
+    expWrite:"Appel de write() pour écrire sur stdout.",
+    expPrintf:"Appel de printf() pour formater et afficher.",
+    expDeclInit:"Déclaration et initialisation d'une variable sur la pile.",
+    expDecl:"Déclaration d'une variable locale (non initialisée).",
+    expAssign:"Attribution d'une nouvelle valeur à une variable.",
+    expDefault:"Exécution de cette instruction.",
+  },
+  de: {
+    title:"C/C++ Tutor",run:"Starten",running:"Läuft...",edit:"Bearbeiten",sourceCode:"Quellcode",
+    variables:"Variablen",stack:"Stapel",heap:"Heap",output:"Ausgabe",
+    ready:"Bereit",runToSeeVars:"Code ausführen um Variablen zu sehen",runToSeeStack:"Code ausführen um Stapel zu sehen",
+    noHeap:"Keine Heap-Zuweisungen",noSource:"Kein Quellcode",compiling:"Kompilieren und Nachverfolgen...",
+    noCode:"Bitte C/C++-Code eingeben.",backendError:"Backend-Fehler",
+    networkError:"Netzwerkfehler:",unknownError:"Unbekannter Fehler",
+    argvTitle:"Programmargumente (argv)",
+    argvDesc:"Ihr Code verwendet argc/argv. Argumente eingeben. argv[0] (Programmname) wird automatisch gesetzt.",
+    addArg:"+ Argument hinzufügen",argvNote:"Ihre erste Eingabe wird argv[1], zweite argv[2], usw.",
+    cancel:"Abbrechen",programFinished:"Programm beendet",noFrames:"Keine Frames",
+    stepLabel:"Schritt",stepOf:"von",
+    expFor:"Auswertung der for-Bedingung und Aktualisierung des Zählers.",
+    expWhile:"Prüfung der while-Bedingung.",
+    expIf:"Auswertung der if-Bedingung.",
+    expReturn:"Rückgabe aus der aktuellen Funktion.",
+    expWrite:"Aufruf von write() zur Ausgabe auf stdout.",
+    expPrintf:"Aufruf von printf() zur Formatierung und Ausgabe.",
+    expDeclInit:"Deklaration und Initialisierung einer Variable auf dem Stapel.",
+    expDecl:"Deklaration einer lokalen Variable (nicht initialisiert).",
+    expAssign:"Zuweisung eines neuen Werts an eine Variable.",
+    expDefault:"Ausführung dieser Anweisung.",
+  },
+  pt: {
+    title:"Tutor C/C++",run:"Executar",running:"Executando...",edit:"Editar",sourceCode:"Código fonte",
+    variables:"Variáveis",stack:"Pilha",heap:"Heap",output:"Saída",
+    ready:"Pronto",runToSeeVars:"Execute o código para ver variáveis",runToSeeStack:"Execute o código para ver a pilha",
+    noHeap:"Sem alocações no heap",noSource:"Sem código fonte",compiling:"Compilando e rastreando...",
+    noCode:"Digite código C/C++ primeiro.",backendError:"Erro no backend",
+    networkError:"Erro de rede:",unknownError:"Erro desconhecido",
+    argvTitle:"Argumentos do programa (argv)",
+    argvDesc:"Seu código usa argc/argv. Digite os argumentos. argv[0] (nome do programa) é definido automaticamente.",
+    addArg:"+ Adicionar argumento",argvNote:"Sua primeira entrada será argv[1], a segunda argv[2], etc.",
+    cancel:"Cancelar",programFinished:"Programa finalizado",noFrames:"Sem frames",
+    stepLabel:"Passo",stepOf:"de",
+    expFor:"Avaliando a condição do for e atualizando o contador.",
+    expWhile:"Verificando a condição do while.",
+    expIf:"Avaliando a condição do if.",
+    expReturn:"Retornando da função atual.",
+    expWrite:"Chamando write() para saída no stdout.",
+    expPrintf:"Chamando printf() para formatar e imprimir.",
+    expDeclInit:"Declarando e inicializando uma variável na pilha.",
+    expDecl:"Declarando uma variável local (não inicializada).",
+    expAssign:"Atribuindo um novo valor a uma variável.",
+    expDefault:"Executando esta instrução.",
+  },
+  ru: {
+    title:"C/C++ Репетитор",run:"Запуск",running:"Выполняется...",edit:"Редакт.",sourceCode:"Исходный код",
+    variables:"Переменные",stack:"Стек",heap:"Куча",output:"Вывод",
+    ready:"Готово",runToSeeVars:"Запустите код для просмотра переменных",runToSeeStack:"Запустите код для просмотра стека",
+    noHeap:"Нет выделений в куче",noSource:"Нет исходного кода",compiling:"Компиляция и трассировка...",
+    noCode:"Сначала введите C/C++ код.",backendError:"Ошибка сервера",
+    networkError:"Ошибка сети:",unknownError:"Неизвестная ошибка",
+    argvTitle:"Аргументы программы (argv)",
+    argvDesc:"Ваш код использует argc/argv. Введите аргументы. argv[0] (имя программы) устанавливается автоматически.",
+    addArg:"+ Добавить аргумент",argvNote:"Первый ввод станет argv[1], второй — argv[2] и т.д.",
+    cancel:"Отмена",programFinished:"Программа завершена",noFrames:"Нет фреймов",
+    stepLabel:"Шаг",stepOf:"из",
+    expFor:"Вычисление условия цикла for и обновление счётчика.",
+    expWhile:"Проверка условия цикла while.",
+    expIf:"Вычисление условия if.",
+    expReturn:"Возврат из текущей функции.",
+    expWrite:"Вызов write() для вывода в stdout.",
+    expPrintf:"Вызов printf() для форматирования и печати.",
+    expDeclInit:"Объявление и инициализация переменной в стеке.",
+    expDecl:"Объявление локальной переменной (без инициализации).",
+    expAssign:"Присваивание нового значения переменной.",
+    expDefault:"Выполнение этого оператора.",
+  },
+  ar: {
+    title:"معلم C/C++",run:"تشغيل",running:"جاري التشغيل...",edit:"تعديل",sourceCode:"الكود المصدري",
+    variables:"المتغيرات",stack:"الدالّة",heap:"الكومة",output:"المخرجات",
+    ready:"جاهز",runToSeeVars:"شغّل الكود لرؤية المتغيرات",runToSeeStack:"شغّل الكود لرؤية الدالّة",
+    noHeap:"لا توجد تخصيصات في الكومة",noSource:"لا يوجد كود مصدري",compiling:"جارٍ التحويل والتعقب...",
+    noCode:"أدخل كود C/C++ أولاً.",backendError:"خطأ في الخادم",
+    networkError:"خطأ في الشبكة:",unknownError:"خطأ غير معروف",
+    argvTitle:"وسائط البرنامج (argv)",
+    argvDesc:"يستخدم كودك argc/argv. أدخل الوسائط. argv[0] (اسم البرنامج) يُضبط تلقائياً.",
+    addArg:"+ إضافة وسيطة",argvNote:"أدخلك الأول يصبح argv[1]، الثاني argv[2]، إلخ.",
+    cancel:"إلغاء",programFinished:"انتهى البرنامج",noFrames:"لا إطارات",
+    stepLabel:"خطوة",stepOf:"من",
+    expFor:"تقييم شرط الحلقة for وتحديث العداد.",
+    expWhile:"التحقق من شرط الحلقة while.",
+    expIf:"تقييم شرط if.",
+    expReturn:"العودة من الدالة الحالية.",
+    expWrite:"استدعاء write() للإخراج إلى stdout.",
+    expPrintf:"استدعاء printf() لتنسيق الطباعة.",
+    expDeclInit:"إعلان وتهيئة متغير على الدالّة.",
+    expDecl:"إعلان متغير محلي (غير مهيأ).",
+    expAssign:"إسناد قيمة جديدة لمتغير.",
+    expDefault:"تنفيذ هذا البيان.",
+  },
+  hi: {
+    title:"C/C++ ट्यूटर",run:"चलाएँ",running:"चल रहा है...",edit:"संपादित",sourceCode:"स्रोत कोड",
+    variables:"वेरिएबल्स",stack:"स्टैक",heap:"हीप",output:"आउटपुट",
+    ready:"तैयार",runToSeeVars:"वेरिएबल्स देखने के लिए कोड चलाएँ",runToSeeStack:"स्टैक देखने के लिए कोड चलाएँ",
+    noHeap:"हीप आवंटन नहीं",noSource:"स्रोत नहीं",compiling:"संकलन और ट्रेसिंग...",
+    noCode:"पहले C/C++ कोड दर्ज करें।",backendError:"बैकएंड त्रुटि",
+    networkError:"नेटवर्क त्रुटि:",unknownError:"अज्ञात त्रुटि",
+    argvTitle:"प्रोग्राम आर्गुमेंट्स (argv)",
+    argvDesc:"आपका कोड argc/argv का उपयोग करता है। नीचे आर्गुमेंट्स दर्ज करें। argv[0] (प्रोग्राम नाम) स्वचालित सेट होता है।",
+    addArg:"+ आर्गुमेंट जोड़ें",argvNote:"आपका पहला इनपुट argv[1] बनेगा, दूसरा argv[2] बनेगा।",
+    cancel:"रद्द",programFinished:"प्रोग्राम समाप्त",noFrames:"फ्रेम नहीं",
+    stepLabel:"चरण",stepOf:"/",
+    expFor:"for लूप की शर्त का मूल्यांकन और काउंटर अपडेट हो रहा है।",
+    expWhile:"while लूप की शर्त जाँची जा रही है।",
+    expIf:"if शर्त का मूल्यांकन हो रहा है।",
+    expReturn:"वर्तमान फ़ंक्शन से लौट रहे हैं।",
+    expWrite:"stdout पर आउटपुट के लिए write() कॉल हो रहा है।",
+    expPrintf:"फ़ॉर्मेट और प्रिंट के लिए printf() कॉल हो रहा है।",
+    expDeclInit:"स्टैक पर एक वेरिएबल घोषित और इनिशियलाइज़ हो रहा है।",
+    expDecl:"एक लोकल वेरिएबल घोषित हो रहा है (अनइनिशियलाइज़्ड)।",
+    expAssign:"वेरिएबल को नया मान दिया जा रहा है।",
+    expDefault:"यह स्टेटमेंट चल रहा है।",
+  },
+  it: {
+    title:"Tutor C/C++",run:"Esegui",running:"Esecuzione...",edit:"Modifica",sourceCode:"Codice sorgente",
+    variables:"Variabili",stack:"Stack",heap:"Heap",output:"Output",
+    ready:"Pronto",runToSeeVars:"Esegui il codice per vedere le variabili",runToSeeStack:"Esegui il codice per vedere lo stack",
+    noHeap:"Nessuna allocazione heap",noSource:"Nessun sorgente",compiling:"Compilazione e tracing...",
+    noCode:"Inserisci del codice C/C++ prima.",backendError:"Errore backend",
+    networkError:"Errore di rete:",unknownError:"Errore sconosciuto",
+    argvTitle:"Argomenti del programma (argv)",
+    argvDesc:"Il tuo codice usa argc/argv. Inserisci gli argomenti. argv[0] (nome programma) è impostato automaticamente.",
+    addArg:"+ Aggiungi argomento",argvNote:"Il tuo primo input diventa argv[1], il secondo argv[2], ecc.",
+    cancel:"Annulla",programFinished:"Programma terminato",noFrames:"Nessun frame",
+    stepLabel:"Passo",stepOf:"di",
+    expFor:"Valutazione della condizione for e aggiornamento del contatore.",
+    expWhile:"Verifica della condizione while.",
+    expIf:"Valutazione della condizione if.",
+    expReturn:"Ritorno dalla funzione corrente.",
+    expWrite:"Chiamata a write() per l'output su stdout.",
+    expPrintf:"Chiamata a printf() per formattare e stampare.",
+    expDeclInit:"Dichiarazione e inizializzazione di una variabile sullo stack.",
+    expDecl:"Dichiarazione di una variabile locale (non inizializzata).",
+    expAssign:"Assegnazione di un nuovo valore a una variabile.",
+    expDefault:"Esecuzione di questa istruzione.",
+  },
+  tr: {
+    title:"C/C++ Eğitmeni",run:"Çalıştır",running:"Çalışıyor...",edit:"Düzenle",sourceCode:"Kaynak kodu",
+    variables:"Değişkenler",stack:"Yığın",heap:"Heap",output:"Çıktı",
+    ready:"Hazır",runToSeeVars:"Değişkenleri görmek için kodu çalıştırın",runToSeeStack:"Yığını görmek için kodu çalıştırın",
+    noHeap:"Heap tahsisi yok",noSource:"Kaynak kodu yok",compiling:"Derleme ve izleme...",
+    noCode:"Önce C/C++ kodu girin.",backendError:"Backend hatası",
+    networkError:"Ağ hatası:",unknownError:"Bilinmeyen hata",
+    argvTitle:"Program argümanları (argv)",
+    argvDesc:"Kodunuz argc/argv kullanıyor. Argümanları girin. argv[0] (program adı) otomatik ayarlanır.",
+    addArg:"+ Argüman ekle",argvNote:"İlk girdiniz argv[1], ikincisi argv[2] olur.",
+    cancel:"İptas",programFinished:"Program bitti",noFrames:"Frame yok",
+    stepLabel:"Adım",stepOf:"/",
+    expFor:"For döngüsü koşulu değerlendiriliyor ve sayaç güncelleniyor.",
+    expWhile:"While döngüsü koşulu kontrol ediliyor.",
+    expIf:"If koşulu değerlendiriliyor.",
+    expReturn:"Mevcut fonksiyondan dönülüyor.",
+    expWrite:"Stdout'a çıktı için write() çağrılıyor.",
+    expPrintf:"Biçimlendirme ve yazdırma için printf() çağrılıyor.",
+    expDeclInit:"Yığında bir değişken bildiriliyor ve başlatılıyor.",
+    expDecl:"Yerel bir değişken bildiriliyor (başlatılmamış).",
+    expAssign:"Bir değişkene yeni değer atanıyor.",
+    expDefault:"Bu ifade çalıştırılıyor.",
+  },
+  vi: {
+    title:"Gia sư C/C++",run:"Chạy",running:"Đang chạy...",edit:"Sửa",sourceCode:"Mã nguồn",
+    variables:"Biến",stack:"Ngăn xếp",heap:"Vùng nhớ động",output:"Đầu ra",
+    ready:"Sẵn sàng",runToSeeVars:"Chạy mã để xem biến",runToSeeStack:"Chạy mã để xem ngăn xếp",
+    noHeap:"Không có phân vùng heap",noSource:"Không có mã nguồn",compiling:"Đang biên dịch và truy vết...",
+    noCode:"Nhập mã C/C++ trước.",backendError:"Lỗi backend",
+    networkError:"Lỗi mạng:",unknownError:"Lỗi không xác định",
+    argvTitle:"Đối số chương trình (argv)",
+    argvDesc:"Mã của bạn dùng argc/argv. Nhập đối số bên dưới. argv[0] (tên chương trình) được tự động đặt.",
+    addArg:"+ Thêm đối số",argvNote:"Nhập đầu tiên của bạn trở thành argv[1], thứ hai là argv[2], v.v.",
+    cancel:"Hủy",programFinished:"Chương trình kết thúc",noFrames:"Không có khung",
+    stepLabel:"Bước",stepOf:"/",
+    expFor:"Đánh giá điều kiện vòng lặp for và cập nhật bộ đếm.",
+    expWhile:"Kiểm tra điều kiện vòng lặp while.",
+    expIf:"Đánh giá điều kiện if.",
+    expReturn:"Đang trả về từ hàm hiện tại.",
+    expWrite:"Gọi write() để ghi ra stdout.",
+    expPrintf:"Gọi printf() để định dạng và in.",
+    expDeclInit:"Khai báo và khởi tạo biến trên ngăn xếp.",
+    expDecl:"Khai báo biến cục bộ (chưa khởi tạo).",
+    expAssign:"Gán giá trị mới cho biến.",
+    expDefault:"Đang thực thi câu lệnh này.",
+  }
+};
+
+let currentLang = 'en';
+function t(key) { return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key; }
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('cctutor_lang', lang);
+  document.documentElement.setAttribute('lang', lang);
+  $('i18n-select').value = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key) el.textContent = t(key);
+  });
+  if (!editMode) { $('btn-edit-toggle').textContent = t('edit'); }
+  $('run-text').textContent = $('btn-run').disabled ? t('running') : t('run');
+  $('step-text').textContent = t('ready');
+  if (traceData && currentStep >= 0) { renderStepDesc(); renderFrames(); renderStack(); }
+}
+function getLang() { return localStorage.getItem('cctutor_lang') || 'en'; }
+
 let traceData = null, currentStep = -1, prevVars = {}, editMode = true, pendingArgs = [];
 const $ = id => document.getElementById(id);
 
 /* ─── Theme ─── */
 function getTheme() { return localStorage.getItem('themePreference') || 'dark'; }
-function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); $('theme-toggle').innerHTML = t === 'dark' ? '&#9789;' : '&#9788;'; }
-function toggleTheme() { const t = getTheme() === 'dark' ? 'light' : 'dark'; localStorage.setItem('themePreference', t); applyTheme(t); }
+function applyTheme(v) { document.documentElement.setAttribute('data-theme', v); $('theme-toggle').innerHTML = v === 'dark' ? '&#9789;' : '&#9788;'; }
+function toggleTheme() { const v = getTheme() === 'dark' ? 'light' : 'dark'; localStorage.setItem('themePreference', v); applyTheme(v); }
 applyTheme(getTheme());
+setLanguage(getLang());
 
 function hasArgv(code) { return /\bargc\b|\bargv\b/.test(code); }
-function parseArgs(raw) { if (!raw.trim()) return []; if (raw.includes(',')) return raw.split(',').map(s=>s.trim()).filter(Boolean); return raw.trim().split(/\s+/).filter(Boolean); }
 
 function toggleEdit() {
   editMode = !editMode;
-  if (editMode) { $('code-editor').style.display=''; $('code-container').style.display='none'; $('btn-edit-toggle').textContent='Edit'; }
-  else { $('code-editor').style.display='none'; $('code-container').style.display=''; $('btn-edit-toggle').textContent='Edit'; if(traceData) renderCode(); }
+  if (editMode) { $('code-editor').style.display=''; $('code-container').style.display='none'; $('btn-edit-toggle').textContent=t('edit'); }
+  else { $('code-editor').style.display='none'; $('code-container').style.display=''; $('btn-edit-toggle').textContent=t('edit'); if(traceData) renderCode(); }
 }
 
 function openArgvModal() {
-  const list = $('modal-argv-list');
-  list.innerHTML = '';
+  const list = $('modal-argv-list'); list.innerHTML = '';
   addArgvRow(); addArgvRow();
   $('argv-modal').style.display = 'flex';
   setTimeout(() => list.querySelectorAll('input')[0].focus(), 100);
@@ -330,22 +613,19 @@ function openArgvModal() {
 function closeArgvModal() { $('argv-modal').style.display='none'; setLoading(false); }
 function addArgvRow(val) {
   const list = $('modal-argv-list'), idx = list.children.length;
-  const row = document.createElement('div');
-  row.className = 'modal-argv-row';
+  const row = document.createElement('div'); row.className = 'modal-argv-row';
   row.innerHTML = `<label>argv[${idx+1}]</label><input type="text" value="${escHtml(val||'')}" placeholder="argument ${idx+1}" onkeydown="if(event.key==='Enter'){event.preventDefault();addArgvRow()}">`;
-  list.appendChild(row);
-  row.querySelector('input').focus();
+  list.appendChild(row); row.querySelector('input').focus();
 }
 function submitArgvModal() {
   pendingArgs = [];
   $('modal-argv-list').querySelectorAll('input').forEach(inp => { const v = inp.value.trim(); if(v) pendingArgs.push(v); });
-  $('argv-modal').style.display = 'none';
-  doRun(pendingArgs);
+  $('argv-modal').style.display = 'none'; doRun(pendingArgs);
 }
 
 async function runCode() {
   const code = $('code-editor').value;
-  if (!code.trim()) { showError('Please enter some C/C++ code first.'); return; }
+  if (!code.trim()) { showError(t('noCode')); return; }
   if (hasArgv(code)) { openArgvModal(); return; }
   doRun([]);
 }
@@ -355,27 +635,26 @@ async function doRun(args) {
   hideError(); setLoading(true); currentStep = -1; prevVars = {}; traceData = null;
   editMode = false;
   $('code-editor').style.display='none'; $('code-container').style.display='';
-  $('code-container').innerHTML = '<div class="no-data"><span class="spinner"></span>&nbsp; Compiling and tracing...</div>';
+  $('code-container').innerHTML = `<div class="no-data"><span class="spinner"></span>&nbsp; ${t('compiling')}</div>`;
   try {
     const resp = await fetch('/api/trace', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({code,lang,args}) });
-    if (!resp.ok) { showError('Backend returned error '+resp.status); setLoading(false); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; return; }
+    if (!resp.ok) { showError(t('backendError')+' '+resp.status); setLoading(false); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; return; }
     const data = await resp.json();
-    if (!data.success) { showError(data.error||'Unknown error'); setLoading(false); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; return; }
-    traceData = data;
-    $('step-desc').style.display='flex';
+    if (!data.success) { showError(data.error||t('unknownError')); setLoading(false); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; return; }
+    traceData = data; $('step-desc').style.display='flex';
     renderCode(); renderArgv(); updateControls(); goToStep(0);
   } catch(e) {
-    showError('Network error: '+e.message); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; $('step-desc').style.display='none';
+    showError(t('networkError')+' '+e.message); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; $('step-desc').style.display='none';
   } finally { setLoading(false); }
 }
 
 function showError(msg) { $('error-bar').style.display='block'; $('error-bar').textContent=msg; }
 function hideError() { $('error-bar').style.display='none'; }
-function setLoading(on) { $('btn-run').disabled=on; $('run-icon').innerHTML=on?'<span class="spinner" style="width:10px;height:10px;border-width:1.5px"></span>':'&#9654;'; $('run-text').textContent=on?'Running...':'Run'; }
+function setLoading(on) { $('btn-run').disabled=on; $('run-icon').innerHTML=on?'<span class="spinner" style="width:10px;height:10px;border-width:1.5px"></span>':'&#9654;'; $('run-text').textContent=on?t('running'):t('run'); }
 
 function renderCode() {
   const c = $('code-container');
-  if (!traceData||!traceData.source_lines) { c.innerHTML='<div class="no-data">No source</div>'; return; }
+  if (!traceData||!traceData.source_lines) { c.innerHTML=`<div class="no-data">${t('noSource')}</div>`; return; }
   const lines = traceData.source_lines;
   const activeLine = currentStep>=0&&traceData.steps[currentStep]?traceData.steps[currentStep].line:0;
   const prevLine = currentStep>0&&traceData.steps[currentStep-1]?traceData.steps[currentStep-1].line:0;
@@ -400,27 +679,24 @@ function renderArgv() {
   const p=$('argv-panel');
   if(!traceData||!traceData.argv||traceData.argv.length===0){p.style.display='none';return;}
   p.style.display='block';
-  let h='<div class="argv-title">argc = '+traceData.argv.length+'</div>';
-  traceData.argv.forEach((v,i)=>{
-    const addr='0x'+(0x7ffffff0+i*8).toString(16);
-    h+=`<span class="argv-item"><span class="argv-idx">argv[${i}]</span> <span class="argv-val">"${escHtml(v)}"</span> <span class="argv-addr">@${addr}</span></span>`;
-  });
+  let h=`<div class="argv-title">argc = ${traceData.argv.length}</div>`;
+  traceData.argv.forEach((v,i)=>{const a='0x'+(0x7ffffff0+i*8).toString(16);h+=`<span class="argv-item"><span class="argv-idx">argv[${i}]</span> <span class="argv-val">"${escHtml(v)}"</span> <span class="argv-addr">@${a}</span></span>`;});
   p.innerHTML=h;
 }
 
 function explainStep(step,lines) {
-  if(!step||step.finished) return 'Program finished executing.';
+  if(!step||step.finished) return t('programFinished');
   const lt=(lines&&step.line>0&&step.line<=lines.length)?lines[step.line-1].trim():'';
-  if(/^\s*for\s*\(/.test(lt)) return 'Evaluating the for-loop condition and updating the counter.';
-  if(/^\s*while\s*\(/.test(lt)) return 'Checking while-loop condition.';
-  if(/^\s*if\s*\(/.test(lt)) return 'Evaluating the if-condition.';
-  if(/^\s*return\b/.test(lt)) return 'Returning from the current function.';
-  if(/\bwrite\s*\(/.test(lt)) return 'Calling write() to output to stdout.';
-  if(/\bprintf\s*\(/.test(lt)) return 'Calling printf() to format and print output.';
-  if(/^\s*int\s+\w+\s*=/.test(lt)) return 'Declaring and initializing a variable on the stack.';
-  if(/^\s*int\s+\w+/.test(lt)) return 'Declaring a local variable (uninitialized).';
-  if(/\w+\s*=/.test(lt)&&!/==/.test(lt)) return 'Assigning a new value to a variable.';
-  return 'Executing this statement.';
+  if(/^\s*for\s*\(/.test(lt)) return t('expFor');
+  if(/^\s*while\s*\(/.test(lt)) return t('expWhile');
+  if(/^\s*if\s*\(/.test(lt)) return t('expIf');
+  if(/^\s*return\b/.test(lt)) return t('expReturn');
+  if(/\bwrite\s*\(/.test(lt)) return t('expWrite');
+  if(/\bprintf\s*\(/.test(lt)) return t('expPrintf');
+  if(/^\s*int\s+\w+\s*=/.test(lt)) return t('expDeclInit');
+  if(/^\s*int\s+\w+/.test(lt)) return t('expDecl');
+  if(/\w+\s*=/.test(lt)&&!/==/.test(lt)) return t('expAssign');
+  return t('expDefault');
 }
 
 function renderStepDesc() {
@@ -429,26 +705,24 @@ function renderStepDesc() {
   const step=traceData.steps[currentStep];
   $('step-num').textContent=currentStep+1;
   let parts=[];
-  if(step.line>0) parts.push(`<strong>line ${step.line}</strong>`);
+  if(step.line>0) parts.push(`<strong>${t('stepLabel')} ${step.line}</strong>`);
   if(step.func&&step.func!=='???') parts.push(`in <code>${escHtml(step.func)}</code>`);
-  if(step.finished) parts.push('<span style="color:var(--success)">Program finished</span>');
+  if(step.finished) parts.push(`<span style="color:var(--success)">${t('programFinished')}</span>`);
   let desc=parts.join(' &middot; ');
   if(step.output_delta) desc+=`<br><span style="color:var(--text-dim)">stdout: "${escHtml(step.output_delta.trim())}"</span>`;
-  $('step-text').innerHTML=desc||'Step '+(currentStep+1);
+  $('step-text').innerHTML=desc||`${t('stepLabel')} ${currentStep+1}`;
   const ex=explainStep(step,traceData.source_lines);
-  $('step-explain').textContent=ex;
-  $('step-explain').style.display=ex?'block':'none';
+  $('step-explain').textContent=ex; $('step-explain').style.display=ex?'block':'none';
 }
 
 function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;return Math.abs(h);}
 
 function renderFrames() {
   const c=$('frames-container');
-  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML='<div class="no-data">Run code to see variables</div>';return;}
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML=`<div class="no-data">${t('runToSeeVars')}</div>`;return;}
   const step=traceData.steps[currentStep];
-  if(!step.frames||step.frames.length===0){c.innerHTML='<div class="no-data">'+(step.finished?'Program finished':'No frames')+'</div>';return;}
-  let html='';
-  const frames=[...step.frames].reverse();
+  if(!step.frames||step.frames.length===0){c.innerHTML=`<div class="no-data">${step.finished?t('programFinished'):t('noFrames')}</div>`;return;}
+  let html=''; const frames=[...step.frames].reverse();
   for(const frame of frames){
     html+=`<div class="stack-frame${frame===frames[0]?' active':''}">`;
     html+=`<div class="stack-frame-header"><span class="func-name">${escHtml(frame.func||'???')}</span><span class="frame-addr">0x${(0xbfff0000+frame.level*0x100).toString(16)}</span></div>`;
@@ -463,12 +737,7 @@ function renderFrames() {
           const tAddr='0x'+((parseInt(v.value,16)||0xbfffe000+hashStr(v.name)%0x2000)>>>0).toString(16);
           arrow=`<span class="var-arrow">&#8594;</span><span style="color:var(--ptr-color)">${tAddr}</span>`;
         }
-        html+=`<tr class="var-row${changed?' changed':''}">`;
-        html+=`<td class="var-name">${escHtml(v.name)}</td>`;
-        html+=`<td class="var-type">${escHtml(v.type)}</td>`;
-        html+=`<td class="var-val${isPtr?' ptr':''}">${escHtml(v.value)}${changed?' &#8594;':''}</td>`;
-        html+=`<td class="var-addr">@${addr}</td>`;
-        html+=`</tr>`;
+        html+=`<tr class="var-row${changed?' changed':''}"><td class="var-name">${escHtml(v.name)}</td><td class="var-type">${escHtml(v.type)}</td><td class="var-val${isPtr?' ptr':''}">${escHtml(v.value)}${changed?' &#8594;':''}</td><td class="var-addr">@${addr}</td></tr>`;
       }
       html+=`</tbody></table>`;
     }
@@ -479,25 +748,18 @@ function renderFrames() {
 
 function renderStack() {
   const c=$('stack-container');
-  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML='<div class="no-data">Run code to see stack frames</div>';return;}
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML=`<div class="no-data">${t('runToSeeStack')}</div>`;return;}
   const step=traceData.steps[currentStep];
-  if(!step.frames||step.frames.length===0){c.innerHTML='<div class="no-data">'+(step.finished?'Program finished':'No frames')+'</div>';return;}
-  let html='';
-  const frames=[...step.frames].reverse();
+  if(!step.frames||step.frames.length===0){c.innerHTML=`<div class="no-data">${step.finished?t('programFinished'):t('noFrames')}</div>`;return;}
+  let html=''; const frames=[...step.frames].reverse();
   for(const frame of frames){
-    const addr=0xbfff0000+frame.level*0x100;
-    const isActive=frame===frames[0];
-    html+=`<div class="stack-frame${isActive?' active':''}">`;
-    html+=`<div class="stack-frame-header"><span class="func-name">${escHtml(frame.func||'???')}</span><span class="frame-addr">0x${addr.toString(16)}</span></div>`;
+    const addr=0xbfff0000+frame.level*0x100; const isActive=frame===frames[0];
+    html+=`<div class="stack-frame${isActive?' active':''}"><div class="stack-frame-header"><span class="func-name">${escHtml(frame.func||'???')}</span><span class="frame-addr">0x${addr.toString(16)}</span></div>`;
     if(frame.vars&&frame.vars.length>0){
       for(const v of frame.vars){
         const vAddr='0x'+((addr+0x20+hashStr(v.name)%0xd0)>>>0).toString(16);
         const isPtr=/\*/.test(v.type);
-        html+=`<div class="var-row">`;
-        html+=`<span class="var-addr">${vAddr}</span>`;
-        html+=`<span class="var-name">${escHtml(v.name)}</span>`;
-        html+=`<span class="var-val${isPtr?' ptr':''}">${escHtml(v.value)}</span>`;
-        html+=`</div>`;
+        html+=`<div class="var-row"><span class="var-addr">${vAddr}</span><span class="var-name">${escHtml(v.name)}</span><span class="var-val${isPtr?' ptr':''}">${escHtml(v.value)}</span></div>`;
       }
     }
     html+=`</div>`;
@@ -507,24 +769,22 @@ function renderStack() {
 
 function renderHeap() {
   const c=$('heap-container');
-  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML='<div class="heap-empty">No heap allocations</div>';return;}
-  const step=traceData.steps[currentStep];
-  let html='';
-  let hasHeap=false;
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML=`<div class="heap-empty">${t('noHeap')}</div>`;return;}
+  const step=traceData.steps[currentStep]; let html='', hasHeap=false;
   if(step.frames){
     for(const frame of step.frames){
       if(frame.vars){
         for(const v of frame.vars){
           if(/\*/.test(v.type)&&v.value&&v.value!=='0x0'&&v.value!=='0'&&v.value!=='(nil)'){
             hasHeap=true;
-            const targetAddr='0x'+((parseInt(v.value,16)||0xc0000000+hashStr(v.name)%0x1000)>>>0).toString(16);
-            html+=`<div class="heap-object"><div class="heap-label">${escHtml(v.name)} &#8594;</div><div class="heap-val">@${targetAddr}</div></div>`;
+            const tAddr='0x'+((parseInt(v.value,16)||0xc0000000+hashStr(v.name)%0x1000)>>>0).toString(16);
+            html+=`<div class="heap-object"><div class="heap-label">${escHtml(v.name)} &#8594;</div><div class="heap-val">@${tAddr}</div></div>`;
           }
         }
       }
     }
   }
-  c.innerHTML=hasHeap?html:'<div class="heap-empty">No heap allocations</div>';
+  c.innerHTML=hasHeap?html:`<div class="heap-empty">${t('noHeap')}</div>`;
 }
 
 function renderConsole() {
@@ -540,9 +800,8 @@ function updateControls() {
   $('btn-next').disabled=total===0||currentStep>=total-1;
   $('btn-last').disabled=total===0||currentStep>=total-1;
   const sl=$('step-slider'); sl.max=Math.max(0,total-1); sl.value=currentStep>=0?currentStep:0; sl.disabled=total===0;
-  const pct=total>0?((currentStep+1)/total*100):0;
-  $('progress-fill').style.width=pct+'%';
-  $('step-count').textContent=total>0?`Step ${currentStep+1} / ${total}`:'';
+  $('progress-fill').style.width=total>0?((currentStep+1)/total*100)+'%':'0%';
+  $('step-count').textContent=total>0?`${t('stepLabel')} ${currentStep+1} / ${total}`:'';
 }
 
 function goToStep(n) {
@@ -550,18 +809,15 @@ function goToStep(n) {
   const total=traceData.steps.length;
   if(n<0)n=0; if(n>=total)n=total-1;
   if(currentStep>=0&&currentStep<traceData.steps.length){
-    prevVars={};
-    const step=traceData.steps[currentStep];
+    prevVars={}; const step=traceData.steps[currentStep];
     for(const frame of(step.frames||[])) for(const v of(frame.vars||[])) prevVars[`${frame.level}:${v.name}`]=v.value;
   }
   currentStep=n;
   renderCode(); renderStepDesc(); renderFrames(); renderStack(); renderHeap(); renderConsole(); updateControls();
 }
 
-function goFirst(){goToStep(0);}
-function goPrev(){goToStep(currentStep-1);}
-function goNext(){goToStep(currentStep+1);}
-function goLast(){goToStep(traceData?traceData.steps.length-1:0);}
+function goFirst(){goToStep(0);} function goPrev(){goToStep(currentStep-1);}
+function goNext(){goToStep(currentStep+1);} function goLast(){goToStep(traceData?traceData.steps.length-1:0);}
 
 document.addEventListener('keydown',e=>{
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
