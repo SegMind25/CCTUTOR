@@ -1,15 +1,15 @@
 {
-  "name": "C/C++ Tutor",
+  "name": "C/C++ Tutor (42 Edition)",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "features": {
     "ghcr.io/devcontainers/features/gcc:1": {}
   },
-  "postCreateCommand": "pip install -r requirements.txt",
+  "postCreateCommand": "pip install -r requirements.txt && make -C libft -j4",
   "postStartCommand": "nohup python server.py > /dev/null 2>&1 &",
   "forwardPorts": [5000],
   "portsAttributes": {
     "5000": {
-      "label": "C/C++ Tutor",
+      "label": "C/C++ Tutor (42)",
       "onAutoForward": "openBrowser"
     }
   }

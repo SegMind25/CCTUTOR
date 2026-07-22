@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import tempfile
 import json
+from datetime import datetime
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from pygdbmi.gdbcontroller import GdbController
@@ -22,6 +23,25 @@ CORS(app)
 MAX_STEPS = 500
 STEP_TIMEOUT = 5
 COMPILE_TIMEOUT = 10
+
+LIBFT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "libft")
+LIBFT_A = os.path.join(LIBFT_DIR, "libft.a")
+
+
+def ensure_libft():
+    if os.path.exists(LIBFT_A):
+        return True
+    try:
+        subprocess.run(
+            ["make", "-C", LIBFT_DIR, "-j4"],
+            capture_output=True, timeout=30
+        )
+        return os.path.exists(LIBFT_A)
+    except Exception:
+        return False
+
+
+ensure_libft()
 
 
 def read_inferior(master_fd):
@@ -48,29 +68,78 @@ def parse_argv_value(raw_value):
     return raw_value
 
 
-def compile_code(code, lang):
+def generate_42_header(filename, login="42student"):
+    now = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+    email = f"{login}@student.42.fr"
+    header = f"""/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   {filename:<51}:+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: {login} <{email:<28}+#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: {now} by {login:<29}#+#    #+#             */
+/*   Updated: {now} by {login:<28}###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */"""
+    return header
+
+
+def compile_code_multi(files, lang, use_libft=False, extra_flags=None):
     if MISSING_TOOLS:
         needed = ", ".join(MISSING_TOOLS)
         raise FileNotFoundError(
             f"Required tools not found: {needed}. "
-            "This app requires gcc, g++, and gdb to be installed on the server."
+            "This app requires gcc, g++, and gdb."
         )
 
     tmpdir = tempfile.mkdtemp(prefix="cctutor_")
+
+    for f in files:
+        fpath = os.path.join(tmpdir, f["name"])
+        with open(fpath, "w") as fh:
+            fh.write(f["content"])
+
+    main_file = None
+    for f in files:
+        if f["name"].endswith((".c", ".cpp")):
+            main_file = f["name"]
+            break
+
+    if not main_file:
+        raise ValueError("No source file provided")
+
     ext = ".cpp" if lang == "cpp" else ".c"
-    src_path = os.path.join(tmpdir, "prog" + ext)
     bin_path = os.path.join(tmpdir, "prog")
 
-    with open(src_path, "w") as f:
-        f.write(code)
-
     compiler = "g++" if lang == "cpp" else "gcc"
+
+    cmd = [compiler, "-g", "-O0"]
+
+    if use_libft and lang == "c":
+        cmd.extend(["-Wall", "-Wextra", "-Werror"])
+        cmd.extend(["-I", LIBFT_DIR])
+        cmd.extend(["-L", LIBFT_DIR, "-lft"])
+
+    if extra_flags:
+        cmd.extend(extra_flags)
+
+    for f in files:
+        if f["name"].endswith((".c", ".cpp")):
+            cmd.append(os.path.join(tmpdir, f["name"]))
+
+    cmd.extend(["-o", bin_path])
+
     result = subprocess.run(
-        [compiler, "-g", "-O0", "-o", bin_path, src_path],
-        capture_output=True, text=True, timeout=COMPILE_TIMEOUT
+        cmd, capture_output=True, text=True, timeout=COMPILE_TIMEOUT
     )
 
-    return tmpdir, src_path, bin_path, result
+    return tmpdir, os.path.join(tmpdir, main_file), bin_path, result
+
+
+def compile_code(code, lang):
+    files = [{"name": "prog" + (".cpp" if lang == "cpp" else ".c"), "content": code}]
+    return compile_code_multi(files, lang, use_libft=False)
 
 
 def extract_var_value(val_str):
@@ -411,18 +480,37 @@ def trace():
     code = data.get("code", "")
     lang = data.get("lang", "c")
     argv_list = data.get("args", [])
+    files = data.get("files", None)
+    use_libft = data.get("use_libft", False)
+    extra_flags = data.get("flags", None)
 
-    if not code.strip():
-        return jsonify({"success": False, "error": "No code provided"})
+    if files:
+        for f in files:
+            if not f.get("content", "").strip():
+                return jsonify({"success": False, "error": f"No content in {f.get('name', 'file')}"})
+        code_for_trace = ""
+        for f in files:
+            if f["name"].endswith((".c", ".cpp")):
+                code_for_trace = f["content"]
+                break
+    else:
+        if not code.strip():
+            return jsonify({"success": False, "error": "No code provided"})
+        code_for_trace = code
 
     tmpdir = None
     try:
-        tmpdir, src_path, bin_path, result = compile_code(code, lang)
+        if files:
+            tmpdir, src_path, bin_path, result = compile_code_multi(
+                files, lang, use_libft=use_libft, extra_flags=extra_flags
+            )
+        else:
+            tmpdir, src_path, bin_path, result = compile_code(code, lang)
 
         if result.returncode != 0:
             return jsonify({"success": False, "error": result.stderr})
 
-        trace_result = capture_trace(tmpdir, src_path, bin_path, argv_list, code)
+        trace_result = capture_trace(tmpdir, src_path, bin_path, argv_list, code_for_trace)
         return jsonify(trace_result)
 
     except FileNotFoundError as e:
@@ -433,15 +521,99 @@ def trace():
         return jsonify({"success": False, "error": str(e)})
     finally:
         if tmpdir:
-            import shutil
             try:
                 shutil.rmtree(tmpdir, ignore_errors=True)
             except Exception:
                 pass
 
 
+@app.route("/api/norminette", methods=["POST"])
+def norminette_check():
+    data = request.get_json()
+    files = data.get("files", [])
+    code = data.get("code", "")
+
+    if not files and not code:
+        return jsonify({"success": False, "error": "No code provided"})
+
+    if not _check_tool("norminette"):
+        return jsonify({"success": False, "error": "norminette is not installed on the server"})
+
+    tmpdir = tempfile.mkdtemp(prefix="norm_")
+    try:
+        if files:
+            for f in files:
+                fpath = os.path.join(tmpdir, f["name"])
+                with open(fpath, "w") as fh:
+                    fh.write(f["content"])
+        else:
+            ext = ".c"
+            with open(os.path.join(tmpdir, "code" + ext), "w") as fh:
+                fh.write(code)
+
+        result = subprocess.run(
+            ["norminette", tmpdir],
+            capture_output=True, text=True, timeout=10
+        )
+
+        output = result.stdout
+        errors = []
+        for line in output.split("\n"):
+            line = line.strip()
+            if not line:
+                continue
+            if line.endswith(": OK!"):
+                continue
+            if line.startswith("Error:"):
+                m = re.match(
+                    r'Error:\s+(\w+)\s+\(line:\s+(\d+),\s+col:\s+(\d+)\):\s+(.*)',
+                    line
+                )
+                if m:
+                    errors.append({
+                        "code": m.group(1),
+                        "line": int(m.group(2)),
+                        "col": int(m.group(3)),
+                        "description": m.group(4).strip(),
+                    })
+                else:
+                    errors.append({
+                        "code": "UNKNOWN",
+                        "line": 0,
+                        "col": 0,
+                        "description": line,
+                    })
+
+        return jsonify({
+            "success": True,
+            "errors": errors,
+            "output": output,
+            "passed": len(errors) == 0,
+        })
+
+    except FileNotFoundError:
+        return jsonify({"success": False, "error": "norminette not found"})
+    except subprocess.TimeoutExpired:
+        return jsonify({"success": False, "error": "norminette timed out"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+    finally:
+        try:
+            shutil.rmtree(tmpdir, ignore_errors=True)
+        except Exception:
+            pass
+
+
+@app.route("/api/header", methods=["POST"])
+def make_header():
+    data = request.get_json()
+    filename = data.get("filename", "main.c")
+    login = data.get("login", "42student")
+    header = generate_42_header(filename, login)
+    return jsonify({"success": True, "header": header})
+
+
 if __name__ == "__main__":
-    import os as _os
-    port = int(_os.environ.get("PORT", 5000))
-    debug = _os.environ.get("FLASK_DEBUG", "1") == "1"
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_DEBUG", "1") == "1"
     app.run(host="0.0.0.0", port=port, debug=debug)
