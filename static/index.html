@@ -1,216 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C/C++ Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
 :root{
-  --bg:#0f1117;--panel:#1a1d27;--panel2:#222633;--border:#2a2e3a;
-  --accent:#6c8cff;--accent-hover:#5a7aff;--accent-glow:rgba(108,140,255,0.15);
-  --highlight:rgba(108,140,255,0.08);--highlight-border:rgba(108,140,255,0.4);
-  --changed-bg:rgba(46,204,113,0.1);--changed-border:rgba(46,204,113,0.5);
-  --error:#ff5252;--error-bg:rgba(255,82,82,0.08);
-  --dim:#5a5e6e;--text:#e1e4ed;--text-secondary:#8b90a0;
-  --mono:'SF Mono','Fira Code','JetBrains Mono','Consolas','Monaco',monospace;
-  --sans:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,sans-serif;
+  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --font-mono:'Fira Code','Source Code Pro','Consolas',monospace;
   --radius:8px;--radius-sm:5px;
-  --shadow:0 2px 8px rgba(0,0,0,0.3);--shadow-lg:0 4px 20px rgba(0,0,0,0.4);
-  --ptr-color:#ff9800;--addr-color:#ab47bc;--stack-color:#26c6da;
 }
-html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ─── Dark Mode (default) ─── */
+[data-theme="dark"]{
+  --bg:#1E1E2E;--panel:#2A2A3C;--panel2:#33334D;--border:#3A3A50;
+  --header-bg:#2A2A3C;--footer-bg:#2A2A3C;
+  --code-bg:#282A36;--code-text:#F8F8F2;
+  --line-num:#6272A4;--line-active-bg:rgba(255,255,0,0.15);--line-executed-bg:rgba(0,255,0,0.08);
+  --output-bg:#000000;--output-text:#00FF00;
+  --stack-bg:#1A3A5C;--stack-border:#89B4FA;--stack-text:#CDD6F4;
+  --heap-bg:#3A2A1A;--heap-border:#FAB387;--heap-text:#CDD6F4;
+  --btn-primary:#89B4FA;--btn-primary-hover:#74C7EC;--btn-text:#1E1E2E;
+  --btn-secondary:#45475A;--btn-secondary-hover:#585B70;--btn-secondary-text:#CDD6F4;
+  --text-primary:#CDD6F4;--text-secondary:#A6ADC8;--text-dim:#6C7086;
+  --error:#F38BA8;--error-bg:rgba(243,139,168,0.1);
+  --success:#A6E3A9;--success-bg:rgba(166,227,169,0.1);
+  --accent:#89B4FA;--accent-hover:#74C7EC;--accent-glow:rgba(137,180,250,0.15);
+  --changed-bg:rgba(166,227,169,0.12);--changed-border:rgba(166,227,169,0.4);
+  --ptr-color:#FAB387;--addr-color:#CBA6F7;--type-color:#6C7086;
+  --shadow:0 2px 8px rgba(0,0,0,0.3);--shadow-lg:0 4px 20px rgba(0,0,0,0.4);
+  --slider-track:#45475A;--slider-thumb:#89B4FA;
+  --modal-overlay:rgba(0,0,0,0.6);
+}
+
+/* ─── Light Mode ─── */
+[data-theme="light"]{
+  --bg:#FFFFFF;--panel:#F5F5F5;--panel2:#EEEEEE;--border:#E0E0E0;
+  --header-bg:#F0F0F0;--footer-bg:#E8E8E8;
+  --code-bg:#FAFAFA;--code-text:#212121;
+  --line-num:#999999;--line-active-bg:rgba(255,255,0,0.12);--line-executed-bg:rgba(0,128,0,0.05);
+  --output-bg:#000000;--output-text:#00FF00;
+  --stack-bg:#E3F2FD;--stack-border:#2196F3;--stack-text:#212121;
+  --heap-bg:#FFF3E0;--heap-border:#FF9800;--heap-text:#212121;
+  --btn-primary:#2196F3;--btn-primary-hover:#1976D2;--btn-text:#FFFFFF;
+  --btn-secondary:#E0E0E0;--btn-secondary-hover:#BDBDBD;--btn-secondary-text:#212121;
+  --text-primary:#212121;--text-secondary:#757575;--text-dim:#999999;
+  --error:#F44336;--error-bg:rgba(244,67,54,0.08);
+  --success:#4CAF50;--success-bg:rgba(76,175,80,0.08);
+  --accent:#2196F3;--btn-primary:#2196F3;--accent-hover:#1976D2;--accent-glow:rgba(33,150,243,0.1);
+  --changed-bg:rgba(76,175,80,0.1);--changed-border:rgba(76,175,80,0.4);
+  --ptr-color:#E65100;--addr-color:#7B1FA2;--type-color:#999999;
+  --shadow:0 2px 8px rgba(0,0,0,0.08);--shadow-lg:0 4px 20px rgba(0,0,0,0.12);
+  --slider-track:#BDBDBD;--slider-thumb:#2196F3;
+  --modal-overlay:rgba(0,0,0,0.3);
+}
+
+html,body{height:100%;font-family:var(--font-sans);background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased;transition:background 0.15s,color 0.15s}
 #app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
-header{background:linear-gradient(135deg,#1a1d27 0%,#1e2235 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0;border-bottom:1px solid var(--border)}
-header h1{font-size:17px;font-weight:700;letter-spacing:0.3px;background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-header .subtitle{font-size:11px;color:var(--text-secondary);letter-spacing:0.2px}
+/* ─── Header ─── */
+.header{background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0;border-bottom:1px solid var(--border);transition:background 0.15s}
+.header h1{font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--accent),#CBA6F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-center{display:flex;align-items:center;gap:8px;margin-left:16px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-sans);background:var(--panel2);color:var(--text-primary);cursor:pointer;transition:background 0.15s,border-color 0.15s}
+.btn-icon{width:32px;height:32px;border:none;border-radius:var(--radius-sm);background:var(--panel2);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;border:1px solid var(--border)}
+.btn-icon:hover{background:var(--accent);color:var(--btn-text);border-color:var(--accent)}
 
-.top-bar{background:var(--panel);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap}
-.top-bar label{font-size:12px;font-weight:600;color:var(--text-secondary)}
-.top-bar input[type=text]{flex:1;min-width:180px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--mono);font-size:12px;background:var(--panel2);color:var(--text);transition:border-color 0.2s}
-.top-bar input[type=text]:focus{outline:none;border-color:var(--accent)}
-.top-bar input[type=text]::placeholder{color:var(--dim)}
-select{padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;background:var(--panel2);color:var(--text);cursor:pointer}
-button{padding:6px 16px;border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s}
-.btn-run{background:var(--accent);color:#fff;display:flex;align-items:center;gap:6px}
-.btn-run:hover{background:var(--accent-hover);box-shadow:0 0 12px rgba(108,140,255,0.3)}
+/* ─── Top Bar ─── */
+.top-bar{background:var(--panel);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:10px;align-items:center;flex-shrink:0;transition:background 0.15s}
+.btn-run{background:var(--btn-primary);color:var(--btn-text);padding:6px 20px;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.15s}
+.btn-run:hover{background:var(--btn-primary-hover);box-shadow:0 0 12px var(--accent-glow)}
 .btn-run:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none}
-.btn-step{background:var(--panel2);color:var(--text-secondary);border:1px solid var(--border)}
-.btn-step:hover:not(:disabled){background:var(--panel);color:var(--text);border-color:var(--accent)}
-.btn-step:disabled{opacity:0.25;cursor:not-allowed}
 
-.error-bar{background:var(--error-bg);border-bottom:1px solid rgba(255,82,82,0.2);padding:10px 20px;color:var(--error);font-family:var(--mono);font-size:12px;white-space:pre-wrap;max-height:120px;overflow-y:auto;flex-shrink:0;display:none;animation:slideDown 0.2s ease}
+/* ─── Error Bar ─── */
+.error-bar{background:var(--error-bg);border-bottom:1px solid var(--error);padding:10px 20px;color:var(--error);font-family:var(--font-mono);font-size:12px;white-space:pre-wrap;max-height:120px;overflow-y:auto;flex-shrink:0;display:none}
 
-.main-area{display:flex;flex:1;overflow:hidden}
-.left-panel{width:40%;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
-.right-panel{width:60%;display:flex;flex-direction:column;overflow:hidden}
+/* ─── Main Layout ─── */
+.main-area{display:flex;flex:1;overflow:hidden;gap:0}
+.left-panel{width:60%;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
+.right-panel{width:40%;display:flex;flex-direction:column;overflow:hidden}
 
-.panel-header{background:var(--panel);padding:8px 14px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-secondary);display:flex;align-items:center;gap:8px}
+/* ─── Panel Headers ─── */
+.panel-header{background:var(--panel);padding:8px 14px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-secondary);display:flex;align-items:center;gap:8px;transition:background 0.15s}
 .panel-header .badge{font-size:10px;font-weight:400;background:var(--accent-glow);color:var(--accent);padding:2px 7px;border-radius:10px;text-transform:none;letter-spacing:0}
 
-.code-editor{flex:1;width:100%;border:none;outline:none;resize:none;padding:14px 16px;font-family:var(--mono);font-size:13px;line-height:1.7;background:var(--panel);color:var(--text);tab-size:4}
+/* ─── Code Editor ─── */
+.code-editor{flex:1;width:100%;border:none;outline:none;resize:none;padding:14px 16px;font-family:var(--font-mono);font-size:13px;line-height:1.6;background:var(--code-bg);color:var(--code-text);tab-size:4;transition:background 0.15s,color 0.15s}
 .code-editor:focus{outline:none}
-.code-editor::placeholder{color:var(--dim)}
+.code-editor::placeholder{color:var(--text-dim)}
 
-.code-container{flex:1;overflow-y:auto;font-family:var(--mono);font-size:13px;line-height:1.7}
-.code-line{display:flex;padding:0 16px;min-height:22px;transition:background 0.15s,border-color 0.15s;position:relative}
-.code-line.active{background:var(--highlight);border-left:3px solid var(--accent);padding-left:13px}
-.code-line:not(.active){border-left:3px solid transparent;padding-left:13px}
-.code-line.active .line-num{color:var(--accent);font-weight:700}
-.line-num{color:var(--dim);min-width:36px;text-align:right;margin-right:14px;user-select:none;flex-shrink:0;font-size:12px}
-.line-text{white-space:pre;color:var(--text)}
+/* ─── Code Display ─── */
+.code-container{flex:1;overflow-y:auto;font-family:var(--font-mono);font-size:13px;line-height:1.6;background:var(--code-bg);transition:background 0.15s}
+.code-line{display:flex;padding:0 16px;min-height:22px;transition:background 0.15s;position:relative}
+.code-line.current{background:var(--line-active-bg);border-left:3px solid var(--accent);padding-left:13px}
+.code-line.executed{background:var(--line-executed-bg)}
+.code-line:not(.current):not(.executed){border-left:3px solid transparent;padding-left:13px}
+.code-line.current .line-num{color:var(--accent);font-weight:700}
+.line-num{color:var(--line-num);min-width:36px;text-align:right;margin-right:14px;user-select:none;flex-shrink:0;font-size:12px}
+.line-text{white-space:pre;color:var(--code-text)}
+.flow-indicator{position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:16px;border-radius:0 2px 2px 0}
 
-.flow-arrow{position:absolute;left:2px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--accent);opacity:0.7;pointer-events:none}
-
-.right-half{display:flex;flex-direction:column;flex:1;overflow:hidden}
-.right-section{flex:1;overflow-y:auto;border-bottom:1px solid var(--border);min-height:0}
-.right-section:last-child{border-bottom:none}
-
+/* ─── Step Description ─── */
 .step-desc{background:var(--panel);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:flex-start;gap:10px;flex-shrink:0}
-.step-desc .step-icon{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.step-desc .step-text{font-size:12px;color:var(--text-secondary);line-height:1.5}
-.step-desc .step-text strong{color:var(--text);font-weight:600}
-.step-desc .step-text code{font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px}
-.step-explain{font-size:11px;color:var(--text-secondary);margin-top:3px;line-height:1.4;padding:4px 8px;background:rgba(255,255,255,0.02);border-radius:4px;border-left:2px solid var(--accent)}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--btn-primary);color:var(--btn-text);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step-info-text{font-size:12px;color:var(--text-secondary);line-height:1.5}
+.step-info-text strong{color:var(--text-primary);font-weight:600}
+.step-info-text code{font-family:var(--font-mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px}
+.step-explain{font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.4;padding:4px 8px;background:var(--panel2);border-radius:4px;border-left:2px solid var(--accent)}
 
-.frame-card{border-bottom:1px solid var(--border);padding:10px 14px;transition:background 0.15s}
-.frame-card:last-child{border-bottom:none}
-.frame-card:hover{background:rgba(255,255,255,0.02)}
-.frame-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.frame-level{background:var(--accent-glow);color:var(--accent);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:0.3px}
-.frame-func{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text)}
-.frame-line{color:var(--dim);font-size:11px;margin-left:auto;font-family:var(--mono)}
+/* ─── Stack Zone ─── */
+.zone-header{background:var(--panel);padding:6px 14px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);border-top:1px solid var(--border);text-transform:uppercase;letter-spacing:0.8px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.zone-header::before{content:'';width:6px;height:6px;border-radius:50%}
+.zone-header.stack::before{background:var(--stack-border)}
+.zone-header.heap::before{background:var(--heap-border)}
+.zone-header.vars::before{background:var(--accent)}
 
-.var-table{width:100%;font-size:11px;border-collapse:collapse}
-.var-table td{padding:3px 8px;font-family:var(--mono);border-top:1px solid var(--border)}
-.var-table tr.changed{background:var(--changed-bg);animation:flashChange 0.6s ease}
-.var-table tr.changed td{border-top-color:var(--changed-border)}
-.var-name{color:var(--accent);font-weight:600}
-.var-type{color:var(--dim);font-size:10px}
-.var-value{color:#2ecc71}
-.var-addr{color:var(--addr-color);font-size:10px}
-.var-ptr{color:var(--ptr-color)}
-.var-table tr.changed .var-value{color:#2ecc71;font-weight:700}
-.var-change-arrow{color:#ff9800;font-size:10px;margin:0 2px}
+.stack-zone{overflow-y:auto;padding:8px;min-height:60px;display:flex;flex-direction:column;gap:4px}
+.stack-frame{border:1px solid var(--stack-border);border-radius:var(--radius);overflow:hidden;transition:all 0.15s}
+.stack-frame.active{box-shadow:0 0 0 1px var(--accent)}
+.stack-frame-header{background:var(--stack-bg);padding:5px 10px;font-size:11px;font-weight:700;color:var(--stack-text);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--stack-border)}
+.stack-frame-header .func-name{font-family:var(--font-mono)}
+.stack-frame-header .frame-addr{font-family:var(--font-mono);font-size:10px;color:var(--addr-color)}
+.var-row{display:flex;align-items:center;padding:3px 10px;gap:8px;font-family:var(--font-mono);font-size:11px;border-bottom:1px solid rgba(128,128,128,0.1)}
+.var-row:last-child{border-bottom:none}
+.var-row.changed{background:var(--changed-bg);animation:flash 0.5s ease}
+.var-name{color:var(--accent);font-weight:600;min-width:60px}
+.var-type{color:var(--type-color);min-width:50px;font-size:10px}
+.var-val{color:var(--success);flex:1}
+.var-val.ptr{color:var(--ptr-color)}
+.var-addr{color:var(--addr-color);font-size:10px;min-width:70px}
+.var-arrow{color:var(--ptr-color);font-size:10px}
 
-.argv-panel{padding:10px 14px;font-size:12px;background:var(--panel);border-bottom:1px solid var(--border)}
-.argv-panel .argv-title{font-weight:700;margin-bottom:6px;color:var(--accent);font-size:12px;display:flex;align-items:center;gap:6px}
-.argv-panel .argv-title::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.argv-item{display:inline-flex;align-items:center;gap:4px;background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:2px 8px;margin:2px;font-family:var(--mono);font-size:11px}
+/* ─── Heap Zone ─── */
+.heap-zone{overflow-y:auto;padding:8px;min-height:40px;display:flex;flex-wrap:wrap;gap:6px}
+.heap-object{border:1px solid var(--heap-border);border-radius:var(--radius-sm);background:var(--heap-bg);padding:6px 10px;font-family:var(--font-mono);font-size:11px;transition:all 0.15s}
+.heap-object .heap-label{font-weight:700;color:var(--heap-text);margin-bottom:3px;font-size:10px;text-transform:uppercase;letter-spacing:0.5px}
+.heap-object .heap-val{color:var(--success)}
+.heap-empty{color:var(--text-dim);font-size:12px;padding:8px;text-align:center}
+
+/* ─── Output Terminal ─── */
+.console-panel{padding:12px 14px;font-family:var(--font-mono);font-size:13px;min-height:60px;background:var(--output-bg);color:var(--output-text);white-space:pre-wrap;word-break:break-all;line-height:1.6}
+
+/* ─── Argv Panel ─── */
+.argv-panel{padding:8px 14px;font-size:12px;background:var(--panel);border-bottom:1px solid var(--border)}
+.argv-title{font-weight:700;margin-bottom:4px;color:var(--accent);font-size:12px;display:flex;align-items:center;gap:6px}
+.argv-title::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.argv-item{display:inline-flex;align-items:center;gap:4px;background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:2px 8px;margin:2px;font-family:var(--font-mono);font-size:11px}
 .argv-idx{color:var(--accent);font-weight:700}
-.argv-val{color:#2ecc71}
-.argv-ptr{color:var(--ptr-color);font-size:10px}
+.argv-val{color:var(--success)}
+.argv-addr{color:var(--addr-color);font-size:10px}
 
-.console-panel{padding:12px 14px;font-family:var(--mono);font-size:12px;min-height:60px;background:#0d1017;color:#a9b7c6;white-space:pre-wrap;word-break:break-all;line-height:1.6}
-.console-panel::before{content:'> ';color:var(--dim)}
-
-.controls{background:var(--panel);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:6px;flex-shrink:0;flex-wrap:wrap}
-.controls .step-info{font-size:12px;color:var(--text-secondary);margin-left:auto;font-family:var(--mono)}
+/* ─── Footer Controls ─── */
+.footer{background:var(--footer-bg);border-top:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:6px;flex-shrink:0;transition:background 0.15s}
+.footer .step-count{font-size:12px;color:var(--text-secondary);margin-left:auto;font-family:var(--font-mono)}
 .slider-wrap{display:flex;align-items:center;gap:8px;flex:1;min-width:180px}
-.slider-wrap input[type=range]{flex:1;height:4px;-webkit-appearance:none;background:var(--border);border-radius:2px;outline:none}
-.slider-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 6px rgba(108,140,255,0.4)}
+.slider-wrap input[type=range]{flex:1;height:4px;-webkit-appearance:none;background:var(--slider-track);border-radius:2px;outline:none}
+.slider-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--slider-thumb);cursor:pointer;box-shadow:0 0 6px var(--accent-glow)}
 .slider-wrap input[type=range]:disabled{opacity:0.3}
+.btn-nav{padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;background:var(--panel2);color:var(--text-primary);transition:all 0.15s}
+.btn-nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.btn-nav:disabled{opacity:0.25;cursor:not-allowed}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;margin:0 8px;flex:1;overflow:hidden}
+.progress-fill{height:100%;background:var(--btn-primary);border-radius:2px;transition:width 0.2s ease}
+.no-data{padding:20px;text-align:center;color:var(--text-dim);font-size:12px}
 
-.progress-dots{display:flex;gap:3px;align-items:center;max-width:200px;overflow:hidden}
+/* ─── Modal ─── */
+.modal-overlay{position:fixed;inset:0;background:var(--modal-overlay);display:flex;align-items:center;justify-content:center;z-index:1000}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;width:460px;max-width:90vw;box-shadow:var(--shadow-lg)}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--text-primary)}
+.modal p{font-size:12px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5}
+.modal-argv-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.modal-argv-row{display:flex;align-items:center;gap:8px}
+.modal-argv-row label{font-family:var(--font-mono);font-size:11px;color:var(--accent);min-width:55px}
+.modal-argv-row input{flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:12px;background:var(--panel2);color:var(--text-primary);transition:border-color 0.15s}
+.modal-argv-row input:focus{outline:none;border-color:var(--accent)}
+.modal-add{background:none;border:1px dashed var(--border);color:var(--text-dim);padding:4px 10px;font-size:11px;width:100%;margin-bottom:8px;border-radius:var(--radius-sm);cursor:pointer;transition:all 0.15s}
+.modal-add:hover{border-color:var(--accent);color:var(--text-primary)}
+.modal-buttons{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.modal-btn{padding:6px 16px;border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.modal-btn-cancel{background:var(--panel2);color:var(--text-secondary);border:1px solid var(--border)}
+.modal-btn-cancel:hover{color:var(--text-primary)}
+.modal-btn-run{background:var(--btn-primary);color:var(--btn-text)}
+.modal-btn-run:hover{background:var(--btn-primary-hover)}
+.modal-note{font-size:10px;color:var(--text-dim);font-style:italic}
+
+@keyframes flash{0%{background:rgba(166,227,169,0.3)}100%{background:var(--changed-bg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.6s linear infinite}
+
+.progress-dots{display:flex;gap:3px;align-items:center}
 .progress-dot{width:4px;height:4px;border-radius:50%;background:var(--border);transition:all 0.15s;flex-shrink:0}
 .progress-dot.active{background:var(--accent);width:12px;height:4px;border-radius:2px}
 .progress-dot.visited{background:var(--accent);opacity:0.4}
-
-.no-data{padding:30px;text-align:center;color:var(--dim);font-size:13px}
-
-/* Memory Panel */
-.memory-panel{padding:10px 14px;font-family:var(--mono);font-size:11px;background:#0d1017;overflow-y:auto}
-.mem-title{color:var(--stack-color);font-weight:700;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.mem-title::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--stack-color)}
-.mem-frame{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
-.mem-frame-header{background:var(--panel2);padding:4px 8px;font-size:10px;font-weight:700;color:var(--text-secondary);display:flex;justify-content:space-between;border-bottom:1px solid var(--border)}
-.mem-row{display:flex;align-items:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);gap:8px}
-.mem-row:last-child{border-bottom:none}
-.mem-addr{color:var(--addr-color);min-width:60px;font-size:10px}
-.mem-label{color:var(--text);flex:1}
-.mem-val{color:#2ecc71;font-weight:600}
-.mem-val.ptr{color:var(--ptr-color)}
-.mem-arrow{color:var(--ptr-color);font-size:10px;min-width:20px;text-align:center}
-.mem-row.changed{background:var(--changed-bg);animation:flashChange 0.6s ease}
-.mem-empty{color:var(--dim);text-align:center;padding:12px}
-
-/* Stack Visual */
-.stack-visual{padding:10px 14px;background:#0d1017;border-bottom:1px solid var(--border)}
-.stack-title{color:var(--stack-color);font-weight:700;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.stack-title::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--stack-color)}
-.stack-boxes{display:flex;flex-direction:column;gap:2px}
-.stack-box{display:flex;align-items:center;gap:6px;padding:3px 8px;border-radius:3px;font-family:var(--mono);font-size:11px;transition:background 0.15s}
-.stack-box.active{background:rgba(108,140,255,0.15);border:1px solid var(--highlight-border)}
-.stack-box:not(.active){border:1px solid transparent}
-.stack-box-label{color:var(--accent);font-weight:600;min-width:60px}
-.stack-box-addr{color:var(--addr-color);font-size:10px;min-width:55px}
-.stack-box-arrow{color:var(--ptr-color);font-size:10px}
-.stack-box-val{color:#2ecc71}
-
-/* Mini-map */
-.minimap{position:absolute;right:4px;top:0;bottom:0;width:30px;background:rgba(255,255,255,0.02);border-left:1px solid var(--border);pointer-events:none}
-.minimap-dot{position:absolute;right:8px;width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:0.6;transform:translateY(-50%)}
-
-/* Modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:1000;animation:fadeIn 0.15s ease}
-.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;width:440px;max-width:90vw;box-shadow:var(--shadow-lg);animation:slideUp 0.2s ease}
-.modal h3{font-size:15px;margin-bottom:4px;color:var(--text)}
-.modal p{font-size:12px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5}
-.modal-argv-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
-.modal-argv-row{display:flex;align-items:center;gap:8px}
-.modal-argv-row label{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:55px}
-.modal-argv-row input{flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--mono);font-size:12px;background:var(--panel2);color:var(--text)}
-.modal-argv-row input:focus{outline:none;border-color:var(--accent)}
-.modal-add{background:none;border:1px dashed var(--border);color:var(--dim);padding:4px 10px;font-size:11px;width:100%;margin-bottom:12px}
-.modal-add:hover{border-color:var(--accent);color:var(--text)}
-.modal-buttons{display:flex;gap:8px;justify-content:flex-end}
-.modal-buttons .btn-cancel{background:var(--panel2);color:var(--text-secondary);border:1px solid var(--border)}
-.modal-buttons .btn-cancel:hover{color:var(--text)}
-.modal-note{font-size:10px;color:var(--dim);margin-top:8px;font-style:italic}
-
-@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes flashChange{0%{background:rgba(46,204,113,0.3)}100%{background:var(--changed-bg)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.6s linear infinite}
 
 @media(max-width:900px){
   .main-area{flex-direction:column}
   .left-panel,.right-panel{width:100%;height:50%}
   .left-panel{border-right:none;border-bottom:1px solid var(--border)}
-  header .subtitle{display:none}
 }
 </style>
 </head>
 <body>
 <div id="app">
-  <header>
+  <div class="header">
     <h1>C/C++ Tutor</h1>
-    <span class="subtitle">Step-by-step execution visualizer with memory &amp; argv support</span>
-  </header>
-
-  <div class="top-bar">
-    <label for="lang-select">Lang</label>
-    <select id="lang-select">
-      <option value="c">C</option>
-      <option value="cpp">C++</option>
-    </select>
-    <button class="btn-run" id="btn-run" onclick="runCode()">
-      <span id="run-icon">&#9654;</span>
-      <span id="run-text">Run</span>
-    </button>
+    <div class="header-center">
+      <select id="lang-select">
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+      </select>
+      <button class="btn-run" id="btn-run" onclick="runCode()">
+        <span id="run-icon">&#9654;</span>
+        <span id="run-text">Run</span>
+      </button>
+    </div>
+    <div class="header-right">
+      <button class="btn-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9789;</button>
+    </div>
   </div>
 
   <div class="error-bar" id="error-bar"></div>
 
   <div class="main-area">
     <div class="left-panel">
-      <div class="panel-header" id="code-header">
+      <div class="panel-header">
         Source Code
         <span class="badge" id="line-badge" style="display:none"></span>
-        <button class="btn-step" id="btn-edit-toggle" onclick="toggleEdit()" style="margin-left:auto;font-size:10px;padding:3px 10px">Edit</button>
+        <button class="btn-nav" id="btn-edit-toggle" onclick="toggleEdit()" style="margin-left:auto;font-size:10px;padding:3px 10px">Edit</button>
       </div>
       <textarea class="code-editor" id="code-editor" spellcheck="false" placeholder="Enter your C/C++ code here...">int main(int argc, char *argv[]) {
     int i;
@@ -225,490 +246,334 @@ button{padding:6px 16px;border:none;border-radius:var(--radius-sm);font-size:12p
     </div>
     <div class="right-panel">
       <div class="step-desc" id="step-desc" style="display:none">
-        <div class="step-icon" id="step-icon">0</div>
-        <div>
-          <div class="step-text" id="step-text">Ready</div>
+        <div class="step-num" id="step-num">0</div>
+        <div style="flex:1">
+          <div class="step-info-text" id="step-text">Ready</div>
           <div class="step-explain" id="step-explain" style="display:none"></div>
         </div>
       </div>
 
-      <div class="panel-header">Call Stack &amp; Variables</div>
+      <div class="zone-header vars">Variables</div>
       <div class="argv-panel" id="argv-panel" style="display:none"></div>
-      <div class="right-section" id="frames-container">
-        <div class="no-data">Run code to see the call stack</div>
+      <div class="stack-zone" id="frames-container">
+        <div class="no-data">Run code to see variables</div>
       </div>
 
-      <div class="panel-header">Stack Memory</div>
-      <div class="memory-panel" id="memory-panel">
-        <div class="mem-empty">Run code to see memory layout</div>
+      <div class="zone-header stack">Stack</div>
+      <div class="stack-zone" id="stack-container">
+        <div class="no-data">Run code to see stack frames</div>
       </div>
 
-      <div class="panel-header">Console Output</div>
+      <div class="zone-header heap">Heap</div>
+      <div class="heap-zone" id="heap-container">
+        <div class="heap-empty">No heap allocations</div>
+      </div>
+
+      <div class="panel-header">Output</div>
       <div class="console-panel" id="console-panel"></div>
     </div>
   </div>
 
-  <div class="controls">
-    <button class="btn-step" id="btn-first" onclick="goFirst()" title="First step (Home)">&#x23EE;</button>
-    <button class="btn-step" id="btn-prev" onclick="goPrev()" title="Previous step (← or p)">&#x25C0;</button>
+  <div class="footer">
+    <button class="btn-nav" id="btn-first" onclick="goFirst()" title="First (Home)">&#x23EE;</button>
+    <button class="btn-nav" id="btn-prev" onclick="goPrev()" title="Prev (←)">&#x25C0;</button>
     <div class="slider-wrap">
       <input type="range" id="step-slider" min="0" max="0" value="0" oninput="goToStep(+this.value)" disabled>
     </div>
-    <button class="btn-step" id="btn-next" onclick="goNext()" title="Next step (→ or n)">&#x25B6;</button>
-    <button class="btn-step" id="btn-last" onclick="goLast()" title="Last step (End)">&#x23ED;</button>
-    <div class="step-info" id="step-info"></div>
+    <button class="btn-nav" id="btn-next" onclick="goNext()" title="Next (→)">&#x25B6;</button>
+    <button class="btn-nav" id="btn-last" onclick="goLast()" title="Last (End)">&#x23ED;</button>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="step-count" id="step-count"></div>
   </div>
 </div>
 
 <div class="modal-overlay" id="argv-modal" style="display:none">
   <div class="modal">
     <h3>Program Arguments (argv)</h3>
-    <p>Your code uses <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argc</code> / <code style="font-family:var(--mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px;font-size:11px">argv</code>. Enter the arguments below. The program name (argv[0]) is added automatically.</p>
+    <p>Your code uses <code style="font-family:var(--font-mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px">argc</code>/<code style="font-family:var(--font-mono);color:var(--accent);background:var(--accent-glow);padding:1px 5px;border-radius:3px">argv</code>. Enter arguments below. argv[0] (program name) is set automatically.</p>
     <div class="modal-argv-list" id="modal-argv-list"></div>
     <button class="modal-add" onclick="addArgvRow()">+ Add argument</button>
-    <div class="modal-note">argv[0] (program name) is set automatically by the system. Your first input becomes argv[1].</div>
+    <div class="modal-note">Your first input becomes argv[1], second becomes argv[2], etc.</div>
     <div class="modal-buttons">
-      <button class="btn-step btn-cancel" onclick="closeArgvModal()">Cancel</button>
-      <button class="btn-run" onclick="submitArgvModal()">&#9654; Run</button>
+      <button class="modal-btn modal-btn-cancel" onclick="closeArgvModal()">Cancel</button>
+      <button class="modal-btn modal-btn-run" onclick="submitArgvModal()">&#9654; Run</button>
     </div>
   </div>
 </div>
 
 <script>
-let traceData = null;
-let currentStep = -1;
-let prevVars = {};
-let editMode = true;
-let pendingArgs = [];
-
+let traceData = null, currentStep = -1, prevVars = {}, editMode = true, pendingArgs = [];
 const $ = id => document.getElementById(id);
 
-function hasArgv(code) {
-  return /\bargc\b|\bargv\b/.test(code);
-}
+/* ─── Theme ─── */
+function getTheme() { return localStorage.getItem('themePreference') || 'dark'; }
+function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); $('theme-toggle').innerHTML = t === 'dark' ? '&#9789;' : '&#9788;'; }
+function toggleTheme() { const t = getTheme() === 'dark' ? 'light' : 'dark'; localStorage.setItem('themePreference', t); applyTheme(t); }
+applyTheme(getTheme());
 
-function parseArgs(raw) {
-  if (!raw.trim()) return [];
-  if (raw.includes(',')) return raw.split(',').map(s => s.trim()).filter(Boolean);
-  return raw.trim().split(/\s+/).filter(Boolean);
-}
+function hasArgv(code) { return /\bargc\b|\bargv\b/.test(code); }
+function parseArgs(raw) { if (!raw.trim()) return []; if (raw.includes(',')) return raw.split(',').map(s=>s.trim()).filter(Boolean); return raw.trim().split(/\s+/).filter(Boolean); }
 
 function toggleEdit() {
   editMode = !editMode;
-  if (editMode) {
-    $('code-editor').style.display = '';
-    $('code-container').style.display = 'none';
-    $('btn-edit-toggle').textContent = 'Edit';
-  } else {
-    $('code-editor').style.display = 'none';
-    $('code-container').style.display = '';
-    $('btn-edit-toggle').textContent = 'Edit';
-    if (traceData) renderCode();
-  }
+  if (editMode) { $('code-editor').style.display=''; $('code-container').style.display='none'; $('btn-edit-toggle').textContent='Edit'; }
+  else { $('code-editor').style.display='none'; $('code-container').style.display=''; $('btn-edit-toggle').textContent='Edit'; if(traceData) renderCode(); }
 }
 
 function openArgvModal() {
-  const modal = $('argv-modal');
   const list = $('modal-argv-list');
   list.innerHTML = '';
-  addArgvRow();
-  addArgvRow();
-  modal.style.display = 'flex';
-  setTimeout(() => {
-    const inputs = list.querySelectorAll('input');
-    inputs[0].focus();
-  }, 100);
+  addArgvRow(); addArgvRow();
+  $('argv-modal').style.display = 'flex';
+  setTimeout(() => list.querySelectorAll('input')[0].focus(), 100);
 }
-
-function closeArgvModal() {
-  $('argv-modal').style.display = 'none';
-  setLoading(false);
-}
-
+function closeArgvModal() { $('argv-modal').style.display='none'; setLoading(false); }
 function addArgvRow(val) {
-  const list = $('modal-argv-list');
-  const idx = list.children.length;
+  const list = $('modal-argv-list'), idx = list.children.length;
   const row = document.createElement('div');
   row.className = 'modal-argv-row';
-  row.innerHTML = `<label>argv[${idx}]</label><input type="text" value="${escHtml(val || '')}" placeholder="argument ${idx}" onkeydown="if(event.key==='Enter'){event.preventDefault();addArgvRow()}">`;
+  row.innerHTML = `<label>argv[${idx+1}]</label><input type="text" value="${escHtml(val||'')}" placeholder="argument ${idx+1}" onkeydown="if(event.key==='Enter'){event.preventDefault();addArgvRow()}">`;
   list.appendChild(row);
   row.querySelector('input').focus();
 }
-
 function submitArgvModal() {
-  const inputs = $('modal-argv-list').querySelectorAll('input');
   pendingArgs = [];
-  inputs.forEach(inp => {
-    const v = inp.value.trim();
-    if (v) pendingArgs.push(v);
-  });
+  $('modal-argv-list').querySelectorAll('input').forEach(inp => { const v = inp.value.trim(); if(v) pendingArgs.push(v); });
   $('argv-modal').style.display = 'none';
   doRun(pendingArgs);
 }
 
 async function runCode() {
   const code = $('code-editor').value;
-  if (!code.trim()) {
-    showError('Please enter some C/C++ code first.');
-    return;
-  }
-  if (hasArgv(code)) {
-    openArgvModal();
-    return;
-  }
+  if (!code.trim()) { showError('Please enter some C/C++ code first.'); return; }
+  if (hasArgv(code)) { openArgvModal(); return; }
   doRun([]);
 }
 
 async function doRun(args) {
-  const code = $('code-editor').value;
-  const lang = $('lang-select').value;
-
-  hideError();
-  setLoading(true);
-  currentStep = -1;
-  prevVars = {};
-  traceData = null;
-
+  const code = $('code-editor').value, lang = $('lang-select').value;
+  hideError(); setLoading(true); currentStep = -1; prevVars = {}; traceData = null;
   editMode = false;
-  $('code-editor').style.display = 'none';
-  $('code-container').style.display = '';
+  $('code-editor').style.display='none'; $('code-container').style.display='';
   $('code-container').innerHTML = '<div class="no-data"><span class="spinner"></span>&nbsp; Compiling and tracing...</div>';
-
   try {
-    const resp = await fetch('/api/trace', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, lang, args }),
-    });
-    if (!resp.ok) {
-      showError('Backend returned error ' + resp.status);
-      setLoading(false);
-      editMode = true;
-      $('code-editor').style.display = '';
-      $('code-container').style.display = 'none';
-      return;
-    }
+    const resp = await fetch('/api/trace', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({code,lang,args}) });
+    if (!resp.ok) { showError('Backend returned error '+resp.status); setLoading(false); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; return; }
     const data = await resp.json();
-    if (!data.success) {
-      showError(data.error || 'Unknown error');
-      setLoading(false);
-      editMode = true;
-      $('code-editor').style.display = '';
-      $('code-container').style.display = 'none';
-      return;
-    }
+    if (!data.success) { showError(data.error||'Unknown error'); setLoading(false); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; return; }
     traceData = data;
-    $('step-desc').style.display = 'flex';
-    renderCode();
-    renderArgv();
-    updateControls();
-    goToStep(0);
-  } catch (e) {
-    showError('Network error: ' + e.message);
-    editMode = true;
-    $('code-editor').style.display = '';
-    $('code-container').style.display = 'none';
-    $('step-desc').style.display = 'none';
-  } finally {
-    setLoading(false);
-  }
+    $('step-desc').style.display='flex';
+    renderCode(); renderArgv(); updateControls(); goToStep(0);
+  } catch(e) {
+    showError('Network error: '+e.message); editMode=true; $('code-editor').style.display=''; $('code-container').style.display='none'; $('step-desc').style.display='none';
+  } finally { setLoading(false); }
 }
 
-function showError(msg) {
-  $('error-bar').style.display = 'block';
-  $('error-bar').textContent = msg;
-}
-function hideError() { $('error-bar').style.display = 'none'; }
-
-function setLoading(on) {
-  $('btn-run').disabled = on;
-  $('run-icon').innerHTML = on ? '<span class="spinner" style="width:10px;height:10px;border-width:1.5px"></span>' : '&#9654;';
-  $('run-text').textContent = on ? 'Running...' : 'Run';
-}
+function showError(msg) { $('error-bar').style.display='block'; $('error-bar').textContent=msg; }
+function hideError() { $('error-bar').style.display='none'; }
+function setLoading(on) { $('btn-run').disabled=on; $('run-icon').innerHTML=on?'<span class="spinner" style="width:10px;height:10px;border-width:1.5px"></span>':'&#9654;'; $('run-text').textContent=on?'Running...':'Run'; }
 
 function renderCode() {
-  const container = $('code-container');
-  if (!traceData || !traceData.source_lines) {
-    container.innerHTML = '<div class="no-data">No source</div>';
-    return;
-  }
+  const c = $('code-container');
+  if (!traceData||!traceData.source_lines) { c.innerHTML='<div class="no-data">No source</div>'; return; }
   const lines = traceData.source_lines;
-  const activeLine = currentStep >= 0 && traceData.steps[currentStep]
-    ? traceData.steps[currentStep].line : 0;
-  const prevLine = currentStep > 0 && traceData.steps[currentStep - 1]
-    ? traceData.steps[currentStep - 1].line : 0;
-
+  const activeLine = currentStep>=0&&traceData.steps[currentStep]?traceData.steps[currentStep].line:0;
+  const prevLine = currentStep>0&&traceData.steps[currentStep-1]?traceData.steps[currentStep-1].line:0;
   let html = '';
-  for (let i = 0; i < lines.length; i++) {
-    const lineNum = i + 1;
-    const active = lineNum === activeLine ? ' active' : '';
-    let arrow = '';
-    if (lineNum === activeLine && lineNum !== prevLine && traceData.steps[currentStep]) {
-      const step = traceData.steps[currentStep];
-      if (step.finished) arrow = '<span class="flow-arrow">&#9632;</span>';
-      else if (step.line > prevLine && prevLine > 0) arrow = '<span class="flow-arrow">&#8595;</span>';
-      else if (step.line < prevLine && prevLine > 0) arrow = '<span class="flow-arrow">&#8593;</span>';
+  for (let i=0;i<lines.length;i++) {
+    const ln=i+1, isCurrent=ln===activeLine;
+    const isExec = !isCurrent && currentStep>=0 && traceData.steps.slice(0,currentStep+1).some(s=>s.line===ln);
+    let cls = isCurrent?'current':isExec?'executed':'';
+    let arrow='';
+    if (isCurrent && traceData.steps[currentStep]) {
+      const s=traceData.steps[currentStep];
+      if(s.finished) arrow='<span class="flow-indicator" style="background:var(--error)"></span>';
+      else if(activeLine>prevLine&&prevLine>0) arrow='<span class="flow-indicator" style="background:var(--accent)"></span>';
     }
-    html += `<div class="code-line${active}" id="codeline-${lineNum}">`
-      + arrow
-      + `<span class="line-num">${lineNum}</span>`
-      + `<span class="line-text">${escHtml(lines[i])}</span></div>`;
+    html+=`<div class="code-line ${cls}" id="codeline-${ln}">${arrow}<span class="line-num">${ln}</span><span class="line-text">${escHtml(lines[i])}</span></div>`;
   }
-  container.innerHTML = html;
-  if (activeLine > 0) {
-    const el = $('codeline-' + activeLine);
-    if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
-  }
+  c.innerHTML = html;
+  if(activeLine>0){const el=$('codeline-'+activeLine);if(el)el.scrollIntoView({block:'center',behavior:'smooth'});}
 }
 
 function renderArgv() {
-  const panel = $('argv-panel');
-  if (!traceData || !traceData.argv || traceData.argv.length === 0) {
-    panel.style.display = 'none';
-    return;
-  }
-  panel.style.display = 'block';
-  let html = '<div class="argv-title">argc = ' + traceData.argv.length + '</div>';
-  traceData.argv.forEach((v, i) => {
-    const addr = '0x' + (0x7ffffff0 + i * 8).toString(16);
-    html += `<span class="argv-item">`
-      + `<span class="argv-idx">argv[${i}]</span> `
-      + `<span class="argv-val">"${escHtml(v)}"</span> `
-      + `<span class="argv-ptr">@${addr}</span>`
-      + `</span>`;
+  const p=$('argv-panel');
+  if(!traceData||!traceData.argv||traceData.argv.length===0){p.style.display='none';return;}
+  p.style.display='block';
+  let h='<div class="argv-title">argc = '+traceData.argv.length+'</div>';
+  traceData.argv.forEach((v,i)=>{
+    const addr='0x'+(0x7ffffff0+i*8).toString(16);
+    h+=`<span class="argv-item"><span class="argv-idx">argv[${i}]</span> <span class="argv-val">"${escHtml(v)}"</span> <span class="argv-addr">@${addr}</span></span>`;
   });
-  panel.innerHTML = html;
+  p.innerHTML=h;
 }
 
-function explainStep(step, lines) {
-  if (!step || step.finished) return 'The program has finished executing.';
-  const lineText = (lines && step.line > 0 && step.line <= lines.length) ? lines[step.line - 1].trim() : '';
-  if (/^\s*for\s*\(/.test(lineText)) return 'Evaluating the for-loop condition and updating the loop counter.';
-  if (/^\s*while\s*\(/.test(lineText)) return 'Checking the while-loop condition.';
-  if (/^\s*if\s*\(/.test(lineText)) return 'Evaluating the if-condition to decide which branch to take.';
-  if (/^\s*return\b/.test(lineText)) return 'Returning a value from the current function.';
-  if (/\bwrite\s*\(/.test(lineText)) return 'Calling write() to output data to stdout.';
-  if (/\bprintf\s*\(/.test(lineText)) return 'Calling printf() to format and print output.';
-  if (/^\s*int\s+\w+\s*=/.test(lineText)) return 'Declaring and initializing a local variable on the stack.';
-  if (/^\s*int\s+\w+/.test(lineText)) return 'Declaring a local variable (uninitialized).';
-  if (/\w+\s*=/.test(lineText) && !/==/.test(lineText)) return 'Assigning a new value to a variable.';
-  if (/\+\+|\-\-/.test(lineText)) return 'Incrementing/decrementing a variable.';
-  if (/\+\+|--/.test(lineText)) return 'Incrementing or decrementing a variable.';
+function explainStep(step,lines) {
+  if(!step||step.finished) return 'Program finished executing.';
+  const lt=(lines&&step.line>0&&step.line<=lines.length)?lines[step.line-1].trim():'';
+  if(/^\s*for\s*\(/.test(lt)) return 'Evaluating the for-loop condition and updating the counter.';
+  if(/^\s*while\s*\(/.test(lt)) return 'Checking while-loop condition.';
+  if(/^\s*if\s*\(/.test(lt)) return 'Evaluating the if-condition.';
+  if(/^\s*return\b/.test(lt)) return 'Returning from the current function.';
+  if(/\bwrite\s*\(/.test(lt)) return 'Calling write() to output to stdout.';
+  if(/\bprintf\s*\(/.test(lt)) return 'Calling printf() to format and print output.';
+  if(/^\s*int\s+\w+\s*=/.test(lt)) return 'Declaring and initializing a variable on the stack.';
+  if(/^\s*int\s+\w+/.test(lt)) return 'Declaring a local variable (uninitialized).';
+  if(/\w+\s*=/.test(lt)&&!/==/.test(lt)) return 'Assigning a new value to a variable.';
   return 'Executing this statement.';
 }
 
 function renderStepDesc() {
-  if (!traceData || currentStep < 0 || currentStep >= traceData.steps.length) {
-    $('step-desc').style.display = 'none';
-    return;
-  }
-  $('step-desc').style.display = 'flex';
-  const step = traceData.steps[currentStep];
-  $('step-icon').textContent = currentStep + 1;
-  let parts = [];
-  if (step.line > 0) parts.push(`<strong>line ${step.line}</strong>`);
-  if (step.func && step.func !== '???') parts.push(`in <code>${escHtml(step.func)}</code>`);
-  if (step.finished) parts.push('<span style="color:#2ecc71">Program finished</span>');
-  let desc = parts.join(' &middot; ');
-  if (step.output_delta) {
-    desc += `<br><span style="color:#a9b7c6">stdout: "${escHtml(step.output_delta.trim())}"</span>`;
-  }
-  $('step-text').innerHTML = desc || 'Step ' + (currentStep + 1);
-  const explain = explainStep(step, traceData.source_lines);
-  $('step-explain').textContent = explain;
-  $('step-explain').style.display = explain ? 'block' : 'none';
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){$('step-desc').style.display='none';return;}
+  $('step-desc').style.display='flex';
+  const step=traceData.steps[currentStep];
+  $('step-num').textContent=currentStep+1;
+  let parts=[];
+  if(step.line>0) parts.push(`<strong>line ${step.line}</strong>`);
+  if(step.func&&step.func!=='???') parts.push(`in <code>${escHtml(step.func)}</code>`);
+  if(step.finished) parts.push('<span style="color:var(--success)">Program finished</span>');
+  let desc=parts.join(' &middot; ');
+  if(step.output_delta) desc+=`<br><span style="color:var(--text-dim)">stdout: "${escHtml(step.output_delta.trim())}"</span>`;
+  $('step-text').innerHTML=desc||'Step '+(currentStep+1);
+  const ex=explainStep(step,traceData.source_lines);
+  $('step-explain').textContent=ex;
+  $('step-explain').style.display=ex?'block':'none';
 }
+
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;return Math.abs(h);}
 
 function renderFrames() {
-  const container = $('frames-container');
-  if (!traceData || currentStep < 0 || currentStep >= traceData.steps.length) {
-    container.innerHTML = '<div class="no-data">Run code to see the call stack</div>';
-    return;
-  }
-  const step = traceData.steps[currentStep];
-  if (!step.frames || step.frames.length === 0) {
-    container.innerHTML = '<div class="no-data">' + (step.finished ? 'Program finished' : 'No stack frames') + '</div>';
-    return;
-  }
-  let html = '';
-  const frames = [...step.frames].reverse();
-  for (const frame of frames) {
-    html += `<div class="frame-card">`;
-    html += `<div class="frame-header">`;
-    html += `<span class="frame-level">${frame.level === 0 ? 'main' : 'frame ' + frame.level}</span>`;
-    html += `<span class="frame-func">${escHtml(frame.func)}</span>`;
-    html += `<span class="frame-line">:${frame.line || '?'}</span>`;
-    html += `</div>`;
-    if (frame.vars && frame.vars.length > 0) {
-      html += `<table class="var-table">`;
-      for (const v of frame.vars) {
-        const key = `${frame.level}:${v.name}`;
-        const changed = prevVars[key] !== undefined && prevVars[key] !== v.value;
-        const isPtr = /\*/.test(v.type) || v.value.startsWith('0x');
-        const addr = '0x' + ((0xbfff0000 + frame.level * 0x100 + hashStr(v.name) % 0x100) >>> 0).toString(16);
-        const valClass = isPtr ? 'var-val ptr' : 'var-val';
-        html += `<tr class="${changed ? 'changed' : ''}">`;
-        html += `<td class="var-name">${escHtml(v.name)}</td>`;
-        html += `<td class="var-type">${escHtml(v.type)}</td>`;
-        html += `<td class="${valClass}">${escHtml(v.value)}${changed ? ' &#8594;' : ''}</td>`;
-        html += `<td class="var-addr">@${addr}</td>`;
-        html += `</tr>`;
-      }
-      html += `</table>`;
-    }
-    html += `</div>`;
-  }
-  container.innerHTML = html;
-}
-
-function renderMemory() {
-  const panel = $('memory-panel');
-  if (!traceData || currentStep < 0 || currentStep >= traceData.steps.length) {
-    panel.innerHTML = '<div class="mem-empty">Run code to see memory layout</div>';
-    return;
-  }
-  const step = traceData.steps[currentStep];
-  if (!step.frames || step.frames.length === 0) {
-    panel.innerHTML = '<div class="mem-empty">' + (step.finished ? 'Program finished' : 'No stack frames') + '</div>';
-    return;
-  }
-
-  let html = '<div class="mem-title">Stack Memory</div><div class="stack-boxes">';
-  const frames = [...step.frames].reverse();
-
-  for (const frame of frames) {
-    const frameAddr = 0xbfff0000 + frame.level * 0x100;
-    const isActive = frame === frames[0];
-    html += `<div class="mem-frame">`;
-    html += `<div class="mem-frame-header"><span>${escHtml(frame.func || '???')}</span><span>0x${frameAddr.toString(16)}</span></div>`;
-
-    if (frame.vars && frame.vars.length > 0) {
-      for (const v of frame.vars) {
-        const vAddr = '0x' + ((frameAddr + 0x20 + hashStr(v.name) % 0xd0) >>> 0).toString(16);
-        const isPtr = /\*/.test(v.type) || (v.value && v.value.startsWith('0x'));
-        const key = `${frame.level}:${v.name}`;
-        const changed = prevVars[key] !== undefined && prevVars[key] !== v.value;
-
-        let displayVal = escHtml(v.value);
-        let arrow = '';
-        if (isPtr && v.value && v.value !== '0x0' && v.value !== '0' && v.value !== '(nil)') {
-          const targetAddr = '0x' + ((parseInt(v.value, 16) || 0xbfffe000 + hashStr(v.name) % 0x2000) >>> 0).toString(16);
-          arrow = `<span class="mem-arrow">&#8594;</span><span class="mem-val ptr">${targetAddr}</span>`;
+  const c=$('frames-container');
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML='<div class="no-data">Run code to see variables</div>';return;}
+  const step=traceData.steps[currentStep];
+  if(!step.frames||step.frames.length===0){c.innerHTML='<div class="no-data">'+(step.finished?'Program finished':'No frames')+'</div>';return;}
+  let html='';
+  const frames=[...step.frames].reverse();
+  for(const frame of frames){
+    html+=`<div class="stack-frame${frame===frames[0]?' active':''}">`;
+    html+=`<div class="stack-frame-header"><span class="func-name">${escHtml(frame.func||'???')}</span><span class="frame-addr">0x${(0xbfff0000+frame.level*0x100).toString(16)}</span></div>`;
+    if(frame.vars&&frame.vars.length>0){
+      html+=`<table class="var-table"><tbody>`;
+      for(const v of frame.vars){
+        const key=`${frame.level}:${v.name}`, changed=prevVars[key]!==undefined&&prevVars[key]!==v.value;
+        const isPtr=/\*/.test(v.type)||v.value.startsWith('0x');
+        const addr='0x'+((0xbfff0000+frame.level*0x100+0x20+hashStr(v.name)%0xd0)>>>0).toString(16);
+        let arrow='';
+        if(isPtr&&v.value&&v.value!=='0x0'&&v.value!=='0'&&v.value!=='(nil)'){
+          const tAddr='0x'+((parseInt(v.value,16)||0xbfffe000+hashStr(v.name)%0x2000)>>>0).toString(16);
+          arrow=`<span class="var-arrow">&#8594;</span><span style="color:var(--ptr-color)">${tAddr}</span>`;
         }
-
-        html += `<div class="mem-row${changed ? ' changed' : ''}">`;
-        html += `<span class="mem-addr">${vAddr}</span>`;
-        html += `<span class="mem-label">${escHtml(v.name)}</span>`;
-        html += `<span class="mem-val${isPtr ? ' ptr' : ''}">${displayVal}</span>`;
-        html += arrow;
-        html += `</div>`;
+        html+=`<tr class="var-row${changed?' changed':''}">`;
+        html+=`<td class="var-name">${escHtml(v.name)}</td>`;
+        html+=`<td class="var-type">${escHtml(v.type)}</td>`;
+        html+=`<td class="var-val${isPtr?' ptr':''}">${escHtml(v.value)}${changed?' &#8594;':''}</td>`;
+        html+=`<td class="var-addr">@${addr}</td>`;
+        html+=`</tr>`;
       }
-    } else {
-      html += `<div class="mem-row"><span class="mem-empty" style="width:100%">(no variables)</span></div>`;
+      html+=`</tbody></table>`;
     }
-    html += `</div>`;
+    html+=`</div>`;
   }
-  html += '</div>';
-  panel.innerHTML = html;
+  c.innerHTML=html;
 }
 
-function hashStr(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
-  return Math.abs(h);
+function renderStack() {
+  const c=$('stack-container');
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML='<div class="no-data">Run code to see stack frames</div>';return;}
+  const step=traceData.steps[currentStep];
+  if(!step.frames||step.frames.length===0){c.innerHTML='<div class="no-data">'+(step.finished?'Program finished':'No frames')+'</div>';return;}
+  let html='';
+  const frames=[...step.frames].reverse();
+  for(const frame of frames){
+    const addr=0xbfff0000+frame.level*0x100;
+    const isActive=frame===frames[0];
+    html+=`<div class="stack-frame${isActive?' active':''}">`;
+    html+=`<div class="stack-frame-header"><span class="func-name">${escHtml(frame.func||'???')}</span><span class="frame-addr">0x${addr.toString(16)}</span></div>`;
+    if(frame.vars&&frame.vars.length>0){
+      for(const v of frame.vars){
+        const vAddr='0x'+((addr+0x20+hashStr(v.name)%0xd0)>>>0).toString(16);
+        const isPtr=/\*/.test(v.type);
+        html+=`<div class="var-row">`;
+        html+=`<span class="var-addr">${vAddr}</span>`;
+        html+=`<span class="var-name">${escHtml(v.name)}</span>`;
+        html+=`<span class="var-val${isPtr?' ptr':''}">${escHtml(v.value)}</span>`;
+        html+=`</div>`;
+      }
+    }
+    html+=`</div>`;
+  }
+  c.innerHTML=html;
+}
+
+function renderHeap() {
+  const c=$('heap-container');
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){c.innerHTML='<div class="heap-empty">No heap allocations</div>';return;}
+  const step=traceData.steps[currentStep];
+  let html='';
+  let hasHeap=false;
+  if(step.frames){
+    for(const frame of step.frames){
+      if(frame.vars){
+        for(const v of frame.vars){
+          if(/\*/.test(v.type)&&v.value&&v.value!=='0x0'&&v.value!=='0'&&v.value!=='(nil)'){
+            hasHeap=true;
+            const targetAddr='0x'+((parseInt(v.value,16)||0xc0000000+hashStr(v.name)%0x1000)>>>0).toString(16);
+            html+=`<div class="heap-object"><div class="heap-label">${escHtml(v.name)} &#8594;</div><div class="heap-val">@${targetAddr}</div></div>`;
+          }
+        }
+      }
+    }
+  }
+  c.innerHTML=hasHeap?html:'<div class="heap-empty">No heap allocations</div>';
 }
 
 function renderConsole() {
-  const panel = $('console-panel');
-  if (!traceData || currentStep < 0 || currentStep >= traceData.steps.length) {
-    panel.textContent = '';
-    return;
-  }
-  panel.textContent = traceData.steps[currentStep].output_so_far || '';
-}
-
-function renderProgress() {
-  const total = traceData ? traceData.steps.length : 0;
-  if (total === 0) { $('step-info').innerHTML = ''; return; }
-  const dots = [];
-  const maxShow = 30;
-  const step = Math.max(1, Math.floor(total / maxShow));
-  for (let i = 0; i < total; i += step) {
-    let cls = 'progress-dot';
-    if (i === currentStep) cls += ' active';
-    else if (i < currentStep) cls += ' visited';
-    dots.push(`<span class="${cls}"></span>`);
-  }
-  if (total <= maxShow) {
-    dots.length = 0;
-    for (let i = 0; i < total; i++) {
-      let cls = 'progress-dot';
-      if (i === currentStep) cls += ' active';
-      else if (i < currentStep) cls += ' visited';
-      dots.push(`<span class="${cls}"></span>`);
-    }
-  }
-  $('step-info').innerHTML =
-    `<span style="margin-right:8px">Step ${currentStep + 1} / ${total}</span>` +
-    `<span class="progress-dots">${dots.join('')}</span>`;
+  const p=$('console-panel');
+  if(!traceData||currentStep<0||currentStep>=traceData.steps.length){p.textContent='';return;}
+  p.textContent=traceData.steps[currentStep].output_so_far||'';
 }
 
 function updateControls() {
-  const total = traceData ? traceData.steps.length : 0;
-  $('btn-first').disabled = total === 0 || currentStep <= 0;
-  $('btn-prev').disabled = total === 0 || currentStep <= 0;
-  $('btn-next').disabled = total === 0 || currentStep >= total - 1;
-  $('btn-last').disabled = total === 0 || currentStep >= total - 1;
-  const slider = $('step-slider');
-  slider.max = Math.max(0, total - 1);
-  slider.value = currentStep >= 0 ? currentStep : 0;
-  slider.disabled = total === 0;
-  renderProgress();
+  const total=traceData?traceData.steps.length:0;
+  $('btn-first').disabled=total===0||currentStep<=0;
+  $('btn-prev').disabled=total===0||currentStep<=0;
+  $('btn-next').disabled=total===0||currentStep>=total-1;
+  $('btn-last').disabled=total===0||currentStep>=total-1;
+  const sl=$('step-slider'); sl.max=Math.max(0,total-1); sl.value=currentStep>=0?currentStep:0; sl.disabled=total===0;
+  const pct=total>0?((currentStep+1)/total*100):0;
+  $('progress-fill').style.width=pct+'%';
+  $('step-count').textContent=total>0?`Step ${currentStep+1} / ${total}`:'';
 }
 
 function goToStep(n) {
-  if (!traceData) return;
-  const total = traceData.steps.length;
-  if (n < 0) n = 0;
-  if (n >= total) n = total - 1;
-
-  if (currentStep >= 0 && currentStep < traceData.steps.length) {
-    prevVars = {};
-    const step = traceData.steps[currentStep];
-    for (const frame of (step.frames || [])) {
-      for (const v of (frame.vars || [])) {
-        prevVars[`${frame.level}:${v.name}`] = v.value;
-      }
-    }
+  if(!traceData)return;
+  const total=traceData.steps.length;
+  if(n<0)n=0; if(n>=total)n=total-1;
+  if(currentStep>=0&&currentStep<traceData.steps.length){
+    prevVars={};
+    const step=traceData.steps[currentStep];
+    for(const frame of(step.frames||[])) for(const v of(frame.vars||[])) prevVars[`${frame.level}:${v.name}`]=v.value;
   }
-  currentStep = n;
-  renderCode();
-  renderStepDesc();
-  renderFrames();
-  renderMemory();
-  renderConsole();
-  updateControls();
+  currentStep=n;
+  renderCode(); renderStepDesc(); renderFrames(); renderStack(); renderHeap(); renderConsole(); updateControls();
 }
 
-function goFirst() { goToStep(0); }
-function goPrev() { goToStep(currentStep - 1); }
-function goNext() { goToStep(currentStep + 1); }
-function goLast() { goToStep(traceData ? traceData.steps.length - 1 : 0); }
+function goFirst(){goToStep(0);}
+function goPrev(){goToStep(currentStep-1);}
+function goNext(){goToStep(currentStep+1);}
+function goLast(){goToStep(traceData?traceData.steps.length-1:0);}
 
-document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
-  if (e.key === 'ArrowRight' || e.key === 'n') goNext();
-  else if (e.key === 'ArrowLeft' || e.key === 'p') goPrev();
-  else if (e.key === 'Home') goFirst();
-  else if (e.key === 'End') goLast();
-  else if (e.key === 'Enter' && e.ctrlKey) runCode();
-  else if (e.key === 'Escape') closeArgvModal();
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='n')goNext();
+  else if(e.key==='ArrowLeft'||e.key==='p')goPrev();
+  else if(e.key==='Home')goFirst();
+  else if(e.key==='End')goLast();
+  else if(e.key==='Enter'&&e.ctrlKey)runCode();
+  else if(e.key==='Escape')closeArgvModal();
 });
 
-function escHtml(s) {
-  if (s == null) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function escHtml(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
 </html>
