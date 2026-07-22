@@ -425,4 +425,7 @@ def trace():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    import os as _os
+    port = int(_os.environ.get("PORT", 5000))
+    debug = _os.environ.get("FLASK_DEBUG", "1") == "1"
+    app.run(host="0.0.0.0", port=port, debug=debug)
