@@ -16,9 +16,14 @@ function buildWrappedSource(code, argv, lang) {
     `static const char *__argv_data[] = {\n${argvEntries}\n};\n` +
     `static const int __argc_val = ${argcVal};\n`;
 
-  const mainSig = /int\s+main\s*\(\s*(?:int\s+argc\s*,\s*(?:const\s+)?char\s*\*\s*argv\s*\[\s*\]|void|\s*)\s*\)/;
-  const wrapped = code.replace(mainSig, "int __user_main(int argc, char *argv[])");
-  if (wrapped === code) {
+  const mainSig = /int\s+main\s*\([^)]*\)/;
+  let matched = false;
+  const wrapped = code.replace(mainSig, (m) => {
+    matched = true;
+    const params = m.slice(m.indexOf("("));
+    return "int __user_main" + params;
+  });
+  if (!matched) {
     return { source: code, wrapped: false };
   }
 
@@ -76,15 +81,17 @@ export default async function handler(req, res) {
 
     const data = await wandRes.json();
 
-    if (data.status !== "0") {
-      const compileErr = data.compiler_error || data.compiler_message || "Compilation failed";
+    const compileErr = (data.compiler_error || "").trim();
+    const hasCompileFail = compileErr.length > 0 || data.status === "CE";
+
+    if (hasCompileFail) {
       return res.status(200).json({
         success: false,
-        compile_error: compileErr.trim(),
+        compile_error: compileErr || "Compilation failed",
         compile_output: (data.compiler_output || "").trim(),
         stdout: "",
         stderr: "",
-        code: parseInt(data.status) || 1,
+        code: -1,
         signal: data.signal || null,
         argv_injected: wrapped,
       });
