@@ -25,9 +25,6 @@ header{background:linear-gradient(135deg,#1a1d27 0%,#1e2235 100%);color:#fff;pad
 header h1{font-size:17px;font-weight:700;letter-spacing:0.3px;background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 header .subtitle{font-size:11px;color:var(--text-secondary);letter-spacing:0.2px}
 .header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.header-right input{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:var(--radius-sm);font-size:11px;width:320px;font-family:var(--mono);transition:border-color 0.2s}
-.header-right input:focus{outline:none;border-color:var(--accent)}
-.header-right input::placeholder{color:var(--dim)}
 
 .top-bar{background:var(--panel);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap}
 .top-bar label{font-size:12px;font-weight:600;color:var(--text-secondary)}
@@ -138,7 +135,6 @@ button{padding:6px 16px;border:none;border-radius:var(--radius-sm);font-size:12p
     <h1>C/C++ Tutor</h1>
     <span class="subtitle">Step-by-step execution visualizer</span>
     <div class="header-right">
-      <input type="text" id="api-url" placeholder="Backend URL (leave empty if same origin)" title="Paste your tunnel URL here">
     </div>
   </header>
 
@@ -204,29 +200,12 @@ button{padding:6px 16px;border:none;border-radius:var(--radius-sm);font-size:12p
 </div>
 
 <script>
-window.CCTUTOR_API = window.CCTUTOR_API || '';
 let traceData = null;
 let currentStep = -1;
 let prevVars = {};
 let editMode = true;
 
 const $ = id => document.getElementById(id);
-
-function getApiBase() {
-  const input = $('api-url');
-  const val = input ? input.value.trim() : '';
-  if (val) {
-    window.CCTUTOR_API = val.replace(/\/+$/, '');
-    localStorage.setItem('cctutor_api', window.CCTUTOR_API);
-  } else if (!window.CCTUTOR_API) {
-    const saved = localStorage.getItem('cctutor_api');
-    if (saved) {
-      window.CCTUTOR_API = saved;
-      if (input) input.value = saved;
-    }
-  }
-  return window.CCTUTOR_API;
-}
 
 function parseArgs(raw) {
   if (!raw.trim()) return [];
@@ -270,16 +249,7 @@ async function runCode() {
   $('code-container').innerHTML = '<div class="no-data"><span class="spinner"></span>&nbsp; Compiling and tracing...</div>';
 
   try {
-    const API_BASE = getApiBase();
-    if (!API_BASE) {
-      showError('Enter your Backend URL in the top-right input (e.g. from localtunnel or ngrok)');
-      setLoading(false);
-      editMode = true;
-      $('code-editor').style.display = '';
-      $('code-container').style.display = 'none';
-      return;
-    }
-    const resp = await fetch(API_BASE + '/api/trace', {
+    const resp = await fetch('/api/trace', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code, lang, args }),
