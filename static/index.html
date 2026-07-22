@@ -156,7 +156,16 @@ const $ = id => document.getElementById(id);
 function getApiBase() {
   const input = $('api-url');
   const val = input ? input.value.trim() : '';
-  if (val) { window.CCTUTOR_API = val.replace(/\/+$/, ''); }
+  if (val) {
+    window.CCTUTOR_API = val.replace(/\/+$/, '');
+    localStorage.setItem('cctutor_api', window.CCTUTOR_API);
+  } else if (!window.CCTUTOR_API) {
+    const saved = localStorage.getItem('cctutor_api');
+    if (saved) {
+      window.CCTUTOR_API = saved;
+      if (input) input.value = saved;
+    }
+  }
   return window.CCTUTOR_API;
 }
 
@@ -204,11 +213,27 @@ async function runCode() {
 
   try {
     const API_BASE = getApiBase();
+    if (!API_BASE) {
+      showError('Enter your Backend URL in the top-right input (e.g. from localtunnel or ngrok)');
+      setLoading(false);
+      editMode = true;
+      $('code-editor').style.display = '';
+      $('code-container').style.display = 'none';
+      return;
+    }
     const resp = await fetch(API_BASE + '/api/trace', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code, lang, args }),
     });
+    if (!resp.ok) {
+      showError('Backend returned error ' + resp.status);
+      setLoading(false);
+      editMode = true;
+      $('code-editor').style.display = '';
+      $('code-container').style.display = 'none';
+      return;
+    }
     const data = await resp.json();
 
     if (!data.success) {
